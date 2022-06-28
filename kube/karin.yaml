@@ -28,9 +28,7 @@ kind: ConfigMap
 metadata:
   name: karin
 data:
-  RUST_LOG: court_bot=DEBUG
+  RUST_LOG: DEBUG
   GUILD_ID: "459006129670979584"
-  MONGO_URI: mongodb://localhost:27017
   DB_NAME: karin
-  MONGO_INITDB_ROOT_USERNAME: root
   SET_GLOBAL: ''
