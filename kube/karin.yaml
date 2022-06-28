@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: karin
+spec:
+  selector:
+    matchLabels:
+      app: karin
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: karin
+    spec:
+      containers:
+      - name: court-bot
+        image: discord-court-bot:1.0
+        envFrom:
+          - configMapRef:
+              name: karin
+          - secretRef:
+              name: karin
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: karin
+data:
+  RUST_LOG: court_bot=DEBUG
+  GUILD_ID: "459006129670979584"
+  MONGO_URI: mongodb://localhost:27017
+  DB_NAME: karin
+  MONGO_INITDB_ROOT_USERNAME: root
+  SET_GLOBAL: ''
