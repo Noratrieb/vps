@@ -20,6 +20,8 @@ spec:
               name: karin
           - secretRef:
               name: karin
+          - secretRef:
+              name: mongodb
 ---
 apiVersion: v1
 kind: ConfigMap
