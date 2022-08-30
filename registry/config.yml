@@ -1,0 +1,28 @@
+version: 0.1
+log:
+  accesslog:
+    disabled: true
+  level: debug
+  formatter: text
+  fields:
+    service: registry
+storage:
+  filesystem:
+    rootdirectory: /var/lib/registry
+    maxthreads: 100
+  delete:
+    enabled: true
+auth:
+  token:
+    autoredirect: true
+    realm: token-realm
+    service: token-service
+    issuer: registry-token-issuer
+    rootcertbundle: /root/certs/bundle
+http:
+  addr: localhost:5000
+  draintimeout: 60s
+  debug:
+    addr: localhost:5001
+  headers:
+    X-Content-Type-Options: [nosniff]
