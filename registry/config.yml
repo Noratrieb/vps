@@ -21,6 +21,7 @@ auth:
     rootcertbundle: /root/certs/bundle
 http:
   addr: localhost:5000
+  prefix: /docker-registry
   draintimeout: 60s
   debug:
     addr: localhost:5001
