@@ -12,18 +12,15 @@ storage:
     maxthreads: 100
   delete:
     enabled: true
-auth:
-  token:
-    autoredirect: true
-    realm: token-realm
-    service: token-service
-    issuer: registry-token-issuer
-    rootcertbundle: /root/certs/bundle
+  #token:
+  #  autoredirect: true
+  #  realm: token-realm
+  #  service: token-service
+  #  issuer: registry-token-issuer
+  #  rootcertbundle: /root/certs/bundle
 http:
-  addr: localhost:5000
+  addr: 0.0.0.0:5000
   prefix: /docker-registry
   draintimeout: 60s
-  debug:
-    addr: localhost:5001
   headers:
     X-Content-Type-Options: [nosniff]
