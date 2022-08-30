@@ -20,7 +20,6 @@ storage:
   #  rootcertbundle: /root/certs/bundle
 http:
   addr: 0.0.0.0:5000
-  prefix: /docker-registry
   draintimeout: 60s
   headers:
     X-Content-Type-Options: [nosniff]
