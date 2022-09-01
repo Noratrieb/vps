@@ -2,7 +2,7 @@
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-if docker inspect registry > /dev/null 2>&1 ;
+if docker container inspect registry > /dev/null 2>&1 ;
 then
     echo "Registry container exists already..."
 else
