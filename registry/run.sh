@@ -23,7 +23,7 @@ if docker container inspect registry > /dev/null 2>&1 ;
 then
     echo "INFO Registry container exists already..."
 else
-    docker run -d -p 5000:5000 --restart=always --name registry \
+    docker run -d --restart=always --name registry \
         -v "$SCRIPT_DIR/config.yml:/etc/docker/registry/config.yml" \
         -v "/var/lib/docker/registry:/var/lib/registry" \
         $CERT_VOLUME \
