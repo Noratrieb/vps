@@ -2,7 +2,7 @@
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-if [ $STAGE = "localhost" ] ;
+if [ "$STAGE" = "localhost" ] ;
 then
     echo "INFO Running on localhost"
     NGINX_CONF="nginx.local.conf"

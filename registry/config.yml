@@ -12,12 +12,6 @@ storage:
     maxthreads: 100
   delete:
     enabled: true
-  #token:
-  #  autoredirect: true
-  #  realm: token-realm
-  #  service: token-service
-  #  issuer: registry-token-issuer
-  #  rootcertbundle: /root/certs/bundle
 http:
   addr: 0.0.0.0:5000
   draintimeout: 60s
