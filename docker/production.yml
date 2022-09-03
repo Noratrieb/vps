@@ -1,0 +1,17 @@
+version: '3.3'
+services:
+  nginx:
+    volumes:
+      - "/etc/letsencrypt:/etc/nginx/certs:ro"
+    ports:
+      - "443:443"
+  registry:
+    volumes:
+      - "/etc/letsencrypt:/etc/letsencrypt"
+      - "/etc/htpasswd:/htpasswd"
+    environment:
+      - REGISTRY_HTTP_TLS_CERTIFICATE=/etc/letsencrypt/live/nilstrieb.dev/fullchain.pem
+      - REGISTRY_HTTP_TLS_KEY=/etc/letsencrypt/live/nilstrieb.dev/privkey.pem
+      - REGISTRY_AUTH=htpasswd
+      - REGISTRY_AUTH_HTPASSWD_REALM=Realm
+      - REGISTRY_AUTH_HTPASSWD_PATH=/htpasswd
