@@ -1,0 +1,1 @@
+docker run --net internal --name cors-school-frontend -d --restart=always private-docker-registry.nilstrieb.dev/cors-school-frontend:1.0.0
