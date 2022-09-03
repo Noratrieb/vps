@@ -5,4 +5,4 @@ docker run --net internal --name cors-school-frontend -d --restart=always docker
 docker run --net internal -d --name cors-postgres -e POSTGRES_PASSWORD=hugo58hugo -e POSTGRES_DB=davinci postgres
 
 # backend
-docker run --net internal -d --name cors-school-backend -v -e DATABASE_URL=postgres://postgres:hugo58hugo@cors-postgres/davinci -e RUST_LOG=info -e JWT_SECRET=redacted
+docker run --net internal -d --name cors-school-backend -e DATABASE_URL=postgres://postgres:hugo58hugo@cors-postgres/davinci -e RUST_LOG=info -e JWT_SECRET='redacted' docker.nilstrieb.dev/cors-school-backend:1.0
