@@ -5,10 +5,6 @@ sudo certbot certonly --standalone
 nilstrieb.dev,private-docker-registry.nilstrieb.dev
 ```
 ```sh
-sudo certbot renew --pre-hook "docker stop nginx" --post-hook "docker start nginx"
-```
-
-```sh
 sudo tee /etc/letsencrypt/renewal-hooks/pre/001-stop-nginx.sh > /dev/null <<EOF
 #!/usr/bin/env bash
 docker stop nginx
