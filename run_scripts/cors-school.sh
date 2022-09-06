@@ -1,3 +1,5 @@
+set -eu pipefail
+
 # frontend
 docker run --net internal --name cors-school-frontend -d --restart=always docker.nilstrieb.dev/cors-school-frontend:1.0.0
 
