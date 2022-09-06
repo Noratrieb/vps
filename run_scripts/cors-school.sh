@@ -8,3 +8,6 @@ docker run --net internal -d --name cors-postgres -e POSTGRES_PASSWORD=hugo58hug
 
 # backend
 docker run --net internal -d --name cors-school-backend -e DATABASE_URL=postgres://postgres:hugo58hugo@cors-postgres/davinci -e RUST_LOG=info -e JWT_SECRET='redacted' docker.nilstrieb.dev/cors-school-backend:1.0
+
+# bot
+docker run --net internal -d --name cors-school-bot -v "$(pwd)/env:/.env" docker.nilstrieb.dev/cors-school-bot:1.0
