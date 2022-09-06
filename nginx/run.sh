@@ -1,16 +1,17 @@
 #!/usr/bin/env bash
+set -eu pipefail
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-if [ "$STAGE" = "localhost" ] ;
+if [ "${STAGE-}" = "prod" ] ;
 then
-    echo "INFO Running on localhost"
-    NGINX_CONF="nginx.local.conf"
-    EXTRA_ARGS="-p 80:80"
-else
     echo "INFO Running on prod"
     NGINX_CONF="nginx.conf"
     EXTRA_ARGS="-v=/etc/letsencrypt:/etc/nginx/certs -p 443:443"
+else
+    echo "INFO Running on localhost"
+    NGINX_CONF="nginx.local.conf"
+    EXTRA_ARGS="-p 80:80"
 fi
 
 if docker container inspect nginx > /dev/null 2>&1 ;
