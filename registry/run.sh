@@ -1,12 +1,10 @@
 #!/usr/bin/env bash
+set -eu pipefail
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-if [ "$STAGE" = "localhost" ] ;
+if [ "${STAGE-}" = "prod" ] ;
 then
-    echo "INFO Running on localhost"
-    CERT_VOLUME=""
-else
     echo "INFO Running on prod"
     CERT_VOLUME="\
         -v=/etc/letsencrypt:/etc/letsencrypt \
@@ -17,6 +15,9 @@ else
         -e=REGISTRY_AUTH_HTPASSWD_REALM=Realm \
         -e=REGISTRY_AUTH_HTPASSWD_PATH=/htpasswd \
     "
+else
+    echo "INFO Running on localhost"
+    CERT_VOLUME=""
 fi
 
 if docker container inspect registry > /dev/null 2>&1 ;
