@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cargo-bisect-rustc-config
+data:
+  SQLITE_DB: /app/db/db.sqlite
+  RUST_LOG: debug
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: cargo-bisect-rustc-volume-claim
+spec:
+  resources:
+    requests:
+      storage: "50Mi"
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cargo-bisect-rustc
+spec:
+  selector:
+    matchLabels:
+      app: cargo-bisect-rustc
+  template:
+    metadata:
+      labels:
+        app: cargo-bisect-rustc
+    spec:
+      containers:
+        - name: cargo-bisect-rustc
+          image: docker.nilstrieb.dev/cargo-bisect-rustc-service:1.10
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "1000Mi"
+              cpu: "2000m"
+          envFrom:
+            - configMapRef:
+                name: cargo-bisect-rustc-config
+          volumeMounts:
+            - mountPath: /app/db
+              name: sqlitedb
+          ports:
+            - containerPort: 4000
+      imagePullSecrets:
+        - name: docker-nilstrieb-dev-login
+      volumes:
+        - name: sqlitedb
+          persistentVolumeClaim:
+            claimName: cargo-bisect-rustc-volume-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cargo-bisect-rustc-service
+spec:
+  selector:
+    app: cargo-bisect-rustc
+  ports:
+    - port: 80
+      targetPort: 4000

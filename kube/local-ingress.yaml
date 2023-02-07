@@ -16,3 +16,13 @@ spec:
                 name: hugo-chat-frontend-service
                 port:
                   number: 8080
+    - host: bisect-rustc.nilstrieb.dev
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: cargo-bisect-rustc-service
+                port:
+                  number: 80

@@ -1,0 +1,38 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: main-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+spec:
+  rules:
+    - host: hugo-chat.nilstrieb.dev
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: hugo-chat-frontend-service
+                port:
+                  number: 8080
+    - host: bisect-rustc.nilstrieb.dev
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: cargo-bisect-rustc-service
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - nilstrieb.dev
+        - docker.nilstrieb.dev
+        - cors-school.nilstrieb.dev
+        - api.cors-school.nilstrieb.dev
+        - hugo-chat.nilstrieb.dev
+        - api.hugo-chat.nilstrieb.dev
+        - bisect-rustc.nilstrieb.dev

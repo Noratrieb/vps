@@ -13,15 +13,15 @@ spec:
         app.kubernetes.io/name: hugo-chat-frontend
     spec:
       containers:
-      - name: hugo-chat-frontend
-        image: docker.nilstrieb.dev/hugo-chat-frontend:1.1
-        ports:
-        - containerPort: 80
-          name: http-web-svc
-        resources:
-          limits:
-            cpu: 200m
-            memory: 300M
+        - name: hugo-chat-frontend
+          image: docker.nilstrieb.dev/hugo-chat-frontend:1.1
+          ports:
+            - containerPort: 80
+              name: http-web-svc
+          resources:
+            limits:
+              cpu: 200m
+              memory: 300M
       imagePullSecrets:
         - name: docker-nilstrieb-dev-login
 ---
@@ -33,6 +33,6 @@ spec:
   selector:
     app.kubernetes.io/name: hugo-chat-frontend
   ports:
-  - protocol: TCP
-    port: 8080
-    targetPort: http-web-svc
+    - protocol: TCP
+      port: 8080
+      targetPort: http-web-svc
