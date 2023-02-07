@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hugo-chat-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hugo-chat-frontend
+  template:
+    metadata:
+      labels:
+        app: hugo-chat-frontend
+    spec:
+      containers:
+      - name: hugo-chat-frontend
+        image: docker.nilstrieb.dev/hugo-chat-frontend:1.1
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 200m
+            memory: 300M
+      imagePullSecrets:
+        - name: docker-nilstrieb-dev-login
