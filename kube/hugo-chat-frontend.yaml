@@ -6,20 +6,33 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: hugo-chat-frontend
+      app.kubernetes.io/name: hugo-chat-frontend
   template:
     metadata:
       labels:
-        app: hugo-chat-frontend
+        app.kubernetes.io/name: hugo-chat-frontend
     spec:
       containers:
       - name: hugo-chat-frontend
         image: docker.nilstrieb.dev/hugo-chat-frontend:1.1
         ports:
         - containerPort: 80
+          name: http-web-svc
         resources:
           limits:
             cpu: 200m
             memory: 300M
       imagePullSecrets:
         - name: docker-nilstrieb-dev-login
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hugo-chat-frontend-service
+spec:
+  selector:
+    app.kubernetes.io/name: hugo-chat-frontend
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: http-web-svc
