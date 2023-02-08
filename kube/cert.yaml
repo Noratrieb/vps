@@ -1,0 +1,17 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: nilstriev-dev-cert
+spec:
+  secretName: nilstrieb-dev-cert-tls
+  dnsNames:
+    - nilstrieb.dev
+    - docker.nilstrieb.dev
+    - cors-school.nilstrieb.dev
+    - api.cors-school.nilstrieb.dev
+    - hugo-chat.nilstrieb.dev
+    - api.hugo-chat.nilstrieb.dev
+    - bisect-rustc.nilstrieb.dev
+  issuerRef:
+    name: letsencrypt-staging
+    kind: ClusterIssuer
