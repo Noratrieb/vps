@@ -6,11 +6,11 @@ metadata:
     name: ubuntu-debugger
 spec:
   containers:
-  - name: ubuntu-debugger
-    image: docker.io/ubuntu:latest
-    resources:
-      limits:
-        memory: "128Mi"
-        cpu: "500m"
-    command: [ "/bin/bash", "-c", "--" ]
-    args: [ "while true; do sleep 30; done;" ]
+    - name: ubuntu-debugger
+      image: docker.io/ubuntu:latest
+      resources:
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+      command: ["/bin/bash", "-c", "--"]
+      args: ["while true; do sleep 30; done;"]

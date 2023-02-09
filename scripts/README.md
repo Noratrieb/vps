@@ -4,7 +4,7 @@
 
 - Install docker
 - Install minikube (https://minikube.sigs.k8s.io/docs/start/)
-- Install helm
+- Install helm (https://helm.sh/docs/intro/install/)
 - Run `setup-env.sh`
 
 ## Start minikube
@@ -16,7 +16,7 @@
 ## Install cert-manager
 
 `./scripts/cert-manager.sh`
-
+i
 ## Apply configs
 
 First, apply all the configs in `./kube` directly. Only apply `server-ingress.yaml`, not `local-ingress.yaml`!
