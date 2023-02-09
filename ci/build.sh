@@ -1,5 +1,7 @@
 #/usr/bin/env bash
 
+set -eu
+
 APP="$1"
 
 echo "Checking out $APP"
