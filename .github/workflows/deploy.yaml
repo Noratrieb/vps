@@ -1,0 +1,27 @@
+name: Deploy an application
+
+on:
+  workflow_dispatch:
+    inputs:
+      app:
+        type: choice
+        description: The app to deploy
+        options:
+          - widetom
+          - cargo-bisect-rustc-service
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build
+    steps:
+      - name: Login to docker.nilstrieb.dev
+        uses: docker/login-action@v2
+        with:
+          registry: docker.nilstrieb.dev
+          username: ${{ secrets.DOCKER_NILSTRIEB_DEV_USER }}
+          password: ${{ secrets.DOCKER_NILSTRIEB_DEV_PASSWORD }}
+      - uses: actions/checkout@v3
+      - name: Check out application source
+        run: |
+          APP=${{ github.event.inputs.app }}
