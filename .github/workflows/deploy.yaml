@@ -22,6 +22,6 @@ jobs:
           username: ${{ secrets.DOCKER_NILSTRIEB_DEV_USER }}
           password: ${{ secrets.DOCKER_NILSTRIEB_DEV_PASSWORD }}
       - uses: actions/checkout@v3
-      - name: Check out application source
+      - name: Build docker image
         run: |
-          APP=${{ github.event.inputs.app }}
+          ci/build.sh ${{ github.event.inputs.app }}
