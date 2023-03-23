@@ -59,10 +59,26 @@ sudo systemctl restart containerd
 ```
 sudo kubeadm init --control-plane-endpoint=k8s-control.nilstrieb.dev --pod-network-cidr=192.168.0.0/16
 
-
 kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/tigera-operator.yaml
 ```
 
 # networking
 
 [callico](https://docs.tigera.io/calico)
+
+# other
+
+`kubectl taint nodes --all node-role.kubernetes.io/control-plane-` to allow scheduling on the control plane. disable if needed.
+
+# sonobuoy
+
+```sh
+SONO_VERSION=0.56.16
+
+curl -L "https://github.com/vmware-tanzu/sonobuoy/releases/download/v$SONO_VERSION/sonobuoy_$(echo $SONO_VERSION)_linux_amd64.tar.gz" -o "sonobuoy_$(echo $SONO_VERSION)_linux_amd64.tar.gz"
+tar -xvf "sonobuoy_$(echo $SONO_VERSION)_linux_amd64.tar.gz"
+```
+
+```sh
+./sonobuoy run --wait
+```
