@@ -25,7 +25,6 @@
             pythonPkgs = python.withPackages (ps: with ps; [
               virtualenv
               pip
-              ansible-core
             ]);
           in
           pkgs.mkShell {
@@ -34,6 +33,8 @@
               pythonPkgs
               ansible
               ansible-lint
+              certbot
+              dig
             ];
           };
       });

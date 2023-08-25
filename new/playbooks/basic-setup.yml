@@ -1,0 +1,36 @@
+---
+- name: Basic Server setup
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Test ping
+      ansible.builtin.ping:
+    - name: Install docker
+      ansible.builtin.apt:
+        name: docker.io
+        state: present
+    - name: Install nginx
+      ansible.builtin.apt:
+        name: nginx
+        state: present
+    - name: Ensure nginx is started
+      ansible.builtin.service:
+        name: nginx
+        state: started
+    - name: Create hello world file
+      ansible.builtin.copy:
+        dest: /var/www/html/index.html
+        content: |
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta http-equiv="X-UA-Compatible" content="IE=edge">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>uwu</title>
+          </head>
+          <body>
+              meow :3
+          </body>
+          </html>
+        mode: u=rw,g=r,o=r
