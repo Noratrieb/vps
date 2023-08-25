@@ -1,0 +1,83 @@
+- name: "Create required directories in /etc/letsencrypt"
+  ansible.builtin.file:
+    path: "/etc/letsencrypt/{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: u=rwx,g=x,o=x
+  with_items:
+    - account
+    - certs
+    - csrs
+    - keys
+- name: "Generate a Let's Encrypt account key"
+  ansible.builtin.shell: |
+    set -euo pipefail
+    if [ ! -f {{ letsencrypt_account_key }} ]; then
+      openssl genrsa 4096 | sudo tee {{ letsencrypt_account_key }};
+      echo "changed"
+    fi
+  args:
+    executable: /bin/bash
+  register: key_output
+  changed_when: key_output.stdout == "changed" # this is probably wrong?
+- name: "Generate Let's Encrypt private key"
+  ansible.builtin.shell: "openssl genrsa 4096 | sudo tee /etc/letsencrypt/keys/{{ domain_name }}.key"
+- name: "Generate Let's Encrypt CSR"
+  ansible.builtin.shell: |
+    set -euo pipefail
+
+    CSR_PATH=/etc/letsencrypt/csrs/{{ domain_name }}.csr
+
+    if [ ! -f "$CSR_PATH" ]; then
+
+      SANS=$(printf "\n[SAN]\nsubjectAltName=DNS:vps2.{{ domain_name }}")
+
+      openssl req -new -sha256 -key /etc/letsencrypt/keys/{{ domain_name }}.key -subj "/CN={{ domain_name }}" -reqexts SAN -config <(cat /etc/ssl/openssl.cnf <(echo $SANS)) | sudo tee "$CSR_PATH"
+      echo "changed"
+    fi
+  args:
+    executable: /bin/bash
+  register: key_output
+  changed_when: key_output.stdout == "changed" # this is probably wrong?
+- name: "Begin Let's Encrypt challenges"
+  acme_certificate:
+    acme_directory: "{{ acme_directory }}"
+    acme_version: "{{ acme_version }}"
+    account_key_src: "{{ letsencrypt_account_key }}"
+    account_email: "{{ acme_email }}"
+    terms_agreed: 1
+    challenge: "{{ acme_challenge_type }}"
+    csr: "{{ letsencrypt_csrs_dir }}/{{ domain_name }}.csr"
+    dest: "{{ letsencrypt_certs_dir }}/{{ domain_name }}.crt"
+    fullchain_dest: "{{ letsencrypt_certs_dir }}/fullchain_{{ domain_name }}.crt"
+    remaining_days: 91
+  register: acme_challenge_nilstrieb_dev
+- name: "Create .well-known/acme-challenge directory"
+  ansible.builtin.file:
+    path: /var/www/html/.well-known/acme-challenge
+    state: directory
+    owner: root
+    group: root
+    mode: u=rwx,g=rx,o=rx
+- name: "Implement http-01 challenge files"
+  ansible.builtin.copy:
+    content: "{{ acme_challenge_nilstrieb_dev['challenge_data'][item]['http-01']['resource_value'] }}"
+    dest: "/var/www/html/{{ acme_challenge_nilstrieb_dev['challenge_data'][item]['http-01']['resource'] }}"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  with_items:
+    - "vps2.{{ domain_name }}"
+- name: "Complete Let's Encrypt challenges"
+  acme_certificate:
+    acme_directory: "{{ acme_directory }}"
+    acme_version: "{{ acme_version }}"
+    account_key_src: "{{ letsencrypt_account_key }}"
+    account_email: "{{ acme_email }}"
+    challenge: "{{ acme_challenge_type }}"
+    csr: "{{ letsencrypt_csrs_dir }}/{{ domain_name }}.csr"
+    dest: "{{ letsencrypt_certs_dir }}/{{ domain_name }}.crt"
+    chain_dest: "{{ letsencrypt_certs_dir }}/chain_{{ domain_name }}.crt"
+    fullchain_dest: "{{ letsencrypt_certs_dir }}/fullchain_{{ domain_name }}"
+    data: "{{ acme_challenge_nilstrieb_dev }}"

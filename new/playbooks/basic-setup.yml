@@ -2,6 +2,17 @@
 - name: Basic Server setup
   hosts: all
   gather_facts: false
+  vars:
+    acme_challenge_type: http-01
+    acme_directory: https://acme-v02.api.letsencrypt.org/directory
+    acme_version: 2
+    acme_email: nilstrieb@gmail.com # don't spam me pls :(
+    letsencrypt_dir: /etc/letsencrypt
+    letsencrypt_keys_dir: /etc/letsencrypt/keys
+    letsencrypt_csrs_dir: /etc/letsencrypt/csrs
+    letsencrypt_certs_dir: /etc/letsencrypt/certs
+    letsencrypt_account_key: /etc/letsencrypt/account/account.key
+    domain_name: vps2.nilstrieb.dev
   tasks:
     - name: Test ping
       ansible.builtin.ping:
@@ -34,3 +45,6 @@
           </body>
           </html>
         mode: u=rw,g=r,o=r
+    - name: Acquire certificates
+      ansible.builtin.include_tasks: ./letsencrypt.yml
+      when: true # disable it by default.
