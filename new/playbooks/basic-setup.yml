@@ -2,46 +2,58 @@
 - name: Basic Server setup
   hosts: all
   gather_facts: false
-  vars:
-    acme_challenge_type: http-01
-    acme_directory: https://acme-v02.api.letsencrypt.org/directory
-    acme_version: 2
-    acme_email: nilstrieb@gmail.com # don't spam me pls :(
-    letsencrypt_dir: /etc/letsencrypt
-    letsencrypt_keys_dir: /etc/letsencrypt/keys
-    letsencrypt_csrs_dir: /etc/letsencrypt/csrs
-    letsencrypt_certs_dir: /etc/letsencrypt/certs
-    letsencrypt_account_key: /etc/letsencrypt/account/account.key
-    domain_name: vps2.nilstrieb.dev
   tasks:
-    - name: Test ping
-      ansible.builtin.ping:
     - name: Install docker
       ansible.builtin.apt:
         name: docker.io
         state: present
-    - name: Install nginx
+    - name: Install keyring packages
       ansible.builtin.apt:
-        name: nginx
+        name: "{{ item }}"
+      with_items:
+        - debian-keyring
+        - debian-archive-keyring
+        - apt-transport-https
+    - name: Add caddy keyrings
+      ansible.builtin.shell: |
+        set -euo pipefail
+
+        sudo rm /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+        curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+        curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list
+
+        # todo: show ok/changed
+      args:
+        executable: /bin/bash
+    - name: Install caddy
+      ansible.builtin.apt:
+        name: caddy
         state: present
-    - name: Ensure nginx is started
+      args:
+        update_cache: true
+    - name: Ensure caddy is started
       ansible.builtin.service:
-        name: nginx
+        name: caddy
         state: started
-    - name: Create hello world file
-      ansible.builtin.copy:
-        dest: /var/www/html/index.html
-        content: |
-          <!DOCTYPE html>
-          <html lang="en">
-          <head>
-              <meta charset="UTF-8">
-              <meta http-equiv="X-UA-Compatible" content="IE=edge">
-              <meta name="viewport" content="width=device-width, initial-scale=1.0">
-              <title>uwu</title>
-          </head>
-          <body>
-              meow :3
-          </body>
-          </html>
+    - name: Create debug html root
+      ansible.builtin.file:
+        path: /var/www/html/debug
+        state: directory
         mode: u=rw,g=r,o=r
+    - name: Create debug webserver file
+      ansible.builtin.copy:
+        dest: /var/www/html/debug/index.html
+        src: "../debug.html"
+        mode: u=rw,g=r,o=r
+    - name: Copy Caddyfile
+      ansible.builtin.copy:
+        dest: /etc/caddy/Caddyfile
+        src: "../vps2/Caddyfile" # TODO: Choose the right caddyfile depending on the server.
+        mode: "u=rw,g=r,o=r"
+      notify:
+        - "Caddyfile changed"
+  handlers:
+    - name: "Caddyfile changed"
+      ansible.builtin.service:
+        name: caddy
+        state: reloaded

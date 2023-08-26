@@ -36,6 +36,7 @@
               certbot
               dig
               openssl
+              caddy
             ];
           };
       });

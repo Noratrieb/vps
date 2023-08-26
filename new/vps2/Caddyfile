@@ -1,0 +1,10 @@
+{
+	email nilstrieb@gmail.com
+	acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
+	debug
+}
+
+vps2.nilstrieb.dev
+
+root * /var/www/html/debug
+file_server
