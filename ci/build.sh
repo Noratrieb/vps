@@ -24,6 +24,8 @@ if [ "$APP" = "hugo-chat" ]; then
     echo "Building client"
     docker build . -t "$CLIENT_FULL_NAME"
     docker push "$CLIENT_FULL_NAME"
+
+    exit 0
 fi
 
 echo "Checking out $APP"
