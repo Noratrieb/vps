@@ -10,6 +10,10 @@
       with_items:
         - docker.io
         - docker-compose
+    - name: Install fish
+      ansible.builtin.apt:
+        name: "fish"
+        state: present
     - name: Install keyring packages
       ansible.builtin.apt:
         name: "{{ item }}"

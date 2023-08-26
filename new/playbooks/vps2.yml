@@ -35,6 +35,14 @@
         state: directory
         mode: u=rwx,g=rx,o=rx
     #####
+    # APP: killua bot, /apps/killua
+    #####
+    - name: Create /apps/killua
+      ansible.builtin.file:
+        path: /apps/registry
+        state: directory
+        mode: u=rwx,g=rx,o=rx
+    #####
     # END: docker compose up!
     #####
       # We want this to be last so that all app-specific config has been done.

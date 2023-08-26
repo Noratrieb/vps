@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 services:
   registry:
     container_name: registry
@@ -12,12 +12,21 @@ services:
       - "5000:5000"
   widetom:
     container_name: widetom
-    image: docker.nilstrieb.dev/widetom:490c94ca
+    image: "docker.nilstrieb.dev/widetom:490c94ca"
     restart: always
     volumes:
       - "/apps/widetom:/app/config"
     environment:
       CONFIG_PATH: /app/config/config.toml
       BOT_TOKEN_PATH: /app/config/bot_token
+  killua:
+    container_name: killua
+    image: "docker.nilstrieb.dev/killua-bot:ac8203d2"
+    restart: always
+    volumes:
+      - "/apps/killua:/app/config"
+    environment:
+      BOT_TOKEN: "${KILLUA_BOT_TOKEN}"
+      KILLUA_JSON_PATH: /app/config/trivia_questions.json
 
 # TODO: create an internal network and move caddy there as well.
