@@ -1,6 +1,5 @@
 {
 	email nilstrieb@gmail.com
-	# acme_ca https://api.letsencrypt.org/directory
 }
 
 # https://gist.github.com/ryanburnette/d13575c9ced201e73f8169d3a793c1a3

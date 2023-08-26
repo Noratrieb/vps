@@ -1,22 +1,7 @@
 # Infra setup
 
-- VPS
-    - nilstrieb.dev
-    - docker.nilstrieb.dev
+see `new` for the new infra
 
-- Github Pages
-    - blog.nilstrieb.dev
+## things that shall not be forgotten
 
-nilstrieb.dev redirects to blog.nilstrieb.dev
-
-docker.nilstrieb.dev proxies to an internal registry container.
-
-The VPS has an nginx server at the front.
-
-# useful links
-## Install mongosh
-https://www.mongodb.com/docs/mongodb-shell/install/#std-label-mdb-shell-install
-
-# fresh setup
-
-Follow the README in `scripts/README.md`
+there once was some custom k8s cluster setup in `./k8s-cluster`. it was incomplete and pretty cursed.
