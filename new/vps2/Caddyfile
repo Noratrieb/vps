@@ -1,10 +1,13 @@
 {
 	email nilstrieb@gmail.com
-	acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
-	debug
+	# acme_ca https://api.letsencrypt.org/directory
 }
 
-vps2.nilstrieb.dev
+vps2.nilstrieb.dev {
+	root * /var/www/html/debug
+	file_server
+}
 
-root * /var/www/html/debug
-file_server
+docker.nilstrieb.dev {
+	reverse_proxy * localhost:5000
+}

@@ -5,8 +5,11 @@
   tasks:
     - name: Install docker
       ansible.builtin.apt:
-        name: docker.io
+        name: "{{ item }}"
         state: present
+      with_items:
+        - docker.io
+        - docker-compose
     - name: Install keyring packages
       ansible.builtin.apt:
         name: "{{ item }}"
@@ -52,6 +55,16 @@
         mode: "u=rw,g=r,o=r"
       notify:
         - "Caddyfile changed"
+    - name: Create /apps
+      ansible.builtin.file:
+        path: /apps
+        state: directory
+        mode: u=rwx,g=rx,o=rx
+    - name: Copy docker-compose
+      ansible.builtin.copy:
+        dest: /apps/docker-compose.yml
+        src: "../vps2/docker-compose.yml" # TODO: choose the right directory
+        mode: "u=r,g=r,o=r"
   handlers:
     - name: "Caddyfile changed"
       ansible.builtin.service:
