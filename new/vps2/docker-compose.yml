@@ -28,5 +28,34 @@ services:
     environment:
       BOT_TOKEN: "${KILLUA_BOT_TOKEN}"
       KILLUA_JSON_PATH: /app/config/trivia_questions.json
+  hugo_chat_db:
+    container_name: hugo-chat-db
+    image: "postgres:latest"
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: "${HUGO_CHAT_DB_PASSWORD}"
+    networks:
+      - internal
+  hugo_chat_server:
+    container_name: hugo-chat-server
+    image: "docker.nilstrieb.dev/hugo-chat-server:63bd1922"
+    ports:
+      - "5001:8080"
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://hugo-chat-db:5432/postgres"
+      SPRING_DATASOURCE_PASSWORD: "${HUGO_CHAT_DB_PASSWORD}"
+    networks:
+      - internal
+  hugo_chat_client:
+    container_name: hugo-chat-client
+    image: "docker.nilstrieb.dev/hugo-chat-client:63bd1922"
+    restart: always
+    ports:
+      - "5002:80"
 
 # TODO: create an internal network and move caddy there as well.
+
+networks:
+  internal:

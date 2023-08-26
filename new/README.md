@@ -16,4 +16,5 @@ Right now the global secrets are
 
 ```
 KILLUA_BOT_TOKEN=
+HUGO_CHAT_DB_PASSWORD=
 ```

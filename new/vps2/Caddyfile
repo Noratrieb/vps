@@ -3,6 +3,32 @@
 	# acme_ca https://api.letsencrypt.org/directory
 }
 
+# https://gist.github.com/ryanburnette/d13575c9ced201e73f8169d3a793c1a3
+(cors) {
+	@cors_preflight{args.0} method OPTIONS
+	@cors{args.0} header Origin {args.0}
+
+	handle @cors_preflight{args.0} {
+		header {
+			Access-Control-Allow-Origin "{args.0}"
+			Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+			Access-Control-Allow-Credentials "false"
+			Access-Control-Allow-Headers *
+			Access-Control-Max-Age "86400"
+			defer
+		}
+		respond "" 204
+	}
+
+	handle @cors{args.0} {
+		header {
+			Access-Control-Allow-Origin "{args.0}"
+			Access-Control-Expose-Headers *
+			defer
+		}
+	}
+}
+
 vps2.nilstrieb.dev {
 	root * /var/www/html/debug
 	file_server
@@ -10,4 +36,13 @@ vps2.nilstrieb.dev {
 
 docker.nilstrieb.dev {
 	reverse_proxy * localhost:5000
+}
+
+api.hugo-chat.nilstrieb.dev {
+	import cors https://hugo-chat.nilstrieb.dev
+	reverse_proxy * localhost:5001
+}
+
+hugo-chat.nilstrieb.dev {
+	reverse_proxy * localhost:5002
 }
