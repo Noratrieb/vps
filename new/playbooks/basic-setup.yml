@@ -39,7 +39,7 @@
       ansible.builtin.file:
         path: /var/www/html/debug
         state: directory
-        mode: u=rw,g=r,o=r
+        mode: u=rwx,g=rx,o=rx
     - name: Create debug webserver file
       ansible.builtin.copy:
         dest: /var/www/html/debug/index.html
