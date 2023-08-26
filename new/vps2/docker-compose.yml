@@ -66,5 +66,13 @@ services:
         limits:
           cpus: "0.5"
           memory: 500M
+  karin_bot:
+    container_name: karin-bot
+    image: "docker.nilstrieb.dev/discord-court-bot:921be642"
+    restart: always
+    env_file:
+      - "/apps/karin-bot/.env"
+    networks:
+      - internal
 networks:
   internal:
