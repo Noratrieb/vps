@@ -27,7 +27,7 @@
         src: ../apps/registry/config.yml
         mode: u=r,g=r,o=r # readonly
     #####
-    # APP: docker registry, /apps/registry
+    # APP: widetom, /apps/widetom
     #####
     - name: Create /apps/widetom
       ansible.builtin.file:
