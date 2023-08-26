@@ -10,5 +10,14 @@ services:
       - "/apps/registry/htpasswd:/htpasswd"
     ports:
       - "5000:5000"
+  widetom:
+    container_name: widetom
+    image: docker.nilstrieb.dev/widetom:490c94ca
+    restart: always
+    volumes:
+      - "/apps/widetom:/app/config"
+    environment:
+      CONFIG_PATH: /app/config/config.toml
+      BOT_TOKEN_PATH: /app/config/bot_token
 
 # TODO: create an internal network and move caddy there as well.
