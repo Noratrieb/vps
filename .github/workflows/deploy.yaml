@@ -9,6 +9,7 @@ on:
         options:
           - widetom
           - cargo-bisect-rustc-service
+          - killua-bot
 
 jobs:
   build:
