@@ -14,6 +14,10 @@
       ansible.builtin.apt:
         name: "fish"
         state: present
+    - name: "Change root's shell to fish"
+      ansible.builtin.user:
+        name: root
+        shell: /usr/bin/fish
     - name: Install keyring packages
       ansible.builtin.apt:
         name: "{{ item }}"
