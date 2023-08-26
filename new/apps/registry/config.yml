@@ -14,12 +14,13 @@ storage:
     enabled: true
 http:
   addr: 0.0.0.0:5000
+  host: https://docker.nilstrieb.dev
   draintimeout: 60s
   headers:
     X-Content-Type-Options: [nosniff]
-  tls:
-    certificate: /etc/certs/vps2.nilstrieb.dev.crt
-    key: /etc/certs/vps2.nilstrieb.dev.key
+  # tls:
+  #   certificate: /etc/certs/vps2.nilstrieb.dev.crt
+  #   key: /etc/certs/vps2.nilstrieb.dev.key
 auth:
   htpasswd:
     realm: nilstrieb-registry
