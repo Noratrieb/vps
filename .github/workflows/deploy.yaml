@@ -10,6 +10,7 @@ on:
           - widetom
           - cargo-bisect-rustc-service
           - killua-bot
+          - discord-court-bot
           - hugo-chat
 
 jobs:

@@ -32,8 +32,7 @@ services:
     container_name: hugo-chat-db
     image: "postgres:latest"
     restart: always
-    ports:
-      - "5432:5432"
+    # no ports bound, accessed via the internal network
     environment:
       POSTGRES_PASSWORD: "${HUGO_CHAT_DB_PASSWORD}"
     networks:
@@ -54,8 +53,18 @@ services:
     restart: always
     ports:
       - "5002:80"
-
-# TODO: create an internal network and move caddy there as well.
-
+  karin_bot_db:
+    container_name: karin-bot-db
+    image: "mongo:latest"
+    restart: always
+    env_file:
+      - "/apps/karin-bot/.env"
+    networks:
+      - internal
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 500M
 networks:
   internal:
