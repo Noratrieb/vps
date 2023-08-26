@@ -45,6 +45,3 @@
           </body>
           </html>
         mode: u=rw,g=r,o=r
-    - name: Acquire certificates
-      ansible.builtin.include_tasks: ./letsencrypt.yml
-      when: true # disable it by default.
