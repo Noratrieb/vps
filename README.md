@@ -9,3 +9,7 @@ there once was some custom k8s cluster setup in `./k8s-cluster`. it was incomple
 also some kubernetes config in `./kube`. why.
 
 gloriously not great docker configs in `./docker`.
+
+`nginx`, `registry` with config for the two.
+
+`run_scripts` with not good scripts for starting containers.

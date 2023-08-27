@@ -62,3 +62,7 @@ api.cors-school.nilstrieb.dev {
 cors-school.nilstrieb.dev {
 	reverse_proxy * localhost:5004
 }
+
+bisect-rustc.nilstrieb.dev {
+	reverse_proxy * localhost:5005
+}
