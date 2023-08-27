@@ -37,6 +37,7 @@
               dig
               openssl
               caddy
+              shellcheck
             ];
           };
       });
