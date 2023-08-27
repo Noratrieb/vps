@@ -18,6 +18,12 @@
       ansible.builtin.user:
         name: root
         shell: /usr/bin/fish
+    - name: Install useful tools
+      ansible.builtin.apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - htop
     - name: Install keyring packages
       ansible.builtin.apt:
         name: "{{ item }}"

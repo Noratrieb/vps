@@ -45,3 +45,12 @@ api.hugo-chat.nilstrieb.dev {
 hugo-chat.nilstrieb.dev {
 	reverse_proxy * localhost:5002
 }
+
+api.cors-school.nilstrieb.dev {
+	import cors https://cors-school.nilstrieb.dev
+	reverse_proxy * localhost:5003
+}
+
+cors-school.nilstrieb.dev {
+	reverse_proxy * localhost:5004
+}

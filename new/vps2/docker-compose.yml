@@ -28,6 +28,7 @@ services:
     environment:
       BOT_TOKEN: "${KILLUA_BOT_TOKEN}"
       KILLUA_JSON_PATH: /app/config/trivia_questions.json
+  #### Hugo Chat
   hugo_chat_db:
     container_name: hugo-chat-db
     image: "postgres:latest"
@@ -53,6 +54,7 @@ services:
     restart: always
     ports:
       - "5002:80"
+  #### Karin
   karin_bot_db:
     container_name: karin-bot-db
     image: "mongo:latest"
@@ -74,5 +76,52 @@ services:
       - "/apps/karin-bot/.env"
     networks:
       - internal
+  #### Cors School
+  cors_school_db:
+    container_name: cors-school-db
+    image: "postgres:latest"
+    restart: always
+    env_file:
+      # POSTGRES_PASSWORD=PASSWORD
+      - "/apps/cors-school/db.env"
+    environment:
+      POSTGRES_DB: davinci
+    networks:
+      - internal
+  cors_school_server:
+    container_name: cors-school-server
+    image: "docker.nilstrieb.dev/cors-school-server:09c5d526"
+    restart: always
+    env_file:
+      # DATABASE_URL=postgres://postgres:PASSWORD@cors-school-db/davinci
+      # JWT_SECRET=secret
+      - "/apps/cors-school/server.env"
+    environment:
+      RUST_LOG: info
+    networks:
+      - internal
+    ports:
+      - "5003:8080"
+  cors_school_client:
+    container_name: cors-school-client
+    image: "docker.nilstrieb.dev/cors-school-client:09c5d526"
+    restart: always
+    ports:
+      - "5004:80"
+  cors_school_bot:
+    container_name: cors-school-bot
+    image: "docker.nilstrieb.dev/cors-school-bot:09c5d526"
+    restart: always
+    volumes:
+      # DISCORD_TOKEN=
+      # CORS_API_TOKEN=
+      - "/apps/cors-school/bot.env:/.env"
+    environment:
+      APPLICATION_ID: "867725027080142870"
+      RUST_LOG: info
+      BACKEND_URL: "http://cors-school-server:8080/api"
+    networks:
+      - internal
+
 networks:
   internal:

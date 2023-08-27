@@ -51,6 +51,14 @@
         state: directory
         mode: u=rwx,g=rx,o=rx
     #####
+    # APP: cors-school, /apps/cors-school
+    #####
+    - name: Create /apps/cors-school
+      ansible.builtin.file:
+        path: /apps/cors-school
+        state: directory
+        mode: u=rwx,g=rx,o=rx
+    #####
     # END: docker compose up!
     #####
       # We want this to be last so that all app-specific config has been done.
