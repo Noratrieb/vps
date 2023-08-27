@@ -48,13 +48,15 @@ if [ "$APP" = "cors" ]; then
     pushd ./react-frontend
     echo "Building frontend"
     docker build -t "$CLIENT_FULL_NAME" .
-    docker push "$SERVER_FULL_NAME"
+    docker push "$CLIENT_FULL_NAME"
     popd
 
     pushd ./rust
-    echo "Building bot"
+    echo "Building server"
     docker build -t "$SERVER_FULL_NAME" -f Dockerfile.server .
     docker push "$SERVER_FULL_NAME"
+
+    echo "Building bot"
     docker build -t "$BOT_FULL_NAME" -f Dockerfile.bot .
     docker push "$BOT_FULL_NAME"
     popd
