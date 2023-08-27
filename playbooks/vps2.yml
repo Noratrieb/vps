@@ -1,6 +1,4 @@
 ---
-- name: Generic setup
-  ansible.builtin.import_playbook: ./basic-setup.yml
 - name: VPS 2 setup
   hosts: vps2
   gather_facts: false

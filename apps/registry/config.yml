@@ -18,9 +18,6 @@ http:
   draintimeout: 60s
   headers:
     X-Content-Type-Options: [nosniff]
-  # tls:
-  #   certificate: /etc/certs/vps2.nilstrieb.dev.crt
-  #   key: /etc/certs/vps2.nilstrieb.dev.key
 auth:
   htpasswd:
     realm: nilstrieb-registry

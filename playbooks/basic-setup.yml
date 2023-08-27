@@ -35,7 +35,7 @@
       ansible.builtin.shell: |
         set -euo pipefail
 
-        sudo rm /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+        sudo rm -f /usr/share/keyrings/caddy-stable-archive-keyring.gpg
         curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
         curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list
 
@@ -56,16 +56,16 @@
       ansible.builtin.file:
         path: /var/www/html/debug
         state: directory
-        mode: u=rwx,g=rx,o=rx
+        mode: "u=rwx,g=rx,o=rx"
     - name: Create debug webserver file
       ansible.builtin.copy:
         dest: /var/www/html/debug/index.html
         src: "../debug.html"
-        mode: u=rw,g=r,o=r
+        mode: "u=rw,g=r,o=r"
     - name: Copy Caddyfile
       ansible.builtin.copy:
         dest: /etc/caddy/Caddyfile
-        src: "../vps2/Caddyfile" # TODO: Choose the right caddyfile depending on the server.
+        src: "../{{ inventory_hostname }}/Caddyfile" # TODO: Choose the right caddyfile depending on the server.
         mode: "u=rw,g=r,o=r"
       notify:
         - "Caddyfile changed"
@@ -77,7 +77,7 @@
     - name: Copy docker-compose
       ansible.builtin.copy:
         dest: /apps/docker-compose.yml
-        src: "../vps2/docker-compose.yml" # TODO: choose the right directory
+        src: "../{{ inventory_hostname }}/docker-compose.yml" # TODO: choose the right directory
         mode: "u=r,g=r,o=r"
   handlers:
     - name: "Caddyfile changed"

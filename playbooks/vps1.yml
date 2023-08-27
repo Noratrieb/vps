@@ -1,0 +1,14 @@
+---
+- name: VPS 1 setup
+  hosts: vps1
+  gather_facts: false
+  tasks:
+    #####
+    # END: docker compose up!
+    #####
+      # We want this to be last so that all app-specific config has been done.
+    - name: Docker compose up! 🚀
+      community.docker.docker_compose:
+        project_src: /apps
+        state: present
+        restarted: true
