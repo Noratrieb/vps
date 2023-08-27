@@ -37,11 +37,15 @@
 
         sudo rm -f /usr/share/keyrings/caddy-stable-archive-keyring.gpg
         curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
-        curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list
 
         # todo: show ok/changed
       args:
         executable: /bin/bash
+    - name: Add caddy repository
+      ansible.builtin.get_url:
+        url: "https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt"
+        dest: "/etc/apt/sources.list.d/caddy-stable.list"
+        mode: "u=rw,g=r,o=r"
     - name: Install caddy
       ansible.builtin.apt:
         name: caddy
