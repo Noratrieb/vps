@@ -72,6 +72,14 @@
         state: touch
         mode: u=rw,g=rw,o=rw
     #####
+    # APP: minecraft server, /apps/minecraft
+    #####
+    - name: Create /apps/minecraft
+      ansible.builtin.file:
+        path: /apps/minecraft
+        state: directory
+        mode: u=rwx,g=rx,o=rx
+    #####
     # END: docker compose up!
     #####
       # We want this to be last so that all app-specific config has been done.

@@ -132,6 +132,26 @@ services:
       BACKEND_URL: "http://cors-school-server:8080/api"
     networks:
       - internal
-
+  minecraft_server:
+    container_name: minecraft-server
+    image: itzg/minecraft-server:latest
+    environment:
+      - TYPE=VANILLA
+      - VERSION=1.20.1
+      - DIFFICULTY=HARD
+      - EULA=TRUE
+      - MOTD=baden
+      - MEMORY=6G
+      - MODE=creative
+      - PVP=true
+      - SERVER_NAME=hallenbad
+      - USE_AIKAR_FLAGS=true
+    env_file:
+      # For example, storing the WHITELIST and OPS
+      - /apps/minecraft/.env
+    ports:
+      - "25565:25565"
+    volumes:
+      - /apps/minecraft/server:/data
 networks:
   internal:
