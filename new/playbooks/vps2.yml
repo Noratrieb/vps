@@ -70,7 +70,7 @@
       ansible.builtin.file:
         path: /apps/bisect-rustc-service/db.sqlite
         state: touch
-        mode: u=rw,g=,o=
+        mode: u=rw,g=rw,o=rw
     #####
     # END: docker compose up!
     #####
