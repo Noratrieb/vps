@@ -12,7 +12,7 @@
 			Access-Control-Allow-Origin "{args.0}"
 			Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE, OPTIONS"
 			Access-Control-Allow-Credentials "false"
-			Access-Control-Allow-Headers *
+			Access-Control-Allow-Headers "${args.1}"
 			Access-Control-Max-Age "86400"
 			defer
 		}
@@ -38,7 +38,7 @@ docker.nilstrieb.dev {
 }
 
 api.hugo-chat.nilstrieb.dev {
-	import cors https://hugo-chat.nilstrieb.dev
+	import cors https://hugo-chat.nilstrieb.dev "DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type"
 	reverse_proxy * localhost:5001
 }
 
@@ -47,7 +47,7 @@ hugo-chat.nilstrieb.dev {
 }
 
 api.cors-school.nilstrieb.dev {
-	import cors https://cors-school.nilstrieb.dev
+	import cors https://cors-school.nilstrieb.dev "DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,token,refresh-token,Authorization"
 	reverse_proxy * localhost:5003
 }
 
