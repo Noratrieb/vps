@@ -12,6 +12,7 @@ on:
           - killua-bot
           - discord-court-bot
           - hugo-chat
+          - cors
 
 jobs:
   build:
