@@ -3,5 +3,6 @@ services:
   dummy:
     container_name: dummy
     image: alpine:latest
+    entrypoint: [ "sleep", "infinity" ]
 networks:
   internal:
