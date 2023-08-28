@@ -84,6 +84,11 @@ services:
     restart: always
     env_file:
       - "/apps/karin-bot/.env"
+    environment:
+      DB_NAME: court_bot
+      MONGO_URI: "mongodb://karin-bot-db:27017"
+      RUST_LOG: INFO
+      PRETTY: "false"
     networks:
       - internal
   #### Cors School

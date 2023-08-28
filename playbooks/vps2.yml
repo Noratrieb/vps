@@ -60,6 +60,11 @@
         path: /apps/karin-bot
         state: directory
         mode: "u=rwx,g=rx,o=rx"
+    - name: "Copy karin .env secret"
+      ansible.builtin.copy:
+        dest: "/apps/karin-bot/.env"
+        src: "../secrets/karin-bot/.env"
+        mode: "u=r,g=r,o=r"
       # TODO: Mount a volume in the karin-db to this directory
     #####
     # APP: cors-school, /apps/cors-school
