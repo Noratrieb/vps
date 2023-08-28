@@ -71,7 +71,7 @@
         mode: "u=rwx,g=rx,o=rx"
     - name: Copy secret envs
       ansible.builtin.copy:
-        path: "/apps/cors-school/{{ item }}"
+        dest: "/apps/cors-school/{{ item }}"
         src: "../secrets/cors-school/{{ item }}"
         mode: "u=r,g=r,o=r"
       with_items:
@@ -101,7 +101,7 @@
         mode: "u=rwx,g=rx,o=rx"
     - name: Copy minecraft secrets
       ansible.builtin.copy:
-        path: "/apps/minecraft/.env"
+        dest: "/apps/minecraft/.env"
         src: "../secrets/minecraft/.env"
         mode: "u=r,g=r,o=r"
     #####
