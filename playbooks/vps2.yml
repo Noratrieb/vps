@@ -84,6 +84,14 @@
         - db.env
         - server.env
     #####
+    # APP: hugo-chat, /apps/hugo-chat
+    #####
+    - name: Create /apps/hugo-chat
+      ansible.builtin.file:
+        path: /apps/hugo-chat
+        state: directory
+        mode: "u=rwx,g=rx,o=rx"
+    #####
     # APP: bisect-rustc-servce, /apps/bisect-rustc-service
     #####
     - name: Create /apps/bisect-rustc-service

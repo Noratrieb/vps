@@ -43,9 +43,11 @@ services:
     container_name: hugo-chat-db
     image: "postgres:latest"
     restart: always
-    # no ports bound, accessed via the hugo-chat network
+    volumes:
+      - "/apps/hugo-chat/data:/var/lib/postgresql/data"
     environment:
       POSTGRES_PASSWORD: "${HUGO_CHAT_DB_PASSWORD}"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
     networks:
       - hugo-chat
   hugo_chat_server:
