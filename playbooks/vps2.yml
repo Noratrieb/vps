@@ -123,3 +123,9 @@
         project_src: /apps
         state: present
         restarted: true
+    #####
+    # POST: things after starting up
+    #####
+    - name: Run CORS db migrations
+      ansible.builtin.shell: |
+        docker exec -w /app/server cors-school-server diesel migration run

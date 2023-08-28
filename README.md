@@ -1,5 +1,12 @@
 # Infra setup
 
+## TODOS
+
+There are many todos here. First, grep this codebase for `todo`. In addition to that:
+
+- backups
+- data replication across the two servers. i have two servers, let's use that power. maybe rsync or something like that?
+
 ## server??
 
 Each VPS has a caddy running _on the host_, not inside docker. It's the entrypoint to the stuff.
