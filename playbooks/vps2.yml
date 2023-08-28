@@ -3,35 +3,47 @@
   hosts: vps2
   gather_facts: false
   tasks:
-    - name: Install htpasswd
-      ansible.builtin.apt:
-        name: apache2-utils
     #####
     # APP: docker registry, /apps/registry
     #####
     - name: Create /apps/registry
       ansible.builtin.file:
-        path: /apps/registry
+        path: "/apps/registry"
         state: directory
-        mode: u=rwx,g=rx,o=rx
+        mode: "u=rwx,g=rx,o=rx"
     - name: Create /apps/registry/data
       ansible.builtin.file:
-        path: /apps/registry/data
+        path: "/apps/registry/data"
         state: directory
-        mode: u=rwx,g=rx,o=rx
+        mode: "u=rwx,g=rx,o=rx"
     - name: Copy over registry config.yml
       ansible.builtin.copy:
         dest: /apps/registry/config.yml
         src: ../apps/registry/config.yml
-        mode: u=r,g=r,o=r # readonly
+        mode: "u=r,g=r,o=r"
+    - name: Copy secrets user file
+      ansible.builtin.copy:
+        dest: "/apps/registry/htpasswd"
+        src: "../secrets/registry/htpasswd"
+        mode: "u=r,g=r,o=r"
     #####
     # APP: widetom, /apps/widetom
     #####
     - name: Create /apps/widetom
       ansible.builtin.file:
-        path: /apps/widetom
+        path: "/apps/widetom"
         state: directory
         mode: u=rwx,g=rx,o=rx
+    - name: Copy widetom config.toml
+      ansible.builtin.copy:
+        dest: "/apps/widetom/config.toml"
+        src: "../secrets/widetom/config.toml"
+        mode: "u=r,g=r,o=r"
+    - name: Copy widetom bot_token
+      ansible.builtin.copy:
+        dest: "/apps/widetom/bot_token"
+        src: "../secrets/widetom/bot_token"
+        mode: "u=r,g=r,o=r"
     #####
     # APP: killua bot, /apps/killua
     #####
@@ -39,7 +51,7 @@
       ansible.builtin.file:
         path: /apps/killua
         state: directory
-        mode: u=rwx,g=rx,o=rx
+        mode: "u=rwx,g=rx,o=rx"
     #####
     # APP: karin bot, /apps/karin-bot
     #####
@@ -47,7 +59,8 @@
       ansible.builtin.file:
         path: /apps/karin-bot
         state: directory
-        mode: u=rwx,g=rx,o=rx
+        mode: "u=rwx,g=rx,o=rx"
+      # TODO: Mount a volume in the karin-db to this directory
     #####
     # APP: cors-school, /apps/cors-school
     #####
@@ -55,7 +68,16 @@
       ansible.builtin.file:
         path: /apps/cors-school
         state: directory
-        mode: u=rwx,g=rx,o=rx
+        mode: "u=rwx,g=rx,o=rx"
+    - name: Copy secret envs
+      ansible.builtin.copy:
+        path: "/apps/cors-school/{{ item }}"
+        src: "../secrets/cors-school/{{ item }}"
+        mode: "u=r,g=r,o=r"
+      with_items:
+        - bot.env
+        - db.env
+        - server.env
     #####
     # APP: bisect-rustc-servce, /apps/bisect-rustc-service
     #####
@@ -63,12 +85,12 @@
       ansible.builtin.file:
         path: /apps/bisect-rustc-service
         state: directory
-        mode: u=rwx,g=rx,o=rx
+        mode: "u=rwx,g=rx,o=rx"
     - name: SQLite DB permissions for bisect-rustc-servce
       ansible.builtin.file:
         path: /apps/bisect-rustc-service/db.sqlite
         state: touch
-        mode: u=rw,g=rw,o=rw
+        mode: "u=rw,g=rw,o=rw"
     #####
     # APP: minecraft server, /apps/minecraft
     #####
@@ -76,11 +98,21 @@
       ansible.builtin.file:
         path: /apps/minecraft
         state: directory
-        mode: u=rwx,g=rx,o=rx
+        mode: "u=rwx,g=rx,o=rx"
+    - name: Copy minecraft secrets
+      ansible.builtin.copy:
+        path: "/apps/minecraft/.env"
+        src: "../secrets/minecraft/.env"
+        mode: "u=r,g=r,o=r"
     #####
     # END: docker compose up!
     #####
       # We want this to be last so that all app-specific config has been done.
+    - name: Copy .env
+      ansible.builtin.copy:
+        dest: "/apps/.env"
+        src: "../secrets/vps2.env"
+        mode: "u=r,g=r,o=r"
     - name: Docker compose up! 🚀
       community.docker.docker_compose:
         project_src: /apps
