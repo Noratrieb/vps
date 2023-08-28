@@ -38,6 +38,7 @@
               openssl
               caddy
               shellcheck
+              git-crypt
             ];
           };
       });

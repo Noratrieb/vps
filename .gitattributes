@@ -1,2 +1,4 @@
 *.yaml linguist-detectable
 *.yml linguist-detectable
+
+/secrets/** filter=git-crypt diff=git-crypt
