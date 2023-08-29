@@ -73,6 +73,8 @@ services:
     restart: always
     volumes:
       - "/apps/karin-bot/data:/data/db"
+    environment:
+      RUST_LOG: info
     env_file:
       - "/apps/karin-bot/.env"
     networks:
