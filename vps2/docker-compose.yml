@@ -100,11 +100,14 @@ services:
     container_name: cors-school-db
     image: "postgres:latest"
     restart: always
+    volumes:
+      - "/apps/cors-school/data:/var/lib/postgresql/data"
     env_file:
       # POSTGRES_PASSWORD=PASSWORD
       - "/apps/cors-school/db.env"
     environment:
       POSTGRES_DB: davinci
+      PGDATA: "/var/lib/postgresql/data/pgdata"
     networks:
       - cors-school
   cors_school_server:
