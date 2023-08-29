@@ -19,6 +19,8 @@ cd ../app
 CURRENT_COMMIT=$(git rev-parse HEAD | cut -c1-8)
 echo "Latest commit of $APP is $CURRENT_COMMIT"
 
+echo "**Commit: \`$CURRENT_COMMIT\`**" >> $GITHUB_STEP_SUMMARY
+
 if [ "$APP" = "hugo-chat" ]; then
     IMAGE_PREFIX="docker.nilstrieb.dev/hugo-chat"
     SERVER_FULL_NAME="$IMAGE_PREFIX-server:$CURRENT_COMMIT"
