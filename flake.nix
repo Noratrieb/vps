@@ -20,17 +20,8 @@
     {
       devShells = forAllSystems ({ pkgs }: {
         default =
-          let
-            python = pkgs.python311;
-            pythonPkgs = python.withPackages (ps: with ps; [
-              virtualenv
-              pip
-            ]);
-          in
           pkgs.mkShell {
             packages = with pkgs; [
-              # Python plus helper tools
-              pythonPkgs
               ansible
               ansible-lint
               certbot
