@@ -75,6 +75,7 @@ services:
       - "/apps/karin-bot/data:/data/db"
     environment:
       RUST_LOG: info
+      PRETTY: "true"
     env_file:
       - "/apps/karin-bot/.env"
     networks:
