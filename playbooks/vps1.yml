@@ -11,4 +11,3 @@
       community.docker.docker_compose:
         project_src: /apps
         state: present
-        restarted: true
