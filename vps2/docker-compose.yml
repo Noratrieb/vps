@@ -150,6 +150,7 @@ services:
   minecraft_server:
     container_name: minecraft-server
     image: itzg/minecraft-server:latest
+    restart: always
     environment:
       - TYPE=VANILLA
       - VERSION=1.20.1
