@@ -32,3 +32,7 @@ vps1.nilstrieb.dev {
 	root * /var/www/html/debug
 	file_server
 }
+
+uptime.nilstrieb.dev {
+	reverse_proxy * localhost:5010
+}

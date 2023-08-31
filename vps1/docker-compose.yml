@@ -1,3 +1,14 @@
 version: "3.8"
-services: {}
+services:
+  uptime:
+    container_name: uptime
+    image: "docker.nilstrieb.dev/uptime:8af7829b"
+    restart: always
+    volumes:
+      - "/apps/uptime:/app/config"
+    environment:
+      UPTIME_CONFIG_PATH: /app/config/uptime.json
+    ports:
+      - "5010:3000"
+
 networks: {}

@@ -1,0 +1,42 @@
+{
+  "interval_seconds": 30,
+  "db_url": "/app/config/uptime.db",
+  "websites": [
+    {
+      "name": "nilstrieb.dev",
+      "url": "https://nilstrieb.dev"
+    },
+    {
+      "name": "docker.nilstrieb.dev",
+      "url": "http://docker.nilstrieb.dev"
+    },
+    {
+      "name": "vps1.nilstrieb.dev",
+      "url": "http://vps1.nilstrieb.dev"
+    },
+    {
+      "name": "vps2.nilstrieb.dev",
+      "url": "http://vps2.nilstrieb.dev"
+    },
+    {
+      "name": "bisect-rustc.nilstrieb.dev",
+      "url": "http://bisect-rustc.nilstrieb.dev"
+    },
+    {
+      "name": "hugo-chat.nilstrieb.dev",
+      "url": "http://hugo-chat.nilstrieb.dev"
+    },
+    {
+      "name": "api.hugo-chat.nilstrieb.dev",
+      "url": "https://api.hugo-chat.nilstrieb.dev/api/v2/rooms"
+    },
+    {
+      "name": "cors-school.nilstrieb.dev",
+      "url": "http://cors-school.nilstrieb.dev"
+    },
+    {
+      "name": "api.cors-school.nilstrieb.dev",
+      "url": "https://api.cors-school.nilstrieb.dev/api/hugo"
+    }
+  ]
+}
