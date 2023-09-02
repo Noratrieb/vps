@@ -10,4 +10,4 @@
     - name: Docker compose up! 🚀
       community.docker.docker_compose:
         project_src: /apps
-        state: restarted
+        restarted: true
