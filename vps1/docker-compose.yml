@@ -2,7 +2,7 @@ version: "3.8"
 services:
   uptime:
     container_name: uptime
-    image: "docker.nilstrieb.dev/uptime:f12b6ffa"
+    image: "docker.nilstrieb.dev/uptime:1f89aae3"
     restart: always
     volumes:
       - "/apps/uptime:/app/config"
