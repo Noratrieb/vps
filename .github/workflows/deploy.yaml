@@ -27,6 +27,11 @@ jobs:
           username: ${{ secrets.DOCKER_NILSTRIEB_DEV_USER }}
           password: ${{ secrets.DOCKER_NILSTRIEB_DEV_PASSWORD }}
       - uses: actions/checkout@v3
+      - name: Unlock git-crypt secrets
+        run: |
+          base64 -d > git-crypt-key <<< "{{ secrets.GIT_CRYPT_KEY_BASE64 }}"
+          git-crypt unlock git-crypt-key
+          rm git-crypt-key
       - name: Build docker image
         run: |
           ci/build.sh ${{ github.event.inputs.app }}
