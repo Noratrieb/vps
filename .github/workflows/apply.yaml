@@ -9,6 +9,11 @@ jobs:
     name: Run playbooks
     steps:
       - uses: actions/checkout@8b5e8b768746b50394015010d25e690bfab9dfbc # v3.6.0
+      - name: Unlock git-crypt secrets
+        run: |
+          base64 -d > git-crypt-key <<< "{{ secrets.GIT_CRYPT_KEY_BASE64 }}"
+          git-crypt unlock git-crypt-key
+          rm git-crypt-key
       - name: Run Ansible playbook
         uses: dawidd6/action-ansible-playbook@260ab3adce54d53c5db8f1b2eed1380ae5c73fea # v2.6.1
         with:
