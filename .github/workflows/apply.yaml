@@ -1,0 +1,23 @@
+name: Run playbooks
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Run playbooks
+    steps:
+      - uses: actions/checkout@8b5e8b768746b50394015010d25e690bfab9dfbc # v3.6.0
+      - name: Run Ansible playbook
+        uses: dawidd6/action-ansible-playbook@260ab3adce54d53c5db8f1b2eed1380ae5c73fea # v2.6.1
+        with:
+          playbook: all.yml
+          directory: playbooks
+          key: ${{ secrets.VPS_DEPLOY_KEY }}
+          known_hosts: |
+            vps1.nilstrieb.dev ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPxUg3kouUDxtkflVELtlaC6C6/kI2hpEhQalFTrY9f1
+            vps2.nilstrieb.dev ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKzt3OZAOG2sih8T9Bhoqg8ANBP5ZX60z0xmUW4cBWvX
+          options: |
+            --inventory inventory.yml
+            -u root
