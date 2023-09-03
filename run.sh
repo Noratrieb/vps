@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-ansible-playbook -i inventory.yml playbooks/all.yml -u root
+ansible-playbook -i playbooks/inventory.yml playbooks/all.yml -u root
