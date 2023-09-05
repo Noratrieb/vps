@@ -37,6 +37,10 @@
     {
       "name": "api.cors-school.nilstrieb.dev",
       "url": "https://api.cors-school.nilstrieb.dev/api/hugo"
+    },
+    {
+      "name": "olat.nilstrieb.dev",
+      "url": "https://olat.nilstrieb.dev/dmz/"
     }
   ]
 }
