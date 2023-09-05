@@ -26,12 +26,17 @@ services:
       - openolat-network
   openolat:
     container_name: openolat
-    image: "docker.nilstrieb.dev/openolat:aaaaaaaa"
+    image: "docker.nilstrieb.dev/openolat:d8b5cd90"
+    restart: always
+    volumes:
+      - "/apps/openolat/olatdata:/home/openolat/olatdata"
+      - "/apps/openolat/extra-properties.properties:/home/openolat/extra-properties.properties"
     ports:
       - "5011:8088"
     environment:
       DB_PASSWORD: "${OPENOLAT_DB_PASSWORD}"
-      DB_URL: "jdbc:postgresql://openolatdb:5432/oodb"
+      DB_URL: "jdbc:postgresql://openolat-db:5432/oodb"
+      EXTRA_PROPERTIES: "/home/openolat/extra-properties.properties"
     networks:
       - openolat-network
 
