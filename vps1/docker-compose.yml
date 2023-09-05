@@ -26,7 +26,7 @@ services:
       - openolat-network
   openolat:
     container_name: openolat
-    image: "docker.nilstrieb.dev/openolat:d8b5cd90"
+    image: "docker.nilstrieb.dev/openolat:50feab31"
     restart: always
     volumes:
       - "/apps/openolat/olatdata:/home/openolat/olatdata"
