@@ -37,6 +37,7 @@ services:
       DB_PASSWORD: "${OPENOLAT_DB_PASSWORD}"
       DB_URL: "jdbc:postgresql://openolat-db:5432/oodb"
       EXTRA_PROPERTIES: "/home/openolat/extra-properties.properties"
+      OLAT_HOST: olat.nilstrieb.dev
     networks:
       - openolat-network
 
