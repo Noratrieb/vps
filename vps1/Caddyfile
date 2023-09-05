@@ -36,3 +36,7 @@ vps1.nilstrieb.dev {
 uptime.nilstrieb.dev {
 	reverse_proxy * localhost:5010
 }
+
+olat.nilstrieb.dev {
+	reverse_proxy * localhost:5011
+}

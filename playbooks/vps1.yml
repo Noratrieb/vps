@@ -4,9 +4,22 @@
   gather_facts: false
   tasks:
     #####
+    # APP: openolat, /apps/openolat
+    #####
+    - name: Create /apps/openolat
+      ansible.builtin.file:
+        path: /apps/openolat
+        state: directory
+        mode: "u=rwx,g=rx,o=rx"
+    #####
     # END: docker compose up!
     #####
       # We want this to be last so that all app-specific config has been done.
+    - name: Copy .env
+      ansible.builtin.copy:
+        dest: "/apps/.env"
+        src: "../secrets/vps1.env"
+        mode: "u=r,g=r,o=r"
     - name: Docker compose up! 🚀
       community.docker.docker_compose:
         project_src: /apps
