@@ -10,5 +10,30 @@ services:
       UPTIME_CONFIG_PATH: /app/config/uptime.json
     ports:
       - "5010:3000"
+  ##### openolat
+  openolat_db:
+    container_name: openolat-db
+    image: "postgres:latest"
+    restart: always
+    volumes:
+      - "/apps/openolat/data:/var/lib/postgresql/data"
+    environment:
+      POSTGRES_DB: oodb
+      POSTGRES_USER: oodbu
+      POSTGRES_PASSWORD: "${OPENOLAT_DB_PASSWORD}"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    networks:
+      - openolat-network
+  openolat:
+    container_name: openolat
+    image: "docker.nilstrieb.dev/openolat:aaaaaaaa"
+    ports:
+      - "5011:8088"
+    environment:
+      DB_PASSWORD: "${OPENOLAT_DB_PASSWORD}"
+      DB_URL: "jdbc:postgresql://openolatdb:5432/oodb"
+    networks:
+      - openolat-network
 
-networks: {}
+networks:
+  openolat-network:
