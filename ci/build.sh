@@ -19,7 +19,7 @@ cd ../app
 CURRENT_COMMIT=$(git rev-parse HEAD | cut -c1-8)
 echo "Latest commit of $APP is $CURRENT_COMMIT"
 
-echo "**Commit: \`$CURRENT_COMMIT\`**" >> $GITHUB_STEP_SUMMARY
+echo "**Commit: \`$CURRENT_COMMIT\`**" >> "$GITHUB_STEP_SUMMARY"
 
 if [ "$APP" = "hugo-chat" ]; then
     IMAGE_PREFIX="docker.nilstrieb.dev/hugo-chat"
@@ -64,6 +64,10 @@ if [ "$APP" = "cors" ]; then
     popd
 
     exit 0
+fi
+
+if [ "$APP" = "dockerolat" ]; then
+    APP="openolat"
 fi
 
 IMAGE_PREFIX="docker.nilstrieb.dev/$APP"
