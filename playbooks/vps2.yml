@@ -118,9 +118,54 @@
         src: "../secrets/minecraft/.env"
         mode: "u=r,g=r,o=r"
     #####
+    # APP: Exim mail server
+    #####
+    - name: Install exim4
+      ansible.builtin.apt:
+        name: exim4
+        state: present
+    - name: Ensure Exim is started
+      ansible.builtin.service:
+        name: exim4
+        state: started
+      # Using mbox, domain nilstrieb.dev
+    - name: Copy Exim config file
+      ansible.builtin.copy:
+        dest: "/etc/exim4/exim4.conf.template"
+        src: "../apps/exim/exim4.conf.template"
+        mode: "u=r,g=r,o=r"
+      notify:
+        - "Exim configuration changed"
+    - name: Copy Exim passwd
+      ansible.builtin.copy:
+        dest: "/etc/exim4/passwd"
+        src: "../secrets/exim/passwd"
+        owner: Debian-exim
+        group: root
+        # Use should explicitly make it rw before adding users to not forget to update ../secrets/exim/passwd
+        mode: "u=r,g=r,o="
+    # Install saslauthd
+    - name: Install saslauthd
+      ansible.builtin.apt:
+        name: sasl2-bin
+        state: present
+    - name: Copy saslauthd config
+      ansible.builtin.copy:
+        dest: "/etc/default/saslauthd"
+        src: "../apps/exim/saslauthd-conf"
+        mode: "u=r,g=r,o=r"
+    - name: Debian-exim in sasl group
+      ansible.builtin.user:
+        name: Debian-exim
+        groups: sasl
+        append: true
+    - name: Start salsauthd
+      ansible.builtin.service:
+        name: syslauthd
+    #####
     # END: docker compose up!
     #####
-      # We want this to be last so that all app-specific config has been done.
+    # We want this to be last so that all app-specific config has been done.
     - name: Copy .env
       ansible.builtin.copy:
         dest: "/apps/.env"
@@ -136,3 +181,6 @@
     - name: Run CORS db migrations
       ansible.builtin.shell: |
         docker exec -w /app/server cors-school-server diesel migration run
+  handlers:
+    - name: "Exim configuration changed"
+      ansible.builtin.shell: set -e ; update-exim4.conf && systemctl restart exim4.service
