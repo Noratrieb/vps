@@ -66,3 +66,11 @@ cors-school.nilstrieb.dev {
 bisect-rustc.nilstrieb.dev {
 	reverse_proxy * localhost:5005
 }
+
+olat.nilstrieb.dev {
+	reverse_proxy * localhost:5011
+}
+
+olat.nilstrieb.dev:8088 {
+	reverse_proxy * localhost:5011
+}

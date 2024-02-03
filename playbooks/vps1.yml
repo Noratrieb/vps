@@ -17,24 +17,6 @@
         src: ../apps/uptime/uptime.json
         mode: "u=r,g=r,o=r"
     #####
-    # APP: openolat, /apps/openolat
-    #####
-    - name: Create /apps/openolat
-      ansible.builtin.file:
-        path: /apps/openolat
-        state: directory
-        mode: "u=rwx,g=rx,o=rx"
-    - name: Copy extra properties
-      ansible.builtin.copy:
-        dest: /apps/openolat/extra-properties.properties
-        src: ../apps/openolat/extra-properties.properties
-        mode: "u=r,g=r,o=r"
-    - name: Olat data file permissions # TODO: a bit hacky.
-      ansible.builtin.file:
-        path: /apps/openolat/olatdata
-        state: directory
-        mode: "u=rwx,g=rwx,o=rwx"
-    #####
     # END: docker compose up!
     #####
       # We want this to be last so that all app-specific config has been done.
