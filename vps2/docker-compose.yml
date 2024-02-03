@@ -201,7 +201,7 @@ services:
       - openolat-network
   uptime:
     container_name: uptime
-    image: "docker.nilstrieb.dev/uptime:1f89aae3"
+    image: "docker.nilstrieb.dev/uptime:50d15bc4"
     restart: always
     volumes:
       - "/apps/uptime:/app/config"
