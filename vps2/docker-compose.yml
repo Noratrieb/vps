@@ -199,6 +199,17 @@ services:
       OLAT_HOST: olat.nilstrieb.dev
     networks:
       - openolat-network
+  uptime:
+    container_name: uptime
+    image: "docker.nilstrieb.dev/uptime:1f89aae3"
+    restart: always
+    volumes:
+      - "/apps/uptime:/app/config"
+    environment:
+      UPTIME_CONFIG_PATH: /app/config/uptime.json
+    ports:
+      - "5010:3000"
+
 networks:
   cors-school:
   hugo-chat:
