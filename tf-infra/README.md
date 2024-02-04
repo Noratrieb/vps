@@ -2,7 +2,7 @@
 
 Terraform files for my setup.
 
-The state can be found in the password manager
+The state can be found in an s3 bucket that is not managed via terraform and looks like it might contain it
 
 This uses the following environment variables:
 
