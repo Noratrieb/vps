@@ -1,0 +1,4 @@
+/.terraform
+/.env
+# Copy to secrets
+/terraform.tfstate*
