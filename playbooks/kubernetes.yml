@@ -72,23 +72,29 @@
         src: "../vps1/kubeadm-config.yaml"
         dest: "/root/kubeadm-config.yaml"
         mode: "u=r,g=r,o=r"
+    - name: Copy test nginx deployment
+      ansible.builtin.copy:
+        src: "../vps1/nginx-test.yaml"
+        dest: "/root/nginx-test.yaml"
+        mode: "u=rw,g=r,o=r"
+    - name: Exit early
+      ansible.builtin.command: "false"
+      changed_when: false
     # ====================
     # https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm
     # https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#initializing-your-control-plane-node
     - name: Init
       ansible.builtin.command:
+        # https://github.com/flannel-io/flannel/blob/master/Documentation/kubernetes.md
+        # Delete it with https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#tear-down
         cmd: kubeadm init --config /root/kubeadm-config.yaml
         creates: /var/lib/kubelet/config.yaml
       notify:
         - "Installed Cluster"
-    # We may need to export KUBECONFIG=/etc/kubernetes/admin.conf ?
   handlers:
     - name: "Containerd config changed"
       ansible.builtin.service:
         name: containerd
         state: reloaded
     - name: "Installed Cluster"
-      ansible.builtin.command:
-        cmd: kubectl apply -f https://github.com/flannel-io/flannel/releases/v0.24.2/download/kube-flannel.yml
-      environment:
-        KUBECONFIG: /etc/kubernetes/admin.conf
+      ansible.builtin.include_tasks: ./kubernetes-init.yml
