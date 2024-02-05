@@ -3,6 +3,17 @@
   hosts: vps2
   gather_facts: false
   tasks:
+    - name: Copy backup file
+      ansible.builtin.copy:
+        src: "../vps2/backup.sh"
+        dest: "/apps/backup.sh"
+        mode: "u=rx,g=rx,o=rx"
+    - name: Configure backup cron
+      ansible.builtin.cron:
+        name: Daily backup
+        minute: "5"
+        hour: "7"
+        job: "/apps/backup.sh"
     #####
     # APP: docker registry, /apps/registry
     #####

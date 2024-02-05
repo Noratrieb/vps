@@ -24,6 +24,7 @@
         state: present
       with_items:
         - htop
+        - awscli
     - name: Install keyring packages
       ansible.builtin.apt:
         name: "{{ item }}"
