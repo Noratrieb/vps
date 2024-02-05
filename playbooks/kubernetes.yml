@@ -1,0 +1,94 @@
+# sure, this should be a role or whatever
+---
+- name: Install Kubernetes
+  hosts: vps1
+  vars:
+    cni_plugins_version: "v1.4.0"
+  tasks:
+    # ====================
+    # https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
+    - name: Add K8s key
+      ansible.builtin.apt_key:
+        url: "https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key"
+        keyring: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+    - name: Add K8s apt repo
+      ansible.builtin.apt_repository:
+        repo: "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /"
+        filename: kubernetes
+    - name: Install K8s tools
+      ansible.builtin.apt:
+        update_cache: true
+        name:
+          - kubelet
+          - kubeadm
+          - kubectl
+    - name: Hold kubeadm
+      ansible.builtin.dpkg_selections:
+        name: "{{ item  }}"
+        selection: hold
+      loop:
+        - kubelet
+        - kubeadm
+        - kubectl
+    # ====================
+    # https://github.com/containerd/containerd/blob/main/docs/getting-started.md
+    # https://docs.docker.com/engine/install/ubuntu/
+    - name: Add docker key
+      ansible.builtin.command:
+        cmd: "curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc"
+        creates: /etc/apt/keyrings/docker.asc
+    - name: Add Docker apt repo
+      ansible.builtin.apt_repository:
+        repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu jammy stable"
+        filename: docker
+    - name: Install containerd/runc
+      ansible.builtin.apt:
+        name: containerd.io
+        update_cache: true
+    - name: Configure containerd to use systemd cgroups
+      ansible.builtin.copy:
+        src: "../vps1/containerd-config.toml"
+        dest: "/etc/containerd/config.toml"
+        mode: "u=r,g=r,o=r"
+      notify:
+        - "Containerd config changed"
+    - name: Create /opt/cni/bin
+      ansible.builtin.file:
+        path: /opt/cni/bin
+        state: directory
+        mode: "u=rwx,g=rx,o=rx"
+    - name: Download CNI plugins
+      ansible.builtin.get_url:
+        url: "https://github.com/containernetworking/plugins/releases/download/{{ cni_plugins_version }}/cni-plugins-linux-amd64-{{ cni_plugins_version }}.tgz"
+        dest: "/tmp/cni-plugins-linux-amd64-{{ cni_plugins_version }}.tgz"
+    - name: Install CNI plugins
+      ansible.builtin.command:
+        cmd: "tar Cxzvf /opt/cni/bin /tmp/cni-plugins-linux-amd64-{{ cni_plugins_version }}.tgz"
+        creates: /opt/cni/bin/tap
+    # ====================
+    # https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/configure-cgroup-driver/
+    - name: Copy config
+      ansible.builtin.copy:
+        src: "../vps1/kubeadm-config.yaml"
+        dest: "/root/kubeadm-config.yaml"
+        mode: "u=r,g=r,o=r"
+    # ====================
+    # https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm
+    # https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#initializing-your-control-plane-node
+    - name: Init
+      ansible.builtin.command:
+        cmd: kubeadm init --config /root/kubeadm-config.yaml
+        creates: /var/lib/kubelet/config.yaml
+      notify:
+        - "Installed Cluster"
+    # We may need to export KUBECONFIG=/etc/kubernetes/admin.conf ?
+  handlers:
+    - name: "Containerd config changed"
+      ansible.builtin.service:
+        name: containerd
+        state: reloaded
+    - name: "Installed Cluster"
+      ansible.builtin.command:
+        cmd: kubectl apply -f https://github.com/flannel-io/flannel/releases/v0.24.2/download/kube-flannel.yml
+      environment:
+        KUBECONFIG: /etc/kubernetes/admin.conf
