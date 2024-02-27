@@ -115,7 +115,7 @@ services:
       - cors-school
   cors_school_server:
     container_name: cors-school-server
-    image: "docker.nilstrieb.dev/cors-school-server:860d45f3"
+    image: "docker.nilstrieb.dev/cors-school-server:bef75a80"
     restart: always
     env_file:
       # DATABASE_URL=postgres://postgres:PASSWORD@cors-school-db/davinci
@@ -129,13 +129,13 @@ services:
       - "5003:8080"
   cors_school_client:
     container_name: cors-school-client
-    image: "docker.nilstrieb.dev/cors-school-client:860d45f3"
+    image: "docker.nilstrieb.dev/cors-school-client:bef75a80"
     restart: always
     ports:
       - "5004:80"
   cors_school_bot:
     container_name: cors-school-bot
-    image: "docker.nilstrieb.dev/cors-school-bot:860d45f3"
+    image: "docker.nilstrieb.dev/cors-school-bot:bef75a80"
     restart: always
     volumes:
       # DISCORD_TOKEN=
