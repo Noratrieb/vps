@@ -10,6 +10,15 @@ services:
       - "/apps/registry/htpasswd:/htpasswd"
     ports:
       - "5000:5000"
+  prometheus:
+    container_name: prometheus
+    restart: always
+    image: bitnami/prometheus:2.51.1
+    volumes:
+      - "/apps/prometheus/prometheus.yml:/opt/bitnami/prometheus/conf/prometheus.yml"
+      - "/apps/prometheus/data:/opt/bitnami/prometheus/data"
+    networks:
+      - prometheus
   widetom:
     container_name: widetom
     image: "docker.nilstrieb.dev/widetom:490c94ca"
@@ -30,7 +39,7 @@ services:
       KILLUA_JSON_PATH: /app/config/trivia_questions.json
   cargo_bisect_rustc_service:
     container_name: cargo-bisect-rustc-service
-    image: "docker.nilstrieb.dev/cargo-bisect-rustc-service:13f89b68"
+    image: "docker.nilstrieb.dev/cargo-bisect-rustc-service:316a4044"
     restart: always
     volumes:
       - "/apps/bisect-rustc-service/db.sqlite:/home/bisector/db.sqlite"
@@ -38,6 +47,8 @@ services:
       SQLITE_DB: /home/bisector/db.sqlite
     ports:
       - "5005:4000"
+    networks:
+      - prometheus
   #### Hugo Chat
   hugo_chat_db:
     container_name: hugo-chat-db
@@ -215,3 +226,4 @@ networks:
   hugo-chat:
   karin-bot:
   openolat-network:
+  prometheus:

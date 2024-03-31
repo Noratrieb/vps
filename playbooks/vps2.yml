@@ -15,6 +15,26 @@
         hour: "7"
         job: "/apps/backup.sh"
     #####
+    # APP: prometheus, /apps/prometheus
+    - name: Create /apps/prometheus
+      ansible.builtin.file:
+        path: "/apps/prometheus"
+        state: directory
+        mode: "u=rwx,g=rx,o=rx"
+    - name: Copy Prometheus config
+      ansible.builtin.copy:
+        dest: /apps/prometheus/prometheus.yml
+        src: ../apps/prometheus/prometheus.yml
+        mode: "u=r,g=r,o=r"
+        owner: 1001
+    - name: Create /apps/prometheus/data
+      ansible.builtin.file:
+        path: "/apps/prometheus/data"
+        state: directory
+        mode: "u=rwx,g=rx,o="
+        owner: 1001
+    #####
+    #####
     # APP: docker registry, /apps/registry
     #####
     - name: Create /apps/registry
