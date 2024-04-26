@@ -33,6 +33,11 @@ vps2.nilstrieb.dev {
 	file_server
 }
 
+noratrieb.dev {
+	root * /var/www/html/nora
+	file_server
+}
+
 nilstrieb.dev {
 	redir https://blog.nilstrieb.dev{uri}
 }
