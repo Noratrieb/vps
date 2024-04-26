@@ -3,6 +3,12 @@
   hosts: vps1
   gather_facts: false
   tasks:
+    # trasnfehtgeder
+    - name: be transgender
+      ansible.builtin.copy:
+        dest: /var/www/html/nora/
+        src: "../vps1/nora/"
+        mode: "u=rw,g=r,o=r"
     #####
     # END: docker compose up!
     #####
