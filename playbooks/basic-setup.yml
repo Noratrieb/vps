@@ -61,6 +61,10 @@
         - docker-ce
         - docker-ce-cli
         - docker-compose-plugin
+    - name: Ensure docker is started
+      ansible.builtin.service:
+        name: docker
+        state: started
     - name: Install caddy
       ansible.builtin.apt:
         name: caddy

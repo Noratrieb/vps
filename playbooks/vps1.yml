@@ -3,7 +3,7 @@
   hosts: vps1
   gather_facts: false
   tasks:
-    - name: copy over some fun files
+    - name: Copy over some fun files
       ansible.builtin.copy:
         dest: /var/www/html/nora/
         src: "../vps1/nora/"
