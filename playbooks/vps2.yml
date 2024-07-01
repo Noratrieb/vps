@@ -191,7 +191,7 @@
     - name: Docker compose up! 🚀
       community.docker.docker_compose_v2:
         project_src: /apps
-        restarted: true
+        state: "present"
     #####
     # POST: things after starting up
     #####

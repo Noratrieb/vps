@@ -3,8 +3,7 @@
   hosts: vps1
   gather_facts: false
   tasks:
-    # trasnfehtgeder
-    - name: be transgender
+    - name: copy over some fun files
       ansible.builtin.copy:
         dest: /var/www/html/nora/
         src: "../vps1/nora/"
@@ -21,4 +20,4 @@
     - name: Docker compose up! 🚀
       community.docker.docker_compose_v2:
         project_src: /apps
-        restarted: true
+        state: "present"
