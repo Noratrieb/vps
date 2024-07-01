@@ -3,6 +3,9 @@
   hosts: all
   gather_facts: false
   tasks:
+    - name: Change hostname
+      ansible.builtin.hostname:
+        name: "{{ inventory_hostname }}"
     - name: apt update
       ansible.builtin.apt:
         update_cache: true
