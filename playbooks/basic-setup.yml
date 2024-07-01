@@ -3,6 +3,10 @@
   hosts: all
   gather_facts: false
   tasks:
+    - name: apt update
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: yes
     - name: Install docker
       ansible.builtin.apt:
         name: "{{ item }}"
