@@ -21,7 +21,7 @@ services:
       - prometheus
   widetom:
     container_name: widetom
-    image: "docker.nilstrieb.dev/widetom:490c94ca"
+    image: "docker.nilstrieb.dev/widetom:33d17387"
     restart: always
     volumes:
       - "/apps/widetom:/app/config"
