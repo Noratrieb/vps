@@ -4,6 +4,7 @@
     ansible-lint
     awscli
     certbot
+    colmena
     dig
     openssl
     caddy
