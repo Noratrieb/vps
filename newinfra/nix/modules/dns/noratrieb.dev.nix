@@ -5,6 +5,9 @@ let
     let
       dns1 = host "154.38.163.74" null;
       dns2 = host "128.140.3.7" "2a01:4f8:c2c:d616::";
+
+      vps1 = host "161.97.165.1" null;
+
     in
     {
       SOA = {
@@ -27,11 +30,13 @@ let
           "she/her"
         ];
 
+        localhost.A = [ (a "127.0.0.1") ];
         newtest.TXT = [ "uwu it works" ];
 
         infra.subdomains = {
           inherit dns1;
           inherit dns2;
+          inherit vps1;
         };
       };
     };

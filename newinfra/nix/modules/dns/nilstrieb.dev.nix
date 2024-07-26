@@ -11,7 +11,7 @@ let
     in
     {
       SOA = {
-        nameServer = "ns1.noratrieb.dev";
+        nameServer = "ns1.nilstrieb.dev";
         adminEmail = "void@noratrieb.dev";
         serial = 2024072601;
       };
@@ -22,8 +22,8 @@ let
       ];
 
       NS = [
-        "ns1.noratrieb.dev"
-        "ns2.noratrieb.dev"
+        "ns1.nilstrieb.dev"
+        "ns2.nilstrieb.dev"
       ];
 
       A = [
@@ -83,6 +83,6 @@ let
     };
 in
 pkgs.writeTextFile {
-  name = "noratrieb.dev.zone";
-  text = pkgs.nix-dns.lib.toString "noratrieb.dev" data;
+  name = "nilstrieb.dev.zone";
+  text = pkgs.nix-dns.lib.toString "nilstrieb.dev" data;
 }

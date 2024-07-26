@@ -127,7 +127,7 @@
     networking.hostName = name;
 
     deployment.targetHost = "vps1.nilstrieb.dev";
-    deployment.tags = [ "ingress" "eu" ];
+    deployment.tags = [ "ingress" "eu" "apps" ];
 
     system.stateVersion = "23.11";
 
