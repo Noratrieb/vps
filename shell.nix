@@ -11,5 +11,6 @@
     shellcheck
     git-crypt
     opentofu
+    (import (builtins.fetchTarball "https://github.com/ryantm/agenix/archive/de96bd907d5fbc3b14fc33ad37d1b9a3cb15edc6.tar.gz") { }).agenix
   ];
 }

@@ -27,6 +27,10 @@
       dnsutils
     ];
 
+    imports = [
+      "${builtins.fetchTarball "https://github.com/ryantm/agenix/archive/de96bd907d5fbc3b14fc33ad37d1b9a3cb15edc6.tar.gz"}/modules/age.nix" # main 2024-07-26
+    ];
+
     time.timeZone = "Europe/Zurich";
     users.users.root.openssh.authorizedKeys.keys = [ ''ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG0n1ikUG9rYqobh7WpAyXrqZqxQoQ2zNJrFPj12gTpP nilsh@PC-Nils'' ];
 
@@ -113,7 +117,10 @@
     imports = [
       (modulesPath + "/profiles/qemu-guest.nix")
       ./modules/ingress
+      ./modules/widetom
     ];
+
+    age.secrets.docker_registry_password.file = ./secrets/docker_registry_password.age;
 
     # The name and nodes parameters are supported in Colmena,
     # allowing you to reference configurations in other nodes.

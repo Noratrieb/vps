@@ -63,24 +63,6 @@
         src: "../secrets/registry/htpasswd"
         mode: "u=r,g=r,o=r"
     #####
-    # APP: widetom, /apps/widetom
-    #####
-    - name: Create /apps/widetom
-      ansible.builtin.file:
-        path: "/apps/widetom"
-        state: directory
-        mode: u=rwx,g=rx,o=rx
-    - name: Copy widetom config.toml
-      ansible.builtin.copy:
-        dest: "/apps/widetom/config.toml"
-        src: "../secrets/widetom/config.toml"
-        mode: "u=r,g=r,o=r"
-    - name: Copy widetom bot_token
-      ansible.builtin.copy:
-        dest: "/apps/widetom/bot_token"
-        src: "../secrets/widetom/bot_token"
-        mode: "u=r,g=r,o=r"
-    #####
     # APP: killua bot, /apps/killua
     #####
     - name: Create /apps/killua
