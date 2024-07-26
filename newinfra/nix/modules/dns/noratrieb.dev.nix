@@ -35,8 +35,8 @@ let
           "she/her"
         ];
 
-        ns1 = dns1;
-        ns2 = dns2;
+        # ns1 = dns1;
+        # ns2 = dns2;
 
         infra.subdomains = {
           inherit dns1;
