@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, config, ... }: {
   networking.firewall.allowedTCPPorts = [
     22
     443
@@ -10,7 +10,7 @@
       (
         builtins.readFile ./Caddyfile +
         ''
-          vps1.nilstrieb.dev {
+          ${config.networking.hostName}.infra.noratrieb.dev {
             root * ${./debugging-page}
             file_server
           }

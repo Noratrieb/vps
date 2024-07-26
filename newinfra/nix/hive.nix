@@ -17,7 +17,7 @@
     # machinesFile = ./machines.client-a;
   };
 
-  defaults = { pkgs, ... }: {
+  defaults = { pkgs, config, lib, ... }: {
     # This module will be imported by all hosts
     environment.systemPackages = with pkgs; [
       vim
@@ -31,6 +31,7 @@
       "${builtins.fetchTarball "https://github.com/ryantm/agenix/archive/de96bd907d5fbc3b14fc33ad37d1b9a3cb15edc6.tar.gz"}/modules/age.nix" # main 2024-07-26
     ];
 
+    deployment.targetHost = "${config.networking.hostName}.infra.noratrieb.dev";
     time.timeZone = "Europe/Zurich";
     users.users.root.openssh.authorizedKeys.keys = [ ''ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG0n1ikUG9rYqobh7WpAyXrqZqxQoQ2zNJrFPj12gTpP nilsh@PC-Nils'' ];
 
@@ -43,22 +44,15 @@
   dns1 = { name, nodes, modulesPath, ... }: {
     imports = [
       (modulesPath + "/profiles/qemu-guest.nix")
+      ./modules/contabo
       ./modules/dns
     ];
 
     # The name and nodes parameters are supported in Colmena,
     # allowing you to reference configurations in other nodes.
     networking.hostName = name;
-
-    deployment.targetHost = "dns1.nilstrieb.dev";
     deployment.tags = [ "dns" "us" ];
-
     system.stateVersion = "23.11";
-
-    boot.loader.grub.device = "/dev/sda";
-    boot.initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "xen_blkfront" "vmw_pvscsi" ];
-    boot.initrd.kernelModules = [ "nvme" ];
-    fileSystems."/" = { device = "/dev/sda3"; fsType = "ext4"; };
   };
   dns2 = { name, nodes, modulesPath, lib, ... }: {
     imports = [
@@ -66,13 +60,8 @@
       ./modules/dns
     ];
 
-    # The name and nodes parameters are supported in Colmena,
-    # allowing you to reference configurations in other nodes.
     networking.hostName = name;
-
-    deployment.targetHost = "dns2.nilstrieb.dev";
     deployment.tags = [ "dns" "eu" ];
-
     system.stateVersion = "23.11";
 
     boot.loader.grub.device = "/dev/sda";
@@ -116,24 +105,15 @@
   vps1 = { name, nodes, modulesPath, ... }: {
     imports = [
       (modulesPath + "/profiles/qemu-guest.nix")
+      ./modules/contabo
       ./modules/ingress
       ./modules/widetom
     ];
 
     age.secrets.docker_registry_password.file = ./secrets/docker_registry_password.age;
 
-    # The name and nodes parameters are supported in Colmena,
-    # allowing you to reference configurations in other nodes.
     networking.hostName = name;
-
-    deployment.targetHost = "vps1.nilstrieb.dev";
     deployment.tags = [ "ingress" "eu" "apps" ];
-
     system.stateVersion = "23.11";
-
-    boot.loader.grub.device = "/dev/sda";
-    boot.initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "xen_blkfront" "vmw_pvscsi" ];
-    boot.initrd.kernelModules = [ "nvme" ];
-    fileSystems."/" = { device = "/dev/sda3"; fsType = "ext4"; };
   };
 }

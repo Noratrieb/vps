@@ -33,6 +33,7 @@ let
         localhost.A = [ (a "127.0.0.1") ];
         newtest.TXT = [ "uwu it works" ];
 
+        # TODO: generate dynamically from IPs...
         infra.subdomains = {
           inherit dns1;
           inherit dns2;
