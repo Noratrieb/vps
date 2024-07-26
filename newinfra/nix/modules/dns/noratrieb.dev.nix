@@ -31,9 +31,11 @@ let
           "she/her"
         ];
 
-        #ns1 = (host "154.38.163.74");
+        ns1 = host "154.38.163.74" null;
 
-        #"dns1.infra" = (a "154.38.163.74");
+        infra.subdomains = {
+          dns1 = host "154.38.163.74" null;
+        };
       };
     };
 in
