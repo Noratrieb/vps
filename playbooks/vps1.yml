@@ -3,11 +3,6 @@
   hosts: vps1
   gather_facts: false
   tasks:
-    - name: Copy over some fun files
-      ansible.builtin.copy:
-        dest: /var/www/html/nora/
-        src: "../vps1/nora/"
-        mode: "u=rw,g=r,o=r"
     #####
     # END: docker compose up!
     #####

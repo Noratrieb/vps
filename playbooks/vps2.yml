@@ -14,6 +14,11 @@
         minute: "5"
         hour: "7"
         job: "/apps/backup.sh"
+    - name: Copy over some fun files
+      ansible.builtin.copy:
+        dest: /var/www/html/nora/
+        src: "../vps2/nora/"
+        mode: "u=rw,g=r,o=r"
     #####
     # APP: prometheus, /apps/prometheus
     - name: Create /apps/prometheus

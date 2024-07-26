@@ -32,8 +32,3 @@ vps1.nilstrieb.dev {
 	root * /var/www/html/debug
 	file_server
 }
-
-noratrieb.dev {
-	root * /var/www/html/nora
-	file_server
-}

@@ -6,8 +6,8 @@ let
       dns1 = host "154.38.163.74" null;
       dns2 = host "128.140.3.7" "2a01:4f8:c2c:d616::";
 
-      vps1 = host "184.174.32.252" null;
-      vps2 = host "161.97.165.1" null;
+      vps1 = host "161.97.165.1" null;
+      vps2 = host "184.174.32.252" null;
     in
     {
       SOA = {
@@ -47,20 +47,20 @@ let
       ];
 
       subdomains = {
-        www = vps1;
+        www = vps2;
         blog.CNAME = [ (cname "nilstrieb.github.io") ];
 
         # apps
-        bisect-rustc = vps1;
-        cors-school = vps1 // {
-          subdomains.api = vps1;
+        bisect-rustc = vps2;
+        cors-school = vps2 // {
+          subdomains.api = vps2;
         };
-        docker = vps1;
-        hugo-chat = vps1 // {
-          subdomains.api = vps1;
+        docker = vps2;
+        hugo-chat = vps2 // {
+          subdomains.api = vps2;
         };
-        olat = vps1;
-        uptime = vps1;
+        olat = vps2;
+        uptime = vps2;
 
         localhost.A = [ (a "127.0.0.1") ];
 

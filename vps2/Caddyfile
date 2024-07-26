@@ -78,3 +78,8 @@ olat.nilstrieb.dev:8088 {
 uptime.nilstrieb.dev {
 	reverse_proxy * localhost:5010
 }
+
+noratrieb.dev {
+	root * /var/www/html/nora
+	file_server
+}

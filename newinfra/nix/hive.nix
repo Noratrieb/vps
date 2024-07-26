@@ -34,16 +34,6 @@
     zramSwap.enable = true;
 
     services.openssh.enable = true;
-
-    # By default, Colmena will replace unknown remote profile
-    # (unknown means the profile isn't in the nix store on the
-    # host running Colmena) during apply (with the default goal,
-    # boot, and switch).
-    # If you share a hive with others, or use multiple machines,
-    # and are not careful to always commit/push/pull changes
-    # you can accidentaly overwrite a remote profile so in those
-    # scenarios you might want to change this default to false.
-    # deployment.replaceUnknownProfiles = true;
   };
 
   dns1 = { name, nodes, modulesPath, ... }: {
@@ -112,32 +102,4 @@
       ATTR{address}=="96:00:03:91:16:47", NAME="eth0"
     '';
   };
-
-  /*host-b = {
-    # Like NixOps and Morph, Colmena will attempt to connect to
-    # the remote host using the attribute name by default. You
-    # can override it like:
-    deployment.targetHost = "dns2.infra.noratrieb.dev";
-
-    # It's also possible to override the target SSH port.
-    # For further customization, use the SSH_CONFIG_FILE
-    # environment variable to specify a ssh_config file.
-    deployment.targetPort = 1234;
-
-    # Override the default for this target host
-    deployment.replaceUnknownProfiles = false;
-
-    # You can filter hosts by tags with --on @tag-a,@tag-b.
-    # In this example, you can deploy to hosts with the "web" tag using:
-    #    colmena apply --on @web
-    # You can use globs in tag matching as well:
-    #    colmena apply --on '@infra-*'
-    deployment.tags = [ "dns" "eu" ];
-
-    boot.loader.grub.device = "/dev/sda";
-    fileSystems."/" = {
-      device = "/dev/sda1";
-      fsType = "ext4";
-    };
-  };*/
 }

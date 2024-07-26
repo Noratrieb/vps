@@ -18,7 +18,7 @@ let
         "ns2.noratrieb.dev"
       ];
 
-      A = [ (a "161.97.165.1") ];
+      A = [ (a "184.174.32.252") ];
       AAAA = [ ];
 
       subdomains = {
