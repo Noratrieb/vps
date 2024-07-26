@@ -37,7 +37,10 @@
   };
 
   dns1 = { name, nodes, modulesPath, ... }: {
-    imports = [ ./modules/dns (modulesPath + "/profiles/qemu-guest.nix") ];
+    imports = [
+      (modulesPath + "/profiles/qemu-guest.nix")
+      ./modules/dns
+    ];
 
     # The name and nodes parameters are supported in Colmena,
     # allowing you to reference configurations in other nodes.
@@ -54,7 +57,10 @@
     fileSystems."/" = { device = "/dev/sda3"; fsType = "ext4"; };
   };
   dns2 = { name, nodes, modulesPath, lib, ... }: {
-    imports = [ ./modules/dns (modulesPath + "/profiles/qemu-guest.nix") ];
+    imports = [
+      (modulesPath + "/profiles/qemu-guest.nix")
+      ./modules/dns
+    ];
 
     # The name and nodes parameters are supported in Colmena,
     # allowing you to reference configurations in other nodes.
@@ -101,5 +107,26 @@
     services.udev.extraRules = ''
       ATTR{address}=="96:00:03:91:16:47", NAME="eth0"
     '';
+  };
+
+  vps1 = { name, nodes, modulesPath, ... }: {
+    imports = [
+      (modulesPath + "/profiles/qemu-guest.nix")
+      ./modules/ingress
+    ];
+
+    # The name and nodes parameters are supported in Colmena,
+    # allowing you to reference configurations in other nodes.
+    networking.hostName = name;
+
+    deployment.targetHost = "vps1.nilstrieb.dev";
+    deployment.tags = [ "ingress" "eu" ];
+
+    system.stateVersion = "23.11";
+
+    boot.loader.grub.device = "/dev/sda";
+    boot.initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "xen_blkfront" "vmw_pvscsi" ];
+    boot.initrd.kernelModules = [ "nvme" ];
+    fileSystems."/" = { device = "/dev/sda3"; fsType = "ext4"; };
   };
 }
