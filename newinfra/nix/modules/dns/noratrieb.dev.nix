@@ -10,6 +10,10 @@ let
   });
 
   data = with dns.lib.combinators;
+    let
+      dns1 = host "154.38.163.74" null;
+      dns2 = host "128.140.3.7" "2a01:4f8:c2c:d616::";
+    in
     {
       SOA = {
         nameServer = "154.38.163.74"; #"ns1.noratrieb.dev";
@@ -19,7 +23,7 @@ let
 
       NS = [
         "154.38.163.74" #"ns1.noratrieb.dev"
-        #"ns2.noratrieb.dev"
+        "128.140.3.7" #"ns2.noratrieb.dev"
       ];
 
       A = [ (a "161.97.165.1") ];
@@ -31,10 +35,12 @@ let
           "she/her"
         ];
 
-        ns1 = host "154.38.163.74" null;
+        ns1 = dns1;
+        ns2 = dns2;
 
         infra.subdomains = {
-          dns1 = host "154.38.163.74" null;
+          inherit dns1;
+          inherit dns2;
         };
       };
     };
