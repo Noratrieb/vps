@@ -16,14 +16,14 @@ let
     in
     {
       SOA = {
-        nameServer = "154.38.163.74"; #"ns1.noratrieb.dev";
+        nameServer = "ns1.noratrieb.dev";
         adminEmail = "void@noratrieb.dev";
         serial = 2024072601;
       };
 
       NS = [
-        "154.38.163.74" #"ns1.noratrieb.dev"
-        "128.140.3.7" #"ns2.noratrieb.dev"
+        "ns1.noratrieb.dev"
+        "ns2.noratrieb.dev"
       ];
 
       A = [ (a "161.97.165.1") ];
