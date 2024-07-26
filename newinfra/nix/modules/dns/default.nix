@@ -6,6 +6,17 @@
     { from = 53; to = 53; }
   ];
 
+  nixpkgs.overlays = [
+    (final: prev: {
+      nix-dns = import (pkgs.fetchFromGitHub {
+        owner = "nix-community";
+        repo = "dns.nix";
+        rev = "v1.1.2";
+        hash = "sha256-EHiDP2jEa7Ai5ZwIf5uld9RVFcV77+2SUxjQXwJsJa0=";
+      });
+    })
+  ];
+
   services.knot = {
     enable = true;
     settingsFile = pkgs.writeTextFile {
@@ -19,6 +30,9 @@
           - domain: noratrieb.dev
             storage: /var/lib/knot/zones/
             file: ${import ./noratrieb.dev.nix { inherit pkgs; }}
+          - domain: nilstrieb.dev
+            storage: /var/lib/knot/zones/
+            file: ${import ./nilstrieb.dev.nix { inherit pkgs; }}
         log:
           - target: syslog
             any: info
