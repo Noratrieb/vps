@@ -1,13 +1,17 @@
 # https://github.com/nix-community/dns.nix
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
   data = with pkgs.nix-dns.lib.combinators;
     let
-      dns1 = host "154.38.163.74" null;
-      dns2 = host "128.140.3.7" "2a01:4f8:c2c:d616::";
+      hour1 = 3600;
+      normalHost = ipv4: ipv6:
+        lib.optionalAttrs (ipv4 != null) { A = [ (ttl hour1 (a ipv4)) ]; } //
+        lib.optionalAttrs (ipv6 != null) { AAAA = [ (ttl hour1 (aaaa ipv6)) ]; };
+      dns1 = normalHost "154.38.163.74" null;
+      dns2 = normalHost "128.140.3.7" "2a01:4f8:c2c:d616::";
 
-      vps1 = host "161.97.165.1" null;
-      vps2 = host "184.174.32.252" null;
+      vps1 = normalHost "161.97.165.1" null;
+      vps2 = normalHost "184.174.32.252" null;
     in
     {
       SOA = {
@@ -26,14 +30,14 @@ let
         "ns2.nilstrieb.dev"
       ];
 
-      A = [
+      A = map (ttl hour1) [
         # GH Pages
         (a "185.199.108.153")
         (a "185.199.109.153")
         (a "185.199.110.153")
         (a "185.199.111.153")
       ];
-      AAAA = [
+      AAAA = map (ttl hour1) [
         # GH Pages
         (aaaa "2606:50c0:8002:0:0:0:0:153")
         (aaaa "2606:50c0:8003:0:0:0:0:153")
@@ -48,7 +52,7 @@ let
 
       subdomains = {
         www = vps2;
-        blog.CNAME = [ (cname "nilstrieb.github.io") ];
+        blog.CNAME = map (ttl hour1) [ (cname "nilstrieb.github.io") ];
 
         # apps
         bisect-rustc = vps2;

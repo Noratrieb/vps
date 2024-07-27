@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   # get the package for the debugging tools
   environment.systemPackages = with pkgs; [ knot-dns ];
 
@@ -29,10 +29,10 @@
         zone:
           - domain: noratrieb.dev
             storage: /var/lib/knot/zones/
-            file: ${import ./noratrieb.dev.nix { inherit pkgs; }}
+            file: ${import ./noratrieb.dev.nix { inherit pkgs; inherit lib; }}
           - domain: nilstrieb.dev
             storage: /var/lib/knot/zones/
-            file: ${import ./nilstrieb.dev.nix { inherit pkgs; }}
+            file: ${import ./nilstrieb.dev.nix { inherit pkgs; inherit lib; }}
         log:
           - target: syslog
             any: info
