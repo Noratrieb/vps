@@ -48,6 +48,7 @@
     services.fail2ban = {
       enable = true;
     };
+    system.nixos.distroName = "NixOS (gay 🏳️‍⚧️)";
   };
 
   dns1 = { name, nodes, modulesPath, ... }: {
