@@ -1,8 +1,0 @@
-version: "3.8"
-services:
-  eepy:
-    container_name: eepy
-    restart: always
-    image: alpine:latest
-    entrypoint: sleep infinity
-

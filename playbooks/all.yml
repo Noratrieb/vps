@@ -1,7 +1,5 @@
 ---
 - name: Generic setup
   ansible.builtin.import_playbook: ./basic-setup.yml
-- name: VPS 1
-  ansible.builtin.import_playbook: ./vps1.yml
 - name: VPS 2
   ansible.builtin.import_playbook: ./vps2.yml
