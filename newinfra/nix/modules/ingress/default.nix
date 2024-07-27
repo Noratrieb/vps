@@ -14,6 +14,11 @@
             root * ${./debugging-page}
             file_server
           }
+
+          noratrieb.dev {
+            root * ${./nora}
+            file_server
+          }
         ''
       );
   };

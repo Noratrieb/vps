@@ -8,7 +8,8 @@ let
 
       vps1 = host "161.97.165.1" null;
     in
-    {
+    # vps1 contains root noratrieb.dev
+    vps1 // {
       SOA = {
         nameServer = "ns1.noratrieb.dev";
         adminEmail = "void@noratrieb.dev";
@@ -19,9 +20,6 @@ let
         "ns1.noratrieb.dev"
         "ns2.noratrieb.dev"
       ];
-
-      A = [ (a "184.174.32.252") ];
-      AAAA = [ ];
 
       subdomains = {
         www.CNAME = [ (cname "noratrieb.dev") ];
