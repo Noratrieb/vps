@@ -38,7 +38,16 @@
     boot.tmp.cleanOnBoot = true;
     zramSwap.enable = true;
 
-    services.openssh.enable = true;
+    services.openssh = {
+      enable = true;
+      banner = "meoooooow!! 😼 :3\n";
+      settings = {
+        PasswordAuthentication = false;
+      };
+    };
+    services.fail2ban = {
+      enable = true;
+    };
   };
 
   dns1 = { name, nodes, modulesPath, ... }: {
