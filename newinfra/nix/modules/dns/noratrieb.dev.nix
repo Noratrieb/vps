@@ -11,6 +11,7 @@ let
       dns2 = normalHost "128.140.3.7" "2a01:4f8:c2c:d616::";
 
       vps1 = normalHost "161.97.165.1" null;
+      vps3 = normalHost "134.255.181.139" null;
     in
     # vps1 contains root noratrieb.dev
     vps1 // {
@@ -39,6 +40,7 @@ let
           inherit dns1;
           inherit dns2;
           inherit vps1;
+          inherit vps3;
         };
       };
     };

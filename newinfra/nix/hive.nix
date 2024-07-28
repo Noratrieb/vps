@@ -127,4 +127,16 @@
     deployment.tags = [ "ingress" "eu" "apps" ];
     system.stateVersion = "23.11";
   };
+  vps3 = { name, nodes, modulesPath, ... }: {
+    imports = [
+      (modulesPath + "/profiles/qemu-guest.nix")
+      ./modules/contabo
+      ./modules/ingress
+      ./modules/minio
+    ];
+
+    networking.hostName = name;
+    deployment.tags = [ "ingress" "eu" "apps" ];
+    system.stateVersion = "23.11";
+  };
 }
