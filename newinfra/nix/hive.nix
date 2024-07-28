@@ -112,7 +112,7 @@
     '';
   };
 
-  vps1 = { name, nodes, modulesPath, ... }: {
+  vps1 = { name, nodes, modulesPath, config, ... }: {
     imports = [
       (modulesPath + "/profiles/qemu-guest.nix")
       ./modules/contabo
@@ -126,8 +126,28 @@
     networking.hostName = name;
     deployment.tags = [ "ingress" "eu" "apps" ];
     system.stateVersion = "23.11";
+
+    # TODO: move
+    age.secrets.wg_private.file = ./secrets/wg_private_vps1.age;
+    networking.wg-quick.interfaces = {
+      wg0 = {
+        address = [ "10.0.0.1/24" ];
+        listenPort = 51820;
+
+        privateKeyFile = config.age.secrets.wg_private.path;
+
+        peers = [
+          {
+            publicKey = "pdUxG1vhmYraKzIIEFxTRAMhGwGztBL/Ly5icJUV3g0=";
+            endpoint = "vps3.infra.noratrieb.dev:51820";
+            allowedIPs = [ "10.0.0.3/32" ];
+            # TODO: Use PSK
+          }
+        ];
+      };
+    };
   };
-  vps3 = { name, nodes, modulesPath, ... }: {
+  vps3 = { name, nodes, modulesPath, config, ... }: {
     imports = [
       (modulesPath + "/profiles/qemu-guest.nix")
       ./modules/contabo
@@ -138,5 +158,25 @@
     networking.hostName = name;
     deployment.tags = [ "ingress" "eu" "apps" ];
     system.stateVersion = "23.11";
+
+    # TODO: move
+    age.secrets.wg_private.file = ./secrets/wg_private_vps3.age;
+    networking.wg-quick.interfaces = {
+      wg0 = {
+        address = [ "10.0.0.3/24" ];
+        listenPort = 51820;
+
+        privateKeyFile = config.age.secrets.wg_private.path;
+
+        peers = [
+          {
+            publicKey = "5tg3w/TiCuCeKIBJCd6lHUeNjGEA76abT1OXnhNVyFQ=";
+            endpoint = "vps1.infra.noratrieb.dev:51820";
+            allowedIPs = [ "10.0.0.1/32" ];
+            # TODO: Use PSK
+          }
+        ];
+      };
+    };
   };
 }

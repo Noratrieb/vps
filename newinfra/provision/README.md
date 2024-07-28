@@ -7,6 +7,7 @@ NixOS is provisioned by running [nixos-infect](https://github.com/elitak/nixos-i
 > If you run the script before changing the hostname - remove the /etc/nixos/configuration.nix so it's regenerated with the new hostname.
 
 ```
+hostname tmp
 curl -LO https://raw.githubusercontent.com/elitak/nixos-infect/master/nixos-infect
 bash nixos-infect
 ```
