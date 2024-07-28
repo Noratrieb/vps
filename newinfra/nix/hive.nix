@@ -117,6 +117,7 @@
       (modulesPath + "/profiles/qemu-guest.nix")
       ./modules/contabo
       ./modules/ingress
+      ./modules/minio
       ./modules/widetom
     ];
 
