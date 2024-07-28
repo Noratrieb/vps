@@ -116,6 +116,7 @@
     imports = [
       (modulesPath + "/profiles/qemu-guest.nix")
       ./modules/contabo
+      ./modules/wg-mesh
       ./modules/ingress
       ./modules/minio
       ./modules/widetom
@@ -124,7 +125,7 @@
     age.secrets.docker_registry_password.file = ./secrets/docker_registry_password.age;
 
     networking.hostName = name;
-    deployment.tags = [ "ingress" "eu" "apps" ];
+    deployment.tags = [ "ingress" "eu" "apps" "wg" ];
     system.stateVersion = "23.11";
 
     # TODO: move
@@ -151,12 +152,13 @@
     imports = [
       (modulesPath + "/profiles/qemu-guest.nix")
       ./modules/contabo
+      ./modules/wg-mesh
       ./modules/ingress
       ./modules/minio
     ];
 
     networking.hostName = name;
-    deployment.tags = [ "ingress" "eu" "apps" ];
+    deployment.tags = [ "ingress" "eu" "apps" "wg" ];
     system.stateVersion = "23.11";
 
     # TODO: move
