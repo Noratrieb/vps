@@ -32,6 +32,8 @@ let
           "she/her"
         ];
 
+        test1.A = vps1.A ++ vps3.A;
+
         localhost.A = [ (a "127.0.0.1") ];
         newtest.TXT = [ "uwu it works" ];
 

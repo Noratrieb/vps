@@ -118,7 +118,6 @@
       ./modules/contabo
       ./modules/wg-mesh
       ./modules/ingress
-      ./modules/minio
       ./modules/widetom
     ];
 
@@ -153,12 +152,10 @@
       (modulesPath + "/profiles/qemu-guest.nix")
       ./modules/contabo
       ./modules/wg-mesh
-      ./modules/ingress
-      ./modules/minio
     ];
 
     networking.hostName = name;
-    deployment.tags = [ "ingress" "eu" "apps" "wg" ];
+    deployment.tags = [ "eu" "apps" "wg" ];
     system.stateVersion = "23.11";
 
     # TODO: move
