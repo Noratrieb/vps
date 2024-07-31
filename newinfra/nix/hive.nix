@@ -16,16 +16,24 @@
         dns2 = {
           publicIPv4 = "128.140.3.7";
           publicIPv6 = "2a01:4f8:c2c:d616::";
-
         };
         vps1 = {
           publicIPv4 = "161.97.165.1";
           publicIPv6 = null;
-
+          wg = {
+            privateIP = "10.0.0.1";
+            publicKey = "5tg3w/TiCuCeKIBJCd6lHUeNjGEA76abT1OXnhNVyFQ=";
+            peers = [ "vps3" ];
+          };
         };
         vps3 = {
           publicIPv4 = "134.255.181.139";
           publicIPv6 = null;
+          wg = {
+            privateIP = "10.0.0.3";
+            publicKey = "pdUxG1vhmYraKzIIEFxTRAMhGwGztBL/Ly5icJUV3g0=";
+            peers = [ "vps1" ];
+          };
         };
       };
     };
@@ -117,26 +125,6 @@
 
     deployment.tags = [ "ingress" "eu" "apps" "wg" ];
     system.stateVersion = "23.11";
-
-    # TODO: move
-    age.secrets.wg_private.file = ./secrets/wg_private_vps1.age;
-    networking.wg-quick.interfaces = {
-      wg0 = {
-        address = [ "10.0.0.1/24" ];
-        listenPort = 51820;
-
-        privateKeyFile = config.age.secrets.wg_private.path;
-
-        peers = [
-          {
-            publicKey = "pdUxG1vhmYraKzIIEFxTRAMhGwGztBL/Ly5icJUV3g0=";
-            endpoint = "vps3.infra.noratrieb.dev:51820";
-            allowedIPs = [ "10.0.0.3/32" ];
-            # TODO: Use PSK
-          }
-        ];
-      };
-    };
   };
   vps3 = { name, nodes, modulesPath, config, ... }: {
     imports = [
@@ -147,25 +135,5 @@
 
     deployment.tags = [ "eu" "apps" "wg" ];
     system.stateVersion = "23.11";
-
-    # TODO: move
-    age.secrets.wg_private.file = ./secrets/wg_private_vps3.age;
-    networking.wg-quick.interfaces = {
-      wg0 = {
-        address = [ "10.0.0.3/24" ];
-        listenPort = 51820;
-
-        privateKeyFile = config.age.secrets.wg_private.path;
-
-        peers = [
-          {
-            publicKey = "5tg3w/TiCuCeKIBJCd6lHUeNjGEA76abT1OXnhNVyFQ=";
-            endpoint = "vps1.infra.noratrieb.dev:51820";
-            allowedIPs = [ "10.0.0.1/32" ];
-            # TODO: Use PSK
-          }
-        ];
-      };
-    };
   };
 }
