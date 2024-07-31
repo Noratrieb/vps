@@ -78,9 +78,6 @@ let
           "TODO"
         ];
 
-        ns1 = dns1;
-        ns2 = dns2;
-
         newtest.TXT = [ "uwu it works" ];
         bsky.subdomains.atproto.TXT = [ "did=did:plc:pqyzoyxk7gfcbxk65mjyncyl" ];
       };
