@@ -7,6 +7,29 @@
     # - An initialized Nixpkgs attribute set
     nixpkgs = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/a1cc729dcbc31d9b0d11d86dc7436163548a9665.tar.gz"); # nixos-24.05 2024-07-26
 
+    specialArgs = {
+      networkingConfig = {
+        dns1 = {
+          publicIPv4 = "154.38.163.74";
+          publicIPv6 = null;
+        };
+        dns2 = {
+          publicIPv4 = "128.140.3.7";
+          publicIPv6 = "2a01:4f8:c2c:d616::";
+
+        };
+        vps1 = {
+          publicIPv4 = "161.97.165.1";
+          publicIPv6 = null;
+
+        };
+        vps3 = {
+          publicIPv4 = "134.255.181.139";
+          publicIPv6 = null;
+        };
+      };
+    };
+
     # If your Colmena host has nix configured to allow for remote builds
     # (for nix-daemon, your user being included in trusted-users)
     # you can set a machines file that will be passed to the underlying

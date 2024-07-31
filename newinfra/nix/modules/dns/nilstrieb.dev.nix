@@ -4,15 +4,13 @@ let
   data = with pkgs.nix-dns.lib.combinators;
     let
       hour1 = 3600;
-      normalHost = ipv4: ipv6:
-        lib.optionalAttrs (ipv4 != null) { A = [ (ttl hour1 (a ipv4)) ]; } //
-        lib.optionalAttrs (ipv6 != null) { AAAA = [ (ttl hour1 (aaaa ipv6)) ]; };
-      dns1 = normalHost "154.38.163.74" null;
-      dns2 = normalHost "128.140.3.7" "2a01:4f8:c2c:d616::";
-
-      vps1 = normalHost "161.97.165.1" null;
-      vps2 = normalHost "184.174.32.252" null;
+      hostsToDns = builtins.mapAttrs
+        (name: { publicIPv4, publicIPv6 }:
+          lib.optionalAttrs (publicIPv4 != null) { A = [ (ttl hour1 (a publicIPv4)) ]; } //
+          lib.optionalAttrs (publicIPv6 != null) { AAAA = [ (ttl hour1 (aaaa publicIPv6)) ]; })
+        networkingConfig;
     in
+    with hostsToDns;
     {
       SOA = {
         nameServer = "ns1.nilstrieb.dev";
