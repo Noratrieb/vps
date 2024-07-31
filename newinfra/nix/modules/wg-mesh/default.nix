@@ -4,11 +4,20 @@ let
   listenPort = 51820;
 in
 {
-  # TODO: put the actual setup here.
-  networking.hosts = {
-    "10.0.0.1" = [ "vps1.local" ];
-    "10.0.0.3" = [ "vps3.local" ];
-  };
+  # Map from $HOST.local to the private IP.
+  networking.hosts =
+    let
+      hostsEntries = map
+        (host:
+          let hostConfig = builtins.getAttr host networkingConfig; in
+          if builtins.hasAttr "wg" hostConfig then {
+            name = hostConfig.wg.privateIP;
+            value = [ "${host}.local" ];
+          } else null)
+        (builtins.attrNames networkingConfig);
+      wgHostEntries = builtins.filter (entry: entry != null) hostsEntries;
+    in
+    builtins.listToAttrs wgHostEntries;
 
   age.secrets.wg_private.file = ../../secrets/wg_private_${name}.age;
   networking.wg-quick.interfaces = {
