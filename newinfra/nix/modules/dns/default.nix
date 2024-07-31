@@ -32,7 +32,7 @@
             file: ${import ./noratrieb.dev.nix { inherit pkgs lib networkingConfig; }}
           - domain: nilstrieb.dev
             storage: /var/lib/knot/zones/
-            file: ${import ./nilstrieb.dev.nix { inherit pkgs lib; }}
+            file: ${import ./nilstrieb.dev.nix { inherit pkgs lib networkingConfig; }}
         log:
           - target: syslog
             any: info

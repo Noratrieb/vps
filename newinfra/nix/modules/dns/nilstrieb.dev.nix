@@ -1,14 +1,17 @@
 # https://github.com/nix-community/dns.nix
-{ pkgs, lib, ... }:
+{ pkgs, lib, networkingConfig, ... }:
 let
   data = with pkgs.nix-dns.lib.combinators;
     let
       hour1 = 3600;
       hostsToDns = builtins.mapAttrs
-        (name: { publicIPv4, publicIPv6 }:
+        (name: { publicIPv4, publicIPv6, ... }:
           lib.optionalAttrs (publicIPv4 != null) { A = [ (ttl hour1 (a publicIPv4)) ]; } //
           lib.optionalAttrs (publicIPv6 != null) { AAAA = [ (ttl hour1 (aaaa publicIPv6)) ]; })
         networkingConfig;
+      vps2 = {
+        A = [ "184.174.32.252" ];
+      };
     in
     with hostsToDns;
     {
