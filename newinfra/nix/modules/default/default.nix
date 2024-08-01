@@ -23,6 +23,7 @@
 
   services.openssh = {
     enable = true;
+    openFirewall = true;
     banner = "meoooooow!! 😼 :3\n";
     settings = {
       PasswordAuthentication = false;

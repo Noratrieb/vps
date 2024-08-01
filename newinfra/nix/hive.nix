@@ -23,7 +23,7 @@
           wg = {
             privateIP = "10.0.0.1";
             publicKey = "5tg3w/TiCuCeKIBJCd6lHUeNjGEA76abT1OXnhNVyFQ=";
-            peers = [ "vps3" ];
+            peers = [ "vps3" "vps4" ];
           };
         };
         vps3 = {
@@ -32,7 +32,16 @@
           wg = {
             privateIP = "10.0.0.3";
             publicKey = "pdUxG1vhmYraKzIIEFxTRAMhGwGztBL/Ly5icJUV3g0=";
-            peers = [ "vps1" ];
+            peers = [ "vps1" "vps4" ];
+          };
+        };
+        vps4 = {
+          publicIPv4 = "195.201.147.17";
+          publicIPv6 = "2a01:4f8:1c1c:cb18::";
+          wg = {
+            privateIP = "10.0.0.5";
+            publicKey = "+n2XKKaSFdCanEGRd41cvnuwJ0URY0HsnpBl6ZrSBRs=";
+            peers = [ "vps1" "vps3" ];
           };
         };
       };
@@ -62,7 +71,7 @@
 
     # The name and nodes parameters are supported in Colmena,
     # allowing you to reference configurations in other nodes.
-    deployment.tags = [ "dns" "us" ];
+    deployment.tags = [ "dns" "us" "contabo" ];
     system.stateVersion = "23.11";
   };
   dns2 = { name, nodes, modulesPath, lib, ... }: {
@@ -71,7 +80,7 @@
       ./modules/dns
     ];
 
-    deployment.tags = [ "dns" "eu" ];
+    deployment.tags = [ "dns" "eu" "hetzner" ];
     system.stateVersion = "23.11";
 
     boot.loader.grub.device = "/dev/sda";
@@ -123,7 +132,7 @@
 
     age.secrets.docker_registry_password.file = ./secrets/docker_registry_password.age;
 
-    deployment.tags = [ "ingress" "eu" "apps" "wg" ];
+    deployment.tags = [ "ingress" "eu" "apps" "wg" "contabo" ];
     system.stateVersion = "23.11";
   };
   vps3 = { name, nodes, modulesPath, config, ... }: {
@@ -131,9 +140,68 @@
       (modulesPath + "/profiles/qemu-guest.nix")
       ./modules/contabo
       ./modules/wg-mesh
+      ./modules/ingress
     ];
 
     deployment.tags = [ "eu" "apps" "wg" ];
     system.stateVersion = "23.11";
   };
+  vps4 = { lib, modulesPath, ... }: {
+    imports = [
+      (modulesPath + "/profiles/qemu-guest.nix")
+      ./modules/ingress
+      ./modules/wg-mesh
+    ];
+
+    deployment.tags = [ "eu" "apps" "hetzner" ];
+    system.stateVersion = "23.11";
+
+    boot.loader.grub.device = "/dev/sda";
+    boot.initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "xen_blkfront" "vmw_pvscsi" ];
+    boot.initrd.kernelModules = [ "nvme" ];
+    fileSystems."/" = { device = "/dev/sda1"; fsType = "ext4"; };
+
+    # This file was populated at runtime with the networking
+    # details gathered from the active system.
+    networking = {
+      nameservers = [
+        "8.8.8.8"
+      ];
+      defaultGateway = "172.31.1.1";
+      defaultGateway6 = {
+        address = "fe80::1";
+        interface = "eth0";
+      };
+      dhcpcd.enable = false;
+      usePredictableInterfaceNames = lib.mkForce false;
+      interfaces = {
+        eth0 = {
+          ipv4.addresses = [
+            { address = "195.201.147.17"; prefixLength = 32; }
+          ];
+          ipv6.addresses = [
+            { address = "2a01:4f8:1c1c:cb18::1"; prefixLength = 64; }
+            { address = "fe80::9400:3ff:fe95:a9e4"; prefixLength = 64; }
+          ];
+          ipv4.routes = [{ address = "172.31.1.1"; prefixLength = 32; }];
+          ipv6.routes = [{ address = "fe80::1"; prefixLength = 128; }];
+        };
+
+      };
+    };
+    services.udev.extraRules = ''
+      ATTR{address}=="96:00:03:95:a9:e4", NAME="eth0"
+    
+    '';
+  };
+  /*vps5 = { name, nodes, modulesPath, config, ... }: {
+    imports = [
+      (modulesPath + "/profiles/qemu-guest.nix")
+      ./modules/contabo
+      ./modules/ingress
+    ];
+
+    deployment.tags = [ "eu" "apps" "wg" ];
+    system.stateVersion = "23.11";
+  };*/
 }

@@ -19,6 +19,10 @@ in
     in
     builtins.listToAttrs wgHostEntries;
 
+  networking.firewall.allowedUDPPorts = [
+    listenPort
+  ];
+
   age.secrets.wg_private.file = ../../secrets/wg_private_${name}.age;
   networking.wg-quick.interfaces = {
     wg0 = {
@@ -33,6 +37,8 @@ in
             inherit (peerConfig) publicKey;
             endpoint = "${peer}.infra.noratrieb.dev:${toString listenPort}";
             allowedIPs = [ "${peerConfig.privateIP}/32" ];
+            # sometimes there's some weirdness....??
+            persistentKeepalive = 25;
           }
         )
         wgSettings.peers;

@@ -24,6 +24,18 @@ All records are fully static, generated in the NixOS config.
 
 ## HTTP(S)
 
-Right now, there's only a single server (`vps1`) serving Caddy.
+stuff.
 
-In the future, there might be a second one in a shared-storage HA setup (with a postgres cluster probably)?
+## provisioning
+
+NixOS is provisioned by running [nixos-infect](https://github.com/elitak/nixos-infect) over a default image.
+
+> Contabo sets the hostname to something like vmi######.contaboserver.net, Nixos only allows RFC 1035 compliant hostnames (see here).
+> Run `hostname something_without_dots` before running the script.
+> If you run the script before changing the hostname - remove the /etc/nixos/configuration.nix so it's regenerated with the new hostname.
+
+```
+hostname tmp
+curl -LO https://raw.githubusercontent.com/elitak/nixos-infect/master/nixos-infect
+bash nixos-infect
+```

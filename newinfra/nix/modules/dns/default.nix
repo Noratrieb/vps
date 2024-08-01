@@ -2,8 +2,8 @@
   # get the package for the debugging tools
   environment.systemPackages = with pkgs; [ knot-dns ];
 
-  networking.firewall.allowedUDPPortRanges = [
-    { from = 53; to = 53; }
+  networking.firewall.allowedUDPPorts = [
+    53
   ];
 
   nixpkgs.overlays = [

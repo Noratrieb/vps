@@ -1,6 +1,7 @@
 let
   vps1 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII4Xj3TsDPStoHquTfOlyxShbA/kgMfQskKN8jpfiY4R";
   vps3 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHvupo7d9YMZw56qhjB+tZPijxiG1dKChLpkOWZN0Y7C";
+  vps4 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpoLgBTWj1BcNxXVdM26jDBZl+BCtUTj20Wv4sZdCHz";
 in
 {
   "widetom_bot_token.age".publicKeys = [ vps1 ];
@@ -10,4 +11,5 @@ in
   "minio_env_file.age".publicKeys = [ vps1 vps3 ];
   "wg_private_vps1.age".publicKeys = [ vps1 ];
   "wg_private_vps3.age".publicKeys = [ vps3 ];
+  "wg_private_vps4.age".publicKeys = [ vps4 ];
 }
