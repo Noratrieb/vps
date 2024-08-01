@@ -52,6 +52,9 @@ let
       ];
 
       subdomains = {
+        ns1 = dns1;
+        ns2 = dns2;
+
         www = vps2;
         blog.CNAME = map (ttl hour1) [ (cname "nilstrieb.github.io") ];
 
