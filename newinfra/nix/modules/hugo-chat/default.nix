@@ -44,11 +44,29 @@ in
       environmentFiles = [ config.age.secrets.hugochat_db_password.path ];
       login = dockerLogin;
     };
-    /*
-      POSTGRES_PASSWORD: "${HUGO_CHAT_DB_PASSWORD}"
-      PGDATA: "/var/lib/postgresql/data/pgdata"
-    */
 
-    services.postgresql.ensureDatabases = [ "hugochat" ];
+    /*
+      hugo_chat_db:
+        container_name: hugo-chat-db
+        image: "postgres:latest"
+        restart: always
+        volumes:
+          - "/apps/hugo-chat/data:/var/lib/postgresql/data"
+        environment:
+          POSTGRES_PASSWORD: "${HUGO_CHAT_DB_PASSWORD}"
+          PGDATA: "/var/lib/postgresql/data/pgdata"
+        networks:
+          - hugo-chat
+    */
+    hugo-chat-db = {
+      image = "postgres:16";
+      ports = [ "5001:80" ];
+      volumes = [ "/var/lib/hugo-chat/data:/var/lib/postgresql/data" ];
+      environment = {
+        POSTGRES_PASSWORD = "\${HUGO_CHAT_DB_PASSWORD}";
+        PGDATA = "/var/lib/postgresql/data/pgdata";
+      };
+      environmentFiles = [ config.age.secrets.hugochat_db_password.path ];
+    };
   };
 }
