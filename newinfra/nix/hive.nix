@@ -32,16 +32,25 @@
           wg = {
             privateIP = "10.0.0.3";
             publicKey = "pdUxG1vhmYraKzIIEFxTRAMhGwGztBL/Ly5icJUV3g0=";
-            peers = [ "vps1" "vps4" ];
+            peers = [ "vps1" "vps4" "vps5" ];
           };
         };
         vps4 = {
           publicIPv4 = "195.201.147.17";
           publicIPv6 = "2a01:4f8:1c1c:cb18::";
           wg = {
-            privateIP = "10.0.0.5";
+            privateIP = "10.0.0.4";
             publicKey = "+n2XKKaSFdCanEGRd41cvnuwJ0URY0HsnpBl6ZrSBRs=";
-            peers = [ "vps1" "vps3" ];
+            peers = [ "vps1" "vps3" "vps5" ];
+          };
+        };
+        vps5 = {
+          publicIPv4 = "45.94.209.30";
+          publicIPv6 = null;
+          wg = {
+            privateIP = "10.0.0.5";
+            publicKey = "r1cwt63fcOR+FTqMTUpZdK4/MxpalkDYRHXyy7osWUk=";
+            peers = [ "vps1" "vps3" "vps4" ];
           };
         };
       };
@@ -71,7 +80,7 @@
 
     # The name and nodes parameters are supported in Colmena,
     # allowing you to reference configurations in other nodes.
-    deployment.tags = [ "dns" "us" "contabo" ];
+    deployment.tags = [ "dns" "us" ];
     system.stateVersion = "23.11";
   };
   dns2 = { name, nodes, modulesPath, lib, ... }: {
@@ -132,7 +141,7 @@
 
     age.secrets.docker_registry_password.file = ./secrets/docker_registry_password.age;
 
-    deployment.tags = [ "ingress" "eu" "apps" "wg" "contabo" ];
+    deployment.tags = [ "ingress" "eu" "apps" "wg" ];
     system.stateVersion = "23.11";
   };
   vps3 = { name, nodes, modulesPath, config, ... }: {
@@ -194,14 +203,15 @@
     
     '';
   };
-  /*vps5 = { name, nodes, modulesPath, config, ... }: {
+  vps5 = { name, nodes, modulesPath, config, ... }: {
     imports = [
       (modulesPath + "/profiles/qemu-guest.nix")
       ./modules/contabo
       ./modules/ingress
+      ./modules/wg-mesh
     ];
 
     deployment.tags = [ "eu" "apps" "wg" ];
     system.stateVersion = "23.11";
-  };*/
+  };
 }

@@ -1,4 +1,4 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, name, ... }: {
   networking.firewall.allowedTCPPorts = [
     443
   ];
@@ -14,9 +14,14 @@
             file_server
           }
 
-          noratrieb.dev {
-            root * ${./nora}
-            file_server
+          ${
+            if name == "vps1" then
+            ''
+              noratrieb.dev {
+                root * ${./nora}
+                file_server
+              }
+            '' else ""
           }
         ''
       );

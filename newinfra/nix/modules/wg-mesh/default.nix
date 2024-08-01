@@ -44,4 +44,6 @@ in
         wgSettings.peers;
     };
   };
+
+  deployment.tags = [ "wg-mesh" ];
 }
