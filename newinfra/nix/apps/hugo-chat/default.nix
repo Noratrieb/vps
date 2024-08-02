@@ -35,15 +35,16 @@ in
         networks:
           - hugo-chat
     */
-    hugo-chat-server = {
-      image = "docker.noratrieb.dev/hugo-chat-server:63bd1922";
-      ports = [ "5001:80" ];
-      environment = {
-        SPRING_DATASOURCE_URL = "jdbc:postgresql://vps1.local:5003/hugochat";
-      };
-      environmentFiles = [ config.age.secrets.hugochat_db_password.path ];
-      login = dockerLogin;
-    };
+    # disabled since the DB connection doesn't work yet.
+    #hugo-chat-server = {
+    #  image = "docker.noratrieb.dev/hugo-chat-server:63bd1922";
+    #  ports = [ "5001:80" ];
+    #  environment = {
+    #    SPRING_DATASOURCE_URL = "jdbc:postgresql://vps1.local:5003/hugochat";
+    #  };
+    #  environmentFiles = [ config.age.secrets.hugochat_db_password.path ];
+    #  login = dockerLogin;
+    #};
 
     /*
       hugo_chat_db:
