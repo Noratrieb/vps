@@ -149,19 +149,6 @@
         state: directory
         mode: "u=rwx,g=rwx,o=rwx"
     #####
-    # APP: uptime, /apps/uptime
-    #####
-    - name: Create /apps/uptime
-      ansible.builtin.file:
-        path: /apps/uptime
-        state: directory
-        mode: "u=rwx,g=rx,o=rx"
-    - name: Copy uptime.json
-      ansible.builtin.copy:
-        dest: /apps/uptime/uptime.json
-        src: ../apps/uptime/uptime.json
-        mode: "u=r,g=r,o=r"
-    #####
     # END: docker compose up!
     #####
       # We want this to be last so that all app-specific config has been done.

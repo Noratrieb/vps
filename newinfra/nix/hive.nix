@@ -142,6 +142,7 @@
       ./modules/ingress
       ./apps/widetom
       ./apps/hugo-chat
+      ./apps/uptime
     ];
 
     age.secrets.docker_registry_password.file = ./secrets/docker_registry_password.age;

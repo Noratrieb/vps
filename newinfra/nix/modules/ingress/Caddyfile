@@ -24,18 +24,30 @@
 	}
 }
 
+www.noratrieb.dev {
+	redir https://noratrieb.dev{uri} permanent
+}
+
+uptime.noratrieb.dev {
+	reverse_proxy * vps1.local:5010
+}
+
 hugo-chat.noratrieb.dev {
 	reverse_proxy * vps1.local:5002
 }
 
-api.cors-school.noratrieb.dev {
-	import cors https://cors-school.noratrieb.dev "DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,token,refresh-token,Authorization"
+api.hugo-chat.noratrieb.dev {
+	import cors https://hugo-chat.noratrieb.dev "DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type"
 	reverse_proxy * vps1.local:5001
 }
 
 ################################################################
 # deadname redirects
 nilstrieb.dev {
+	redir https://noratrieb.dev{uri} permanent
+}
+
+www.nilstrieb.dev {
 	redir https://noratrieb.dev{uri} permanent
 }
 
@@ -49,4 +61,8 @@ hugo-chat.nilstrieb.dev {
 
 api.hugo-chat.nilstrieb.dev {
 	redir https://api.hugo-chat.noratrieb.dev{uri} permanent
+}
+
+uptime.nilstrieb.dev {
+	redir https://uptime.noratrieb.dev{uri} permanent
 }

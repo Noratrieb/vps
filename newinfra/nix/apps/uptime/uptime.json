@@ -1,7 +1,11 @@
 {
   "interval_seconds": 30,
-  "db_url": "/app/config/uptime.db",
+  "db_url": "/data/uptime.db",
   "websites": [
+    {
+      "name": "noratrieb.dev",
+      "url": "https://noratrieb.dev"
+    },
     {
       "name": "nilstrieb.dev",
       "url": "https://nilstrieb.dev"

@@ -17,7 +17,7 @@ let
     # vps1 contains root noratrieb.dev
     vps1 // {
       SOA = {
-        nameServer = "ns1.noratrieb.dev";
+        nameServer = "ns1.noratrieb.dev.";
         adminEmail = "void@noratrieb.dev";
         serial = 2024072601;
       };
@@ -28,28 +28,32 @@ let
       ];
 
       subdomains = {
+        # --- NS records
         ns1 = dns1;
         ns2 = dns2;
 
+        # --- website stuff
         blog.CNAME = map (ttl hour1) [ (cname "noratrieb.github.io") ];
+        www = vps1;
 
-        www.CNAME = [ (cname "noratrieb.dev") ];
-        pronouns.TXT = [
-          "she/her"
-        ];
+        # --- legacy crap
+        vps2 = vps2; # TODO REMOVE
         docker = vps2;
 
-        vps2 = vps2; # TODO REMOVE
-
+        # --- apps
+        uptime = vps1;
         hugo-chat = vps1 // {
           subdomains.api = vps1;
         };
 
-        test1.A = vps1.A ++ vps3.A;
-
+        # --- fun shit
         localhost.A = [ (a "127.0.0.1") ];
         newtest.TXT = [ "uwu it works" ];
+        pronouns.TXT = [
+          "she/her"
+        ];
 
+        # --- infra
         infra.subdomains = hostsToDns;
       };
     };

@@ -14,11 +14,11 @@ let
       };
     in
     with hostsToDns;
-    # point nilstrieb.dev to vps1
+    # point nilstrieb.dev to vps1 (retired)
     vps1 // {
       SOA = {
-        nameServer = "ns1.nilstrieb.dev";
-        adminEmail = "void@noratrieb.dev";
+        nameServer = "ns1.nilstrieb.dev.";
+        adminEmail = "void@nilstrieb.dev";
         serial = 2024072601;
       };
 
@@ -41,34 +41,33 @@ let
         ns1 = dns1;
         ns2 = dns2;
 
-        www = vps2;
-        blog = vps1;
-
         # apps
         bisect-rustc = vps2;
         cors-school = vps2 // {
           subdomains.api = vps2;
         };
         docker = vps2;
-        hugo-chat = vps2 // {
-          subdomains.api = vps2;
-        };
         olat = vps2;
-        uptime = vps2;
 
         localhost.A = [ (a "127.0.0.1") ];
+
+        # --- retired:
+        blog = vps1;
+        www = vps1;
+        uptime = vps1;
+        hugo-chat = vps1 // {
+          subdomains.api = vps1;
+        };
+        # ---
 
         # infra (legacy)
         inherit vps1;
         inherit vps2;
-        inherit dns1;
-        inherit dns2;
 
         pronouns.TXT = [
           "TODO"
         ];
 
-        newtest.TXT = [ "uwu it works" ];
         bsky.subdomains.atproto.TXT = [ "did=did:plc:pqyzoyxk7gfcbxk65mjyncyl" ];
       };
     };
