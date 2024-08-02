@@ -134,13 +134,14 @@
     '';
   };
 
-  vps1 = { name, nodes, modulesPath, config, ... }: {
+  vps1 = { name, nodes, modulesPath, config, lib, ... }: {
     imports = [
       (modulesPath + "/profiles/qemu-guest.nix")
       ./modules/contabo
       ./modules/wg-mesh
       ./modules/ingress
-      ./modules/widetom
+      ./apps/widetom
+      ./apps/hugo-chat
     ];
 
     age.secrets.docker_registry_password.file = ./secrets/docker_registry_password.age;

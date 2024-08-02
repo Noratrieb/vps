@@ -21,10 +21,10 @@ jobs:
     runs-on: ubuntu-latest
     name: Build
     steps:
-      - name: Login to docker.nilstrieb.dev
+      - name: Login to docker.noratrieb.dev
         uses: docker/login-action@v2
         with:
-          registry: docker.nilstrieb.dev
+          registry: docker.noratrieb.dev
           username: ${{ secrets.DOCKER_NILSTRIEB_DEV_USER }}
           password: ${{ secrets.DOCKER_NILSTRIEB_DEV_PASSWORD }}
       - uses: actions/checkout@v3

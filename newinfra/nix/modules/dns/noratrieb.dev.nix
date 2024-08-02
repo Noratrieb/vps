@@ -9,6 +9,9 @@ let
           lib.optionalAttrs (publicIPv4 != null) { A = [ (ttl hour1 (a publicIPv4)) ]; } //
           lib.optionalAttrs (publicIPv6 != null) { AAAA = [ (ttl hour1 (aaaa publicIPv6)) ]; })
         networkingConfig;
+      vps2 = {
+        A = [ "184.174.32.252" ];
+      };
     in
     with hostsToDns;
     # vps1 contains root noratrieb.dev
@@ -34,6 +37,13 @@ let
         pronouns.TXT = [
           "she/her"
         ];
+        docker = vps2;
+
+        vps2 = vps2; # TODO REMOVE
+
+        hugo-chat = vps1 // {
+          subdomains.api = vps1;
+        };
 
         test1.A = vps1.A ++ vps3.A;
 

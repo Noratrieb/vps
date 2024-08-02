@@ -7,7 +7,6 @@
     enable = true;
     configFile = pkgs.writeText "Caddyfile"
       (
-        builtins.readFile ./Caddyfile +
         ''
           ${config.networking.hostName}.infra.noratrieb.dev {
             root * ${./debugging-page}
@@ -16,15 +15,7 @@
 
           ${
             if name == "vps1" then
-            ''
-              nilstrieb.dev {
-                redir https://noratrieb.dev{uri} permanent
-              }
-
-              blog.nilstrieb.dev {
-                redir https://blog.noratrieb.dev{uri} permanent
-              }
-
+            builtins.readFile ./Caddyfile + ''
               noratrieb.dev {
                 root * ${website {inherit pkgs slides blog;}}
                 file_server

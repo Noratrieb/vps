@@ -1,7 +1,7 @@
-{ config, ... }:
+{ config, lib, ... }:
 let
   dockerLogin = {
-    registry = "docker.nilstrieb.dev";
+    registry = "docker.noratrieb.dev";
     username = "nils";
     passwordFile = config.age.secrets.docker_registry_password.path;
   };
@@ -13,20 +13,20 @@ in
     /*
       hugo_chat_client:
         container_name: hugo-chat-client
-        image: "docker.nilstrieb.dev/hugo-chat-client:63bd1922"
+        image: "docker.noratrieb.dev/hugo-chat-client:63bd1922"
         restart: always
         ports:
           - "5002:80"
     */
     hugo-chat-client = {
-      image = "docker.nilstrieb.dev/hugo-chat-client:63bd1922";
+      image = "docker.noratrieb.dev/hugo-chat-client:63bd1922";
       login = dockerLogin;
       ports = [ "5002:80" ];
     };
     /*
       hugo_chat_server:
         container_name: hugo-chat-server
-        image: "docker.nilstrieb.dev/hugo-chat-server:63bd1922"
+        image: "docker.noratrieb.dev/hugo-chat-server:63bd1922"
         ports:
           - "5001:8080"
         environment:
@@ -36,10 +36,10 @@ in
           - hugo-chat
     */
     hugo-chat-server = {
-      image = "docker.nilstrieb.dev/hugo-chat-server:63bd1922";
+      image = "docker.noratrieb.dev/hugo-chat-server:63bd1922";
       ports = [ "5001:80" ];
       environment = {
-        SPRING_DATASOURCE_URL = "jdbc:postgresql://vps1.local:5432/hugochat";
+        SPRING_DATASOURCE_URL = "jdbc:postgresql://vps1.local:5003/hugochat";
       };
       environmentFiles = [ config.age.secrets.hugochat_db_password.path ];
       login = dockerLogin;
@@ -60,7 +60,7 @@ in
     */
     hugo-chat-db = {
       image = "postgres:16";
-      ports = [ "5001:80" ];
+      ports = [ "5003:80" ];
       volumes = [ "/var/lib/hugo-chat/data:/var/lib/postgresql/data" ];
       environment = {
         POSTGRES_PASSWORD = "\${HUGO_CHAT_DB_PASSWORD}";
@@ -69,4 +69,9 @@ in
       environmentFiles = [ config.age.secrets.hugochat_db_password.path ];
     };
   };
+
+
+  system.activationScripts.makeHugoChatDir = lib.stringAfter [ "var" ] ''
+    mkdir -p /var/lib/hugo-chat/data
+  '';
 }

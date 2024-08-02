@@ -1,4 +1,4 @@
 vps:
   hosts:
     vps2:
-      ansible_host: vps2.nilstrieb.dev
+      ansible_host: vps2.noratrieb.dev

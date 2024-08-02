@@ -22,7 +22,7 @@ echo "Latest commit of $APP is $CURRENT_COMMIT"
 echo "**Commit: \`$CURRENT_COMMIT\`**" >> "$GITHUB_STEP_SUMMARY"
 
 if [ "$APP" = "hugo-chat" ]; then
-    IMAGE_PREFIX="docker.nilstrieb.dev/hugo-chat"
+    IMAGE_PREFIX="docker.noratrieb.dev/hugo-chat"
     SERVER_FULL_NAME="$IMAGE_PREFIX-server:$CURRENT_COMMIT"
     CLIENT_FULL_NAME="$IMAGE_PREFIX-client:$CURRENT_COMMIT"
 
@@ -42,7 +42,7 @@ if [ "$APP" = "hugo-chat" ]; then
 fi
 
 if [ "$APP" = "cors" ]; then
-    IMAGE_PREFIX="docker.nilstrieb.dev/cors-school"
+    IMAGE_PREFIX="docker.noratrieb.dev/cors-school"
     SERVER_FULL_NAME="$IMAGE_PREFIX-server:$CURRENT_COMMIT"
     CLIENT_FULL_NAME="$IMAGE_PREFIX-client:$CURRENT_COMMIT"
     BOT_FULL_NAME="$IMAGE_PREFIX-bot:$CURRENT_COMMIT"
@@ -70,7 +70,7 @@ if [ "$APP" = "dockerolat" ]; then
     APP="openolat"
 fi
 
-IMAGE_PREFIX="docker.nilstrieb.dev/$APP"
+IMAGE_PREFIX="docker.noratrieb.dev/$APP"
 IMAGE_FULL_NAME="$IMAGE_PREFIX:$CURRENT_COMMIT"
 
 docker build . -t "$IMAGE_FULL_NAME"

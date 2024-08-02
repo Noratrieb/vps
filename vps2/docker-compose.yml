@@ -21,7 +21,7 @@ services:
       - prometheus
   killua:
     container_name: killua
-    image: "docker.nilstrieb.dev/killua-bot:ac8203d2"
+    image: "docker.noratrieb.dev/killua-bot:ac8203d2"
     restart: always
     volumes:
       - "/apps/killua:/app/config"
@@ -30,7 +30,7 @@ services:
       KILLUA_JSON_PATH: /app/config/trivia_questions.json
   cargo_bisect_rustc_service:
     container_name: cargo-bisect-rustc-service
-    image: "docker.nilstrieb.dev/cargo-bisect-rustc-service:316a4044"
+    image: "docker.noratrieb.dev/cargo-bisect-rustc-service:316a4044"
     restart: always
     volumes:
       - "/apps/bisect-rustc-service/db.sqlite:/home/bisector/db.sqlite"
@@ -54,7 +54,7 @@ services:
       - hugo-chat
   hugo_chat_server:
     container_name: hugo-chat-server
-    image: "docker.nilstrieb.dev/hugo-chat-server:63bd1922"
+    image: "docker.noratrieb.dev/hugo-chat-server:63bd1922"
     ports:
       - "5001:8080"
     environment:
@@ -64,7 +64,7 @@ services:
       - hugo-chat
   hugo_chat_client:
     container_name: hugo-chat-client
-    image: "docker.nilstrieb.dev/hugo-chat-client:63bd1922"
+    image: "docker.noratrieb.dev/hugo-chat-client:63bd1922"
     restart: always
     ports:
       - "5002:80"
@@ -89,7 +89,7 @@ services:
           memory: 500M
   karin_bot:
     container_name: karin-bot
-    image: "docker.nilstrieb.dev/discord-court-bot:921be642"
+    image: "docker.noratrieb.dev/discord-court-bot:921be642"
     restart: always
     env_file:
       - "/apps/karin-bot/.env"
@@ -117,7 +117,7 @@ services:
       - cors-school
   cors_school_server:
     container_name: cors-school-server
-    image: "docker.nilstrieb.dev/cors-school-server:bef75a80"
+    image: "docker.noratrieb.dev/cors-school-server:bef75a80"
     restart: always
     env_file:
       # DATABASE_URL=postgres://postgres:PASSWORD@cors-school-db/davinci
@@ -131,13 +131,13 @@ services:
       - "5003:8080"
   cors_school_client:
     container_name: cors-school-client
-    image: "docker.nilstrieb.dev/cors-school-client:bef75a80"
+    image: "docker.noratrieb.dev/cors-school-client:bef75a80"
     restart: always
     ports:
       - "5004:80"
   cors_school_bot:
     container_name: cors-school-bot
-    image: "docker.nilstrieb.dev/cors-school-bot:bef75a80"
+    image: "docker.noratrieb.dev/cors-school-bot:bef75a80"
     restart: always
     volumes:
       # DISCORD_TOKEN=
@@ -187,7 +187,7 @@ services:
       - openolat-network
   openolat:
     container_name: openolat
-    image: "docker.nilstrieb.dev/openolat:69b3c8b6"
+    image: "docker.noratrieb.dev/openolat:69b3c8b6"
     restart: always
     volumes:
       - "/apps/openolat/olatdata:/home/openolat/olatdata"
@@ -203,7 +203,7 @@ services:
       - openolat-network
   uptime:
     container_name: uptime
-    image: "docker.nilstrieb.dev/uptime:50d15bc4"
+    image: "docker.noratrieb.dev/uptime:50d15bc4"
     restart: always
     volumes:
       - "/apps/uptime:/app/config"
