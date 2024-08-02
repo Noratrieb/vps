@@ -40,34 +40,6 @@ services:
       - "5005:4000"
     networks:
       - prometheus
-  #### Hugo Chat
-  hugo_chat_db:
-    container_name: hugo-chat-db
-    image: "postgres:latest"
-    restart: always
-    volumes:
-      - "/apps/hugo-chat/data:/var/lib/postgresql/data"
-    environment:
-      POSTGRES_PASSWORD: "${HUGO_CHAT_DB_PASSWORD}"
-      PGDATA: "/var/lib/postgresql/data/pgdata"
-    networks:
-      - hugo-chat
-  hugo_chat_server:
-    container_name: hugo-chat-server
-    image: "docker.noratrieb.dev/hugo-chat-server:63bd1922"
-    ports:
-      - "5001:8080"
-    environment:
-      SPRING_DATASOURCE_URL: "jdbc:postgresql://hugo-chat-db:5432/postgres"
-      SPRING_DATASOURCE_PASSWORD: "${HUGO_CHAT_DB_PASSWORD}"
-    networks:
-      - hugo-chat
-  hugo_chat_client:
-    container_name: hugo-chat-client
-    image: "docker.noratrieb.dev/hugo-chat-client:63bd1922"
-    restart: always
-    ports:
-      - "5002:80"
   #### Karin
   karin_bot_db:
     container_name: karin-bot-db
@@ -204,7 +176,6 @@ services:
 
 networks:
   cors-school:
-  hugo-chat:
   karin-bot:
   openolat-network:
   prometheus:

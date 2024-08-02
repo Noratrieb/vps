@@ -70,7 +70,7 @@ upload_file "killua/trivia_questions.json"
 #upload_file "uptime/uptime.db"
 
 upload_pg_dump "cors-school" "cors-school-db" "davinci" "postgres"
-upload_pg_dump "hugo-chat" "hugo-chat-db" "postgres" "postgres"
+#upload_pg_dump "hugo-chat" "hugo-chat-db" "postgres" "postgres"
 upload_pg_dump "openolat" "openolat-db" "oodb" "oodbu"
 
 # shellcheck disable=SC1091

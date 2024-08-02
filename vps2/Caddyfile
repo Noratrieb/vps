@@ -48,15 +48,6 @@ docker.noratrieb.dev {
 	reverse_proxy * localhost:5000
 }
 
-api.hugo-chat.nilstrieb.dev {
-	import cors https://hugo-chat.nilstrieb.dev "DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type"
-	reverse_proxy * localhost:5001
-}
-
-hugo-chat.nilstrieb.dev {
-	reverse_proxy * localhost:5002
-}
-
 api.cors-school.nilstrieb.dev {
 	import cors https://cors-school.nilstrieb.dev "DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,token,refresh-token,Authorization"
 	reverse_proxy * localhost:5003
