@@ -8,6 +8,10 @@
     configFile = pkgs.writeText "Caddyfile"
       (
         ''
+          {
+            email nilstrieb@proton.me
+          }
+
           ${config.networking.hostName}.infra.noratrieb.dev {
             root * ${./debugging-page}
             file_server

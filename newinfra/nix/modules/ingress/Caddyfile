@@ -1,7 +1,3 @@
-{
-	email nilstrieb@proton.me
-}
-
 # https://gist.github.com/ryanburnette/d13575c9ced201e73f8169d3a793c1a3
 (cors) {
 	@cors_preflight{args.0} method OPTIONS
