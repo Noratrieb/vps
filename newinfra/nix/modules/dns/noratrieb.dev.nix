@@ -23,8 +23,8 @@ let
       };
 
       NS = [
-        "ns1.noratrieb.dev"
-        "ns2.noratrieb.dev"
+        "ns1.noratrieb.dev."
+        "ns2.noratrieb.dev."
       ];
 
       subdomains = {

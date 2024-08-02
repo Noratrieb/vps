@@ -28,8 +28,8 @@ let
       ];
 
       NS = [
-        "ns1.nilstrieb.dev"
-        "ns2.nilstrieb.dev"
+        "ns1.nilstrieb.dev."
+        "ns2.nilstrieb.dev."
       ];
 
       MX = with mx; [
