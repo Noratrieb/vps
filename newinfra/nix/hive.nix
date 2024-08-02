@@ -8,6 +8,10 @@
     nixpkgs = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/a1cc729dcbc31d9b0d11d86dc7436163548a9665.tar.gz"); # nixos-24.05 2024-07-26
 
     specialArgs = {
+      website = import (fetchTarball "https://github.com/Noratrieb/website/archive/8751a926d108288c370414ee6add78cb9058c29a.tar.gz");
+      blog = fetchTarball "https://github.com/Noratrieb/nilstrieb.github.io/archive/d2e858ddca7e59c9d9c843f7273ff0f75d65421e.tar.gz";
+      slides = fetchTarball "https://github.com/Noratrieb/slides/archive/0401f35c22b124b69447655f0c537badae9e223c.tar.gz";
+
       networkingConfig = {
         dns1 = {
           publicIPv4 = "154.38.163.74";

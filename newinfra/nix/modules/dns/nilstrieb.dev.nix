@@ -14,7 +14,8 @@ let
       };
     in
     with hostsToDns;
-    {
+    # point nilstrieb.dev to vps1
+    vps1 // {
       SOA = {
         nameServer = "ns1.nilstrieb.dev";
         adminEmail = "void@noratrieb.dev";
@@ -31,21 +32,6 @@ let
         "ns2.nilstrieb.dev"
       ];
 
-      A = map (ttl hour1) [
-        # GH Pages
-        (a "185.199.108.153")
-        (a "185.199.109.153")
-        (a "185.199.110.153")
-        (a "185.199.111.153")
-      ];
-      AAAA = map (ttl hour1) [
-        # GH Pages
-        (aaaa "2606:50c0:8002:0:0:0:0:153")
-        (aaaa "2606:50c0:8003:0:0:0:0:153")
-        (aaaa "2606:50c0:8000:0:0:0:0:153")
-        (aaaa "2606:50c0:8001:0:0:0:0:153")
-      ];
-
       MX = with mx; [
         (mx 10 "mail.protonmail.ch")
         (mx 20 "mailsec.protonmail.ch")
@@ -56,7 +42,7 @@ let
         ns2 = dns2;
 
         www = vps2;
-        blog.CNAME = map (ttl hour1) [ (cname "nilstrieb.github.io") ];
+        blog = vps1;
 
         # apps
         bisect-rustc = vps2;

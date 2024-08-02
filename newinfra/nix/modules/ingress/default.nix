@@ -1,4 +1,4 @@
-{ pkgs, config, name, ... }: {
+{ pkgs, config, name, website, slides, blog, ... }: {
   networking.firewall.allowedTCPPorts = [
     443
   ];
@@ -17,8 +17,16 @@
           ${
             if name == "vps1" then
             ''
+              nilstrieb.dev {
+                redir https://noratrieb.dev{uri} permanent
+              }
+
+              blog.nilstrieb.dev {
+                redir https://blog.noratrieb.dev{uri} permanent
+              }
+
               noratrieb.dev {
-                root * ${./nora}
+                root * ${website {inherit pkgs slides blog;}}
                 file_server
               }
             '' else ""

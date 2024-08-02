@@ -28,6 +28,8 @@ let
         ns1 = dns1;
         ns2 = dns2;
 
+        blog.CNAME = map (ttl hour1) [ (cname "noratrieb.github.io") ];
+
         www.CNAME = [ (cname "noratrieb.dev") ];
         pronouns.TXT = [
           "she/her"

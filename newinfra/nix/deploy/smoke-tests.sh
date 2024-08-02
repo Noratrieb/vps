@@ -8,8 +8,12 @@ set -eux
 dig @dns1.infra.noratrieb.dev dns1.infra.noratrieb.dev +noall +answer | grep 154.38.163.74
 dig @dns2.infra.noratrieb.dev dns1.infra.noratrieb.dev +noall +answer | grep 154.38.163.74
 
-dig @dns1.infra.noratrieb.dev nilstrieb.dev +noall +answer | grep 185.199.108.153
-dig @dns2.infra.noratrieb.dev nilstrieb.dev +noall +answer | grep 185.199.108.153
+dig @dns1.infra.noratrieb.dev nilstrieb.dev +noall +answer | grep 161.97.165.1
+dig @dns2.infra.noratrieb.dev nilstrieb.dev +noall +answer | grep 161.97.165.1
 
 # Check HTTP responses
-curl --fail https://vps1.infra.noratrieb.dev
+curl --fail -s https://vps1.infra.noratrieb.dev -o /dev/null
+curl --fail -s https://vps3.infra.noratrieb.dev -o /dev/null
+curl --fail -s https://vps4.infra.noratrieb.dev -o /dev/null
+curl --fail -s https://vps5.infra.noratrieb.dev -o /dev/null
+curl --fail -s https://noratrieb.dev -o /dev/null
