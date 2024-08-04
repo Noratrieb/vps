@@ -33,8 +33,8 @@ let
       ];
 
       MX = with mx; [
-        (mx 10 "mail.protonmail.ch")
-        (mx 20 "mailsec.protonmail.ch")
+        (mx 10 "mail.protonmail.ch.")
+        (mx 20 "mailsec.protonmail.ch.")
       ];
 
       subdomains = {
