@@ -60,6 +60,7 @@ hugo-chat.nilstrieb.dev {
 }
 
 api.hugo-chat.nilstrieb.dev {
+	import cors https://hugo-chat.nilstrieb.dev "DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type"
 	redir https://api.hugo-chat.noratrieb.dev{uri} permanent
 }
 
