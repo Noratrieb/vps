@@ -21,7 +21,7 @@
     environment = {
       UPTIME_CONFIG_PATH = "/uptime.json";
     };
-    ports = [ "5010:3000" ];
+    ports = [ "127.0.0.1:5010:3000" ];
     login = {
       registry = "docker.noratrieb.dev";
       username = "nils";

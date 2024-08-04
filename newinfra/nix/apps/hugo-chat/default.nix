@@ -21,7 +21,7 @@ in
     hugo-chat-client = {
       image = "docker.noratrieb.dev/hugo-chat-client:63bd1922";
       login = dockerLogin;
-      ports = [ "5002:80" ];
+      ports = [ "127.0.0.1:5002:80" ];
     };
     /*
       hugo_chat_server:
@@ -61,7 +61,7 @@ in
     */
     hugo-chat-db = {
       image = "postgres:16";
-      ports = [ "5003:80" ];
+      ports = [ "127.0.0.1:5003:80" ];
       volumes = [ "/var/lib/hugo-chat/data:/var/lib/postgresql/data" ];
       environment = {
         POSTGRES_PASSWORD = "\${HUGO_CHAT_DB_PASSWORD}";
