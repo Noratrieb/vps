@@ -41,6 +41,11 @@ api.hugo-chat.noratrieb.dev {
 	reverse_proxy * vps1.local:5001
 }
 
+# TODO:
+# Set up a domain called gh-pages.noratrieb.dev that's a CNAME for noratrieb.github.io
+# such that all one-off repos use that domain, making links redirectable in the future.
+# i've posted a bunch of nilstrieb.github.io links that are now dead
+
 ################################################################
 # deadname redirects
 nilstrieb.dev {
@@ -52,7 +57,7 @@ www.nilstrieb.dev {
 }
 
 blog.nilstrieb.dev {
-	redir https://blog.noratrieb.dev{uri} permanent
+	redir https://noratrieb.dev/blog{uri} permanent
 }
 
 hugo-chat.nilstrieb.dev {
