@@ -24,6 +24,8 @@
 	}
 }
 
+# TODO: compression?
+
 www.noratrieb.dev {
 	redir https://noratrieb.dev{uri} permanent
 }
