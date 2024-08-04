@@ -9,7 +9,7 @@
 
     specialArgs = {
       website = import (fetchTarball "https://github.com/Noratrieb/website/archive/71d45291a352cc4e9e7ce1ffc078b5e36432b3f1.tar.gz");
-      blog = fetchTarball "https://github.com/Noratrieb/nilstrieb.github.io/archive/d2e858ddca7e59c9d9c843f7273ff0f75d65421e.tar.gz";
+      blog = fetchTarball "https://github.com/Noratrieb/nilstrieb.github.io/archive/8162ce0cff29f940507032be6b0692290d73594c.tar.gz";
       slides = fetchTarball "https://github.com/Noratrieb/slides/archive/0401f35c22b124b69447655f0c537badae9e223c.tar.gz";
 
       networkingConfig = {
