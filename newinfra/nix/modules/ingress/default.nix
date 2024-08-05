@@ -38,7 +38,7 @@ let caddy = nixpkgs-unstable.caddy; in
               }}
               file_server {
                 etag_file_extensions .sha256
-                precompressed zstd gzip
+                precompressed zstd gzip br
               }
           }
 
@@ -55,7 +55,7 @@ let caddy = nixpkgs-unstable.caddy; in
                   }}
                   file_server {
                     etag_file_extensions .sha256
-                    precompressed zstd gzip
+                    precompressed zstd gzip br
                   }
               }
             '' else ""
