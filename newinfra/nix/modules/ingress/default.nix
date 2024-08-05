@@ -2,10 +2,15 @@
 
 let caddy = nixpkgs-unstable.caddy; in
 {
-  networking.firewall.allowedTCPPorts = [
-    80
-    443
-  ];
+  networking.firewall = {
+    allowedTCPPorts = [
+      80 # HTTP
+      443 # HTTPS
+    ];
+    allowedUDPPorts = [
+      443 # HTTP/3 via QUIC
+    ];
+  };
 
   services.caddy = {
     enable = true;
