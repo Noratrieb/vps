@@ -16,7 +16,7 @@
           }
 
           http:// {
-            respond "This is an HTTP-only server, silly you. Go to https:// instead." 400
+            respond "This is an HTTPS-only server, silly you. Go to https:// instead." 418
           }
 
           ${config.networking.hostName}.infra.noratrieb.dev {
