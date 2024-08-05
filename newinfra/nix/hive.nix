@@ -140,12 +140,11 @@
       ./modules/contabo
       ./modules/wg-mesh
       ./modules/ingress
+      ./modules/podman
       ./apps/widetom
       ./apps/hugo-chat
       ./apps/uptime
     ];
-
-    age.secrets.docker_registry_password.file = ./secrets/docker_registry_password.age;
 
     deployment.tags = [ "ingress" "eu" "apps" "wg" ];
     system.stateVersion = "23.11";
