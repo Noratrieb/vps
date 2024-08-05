@@ -14,6 +14,8 @@
           }
 
           ${config.networking.hostName}.infra.noratrieb.dev {
+              encode zstd gzip
+              header -Last-Modified
               root * ${./debugging-page}
               file_server
           }
@@ -22,6 +24,8 @@
             if name == "vps1" then
             builtins.readFile ./Caddyfile + ''
               noratrieb.dev {
+                  encode zstd gzip
+                  header -Last-Modified
                   root * ${website {inherit pkgs slides blog;}}
                   file_server
               }

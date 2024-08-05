@@ -31,19 +31,23 @@ www.noratrieb.dev {
 }
 
 uptime.noratrieb.dev {
+	encode zstd gzip
 	reverse_proxy * localhost:5010
 }
 
 hugo-chat.noratrieb.dev {
+	encode zstd gzip
 	reverse_proxy * localhost:5002
 }
 
 api.hugo-chat.noratrieb.dev {
 	import cors https://hugo-chat.noratrieb.dev "DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type"
+	encode zstd gzip
 	reverse_proxy * localhost:5001
 }
 
 bisect-rustc.noratrieb.dev {
+	encode zstd gzip
 	reverse_proxy * localhost:5005
 }
 
