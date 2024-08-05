@@ -12,6 +12,8 @@
     git-crypt
     opentofu
     wireguard-tools
+    python311Packages.zstandard
+    python311Packages.brotli
     (import (builtins.fetchTarball "https://github.com/ryantm/agenix/archive/de96bd907d5fbc3b14fc33ad37d1b9a3cb15edc6.tar.gz") { }).agenix
   ];
 }
