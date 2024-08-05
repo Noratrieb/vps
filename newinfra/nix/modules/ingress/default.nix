@@ -1,5 +1,6 @@
 { pkgs, config, lib, name, website, slides, blog, ... }: {
   networking.firewall.allowedTCPPorts = [
+    80
     443
   ];
 
@@ -11,6 +12,11 @@
         ''
           {
               email nilstrieb@proton.me
+              auto_https disable_redirects
+          }
+
+          http:// {
+            respond "This is an HTTP-only server, silly you. Go to https:// instead." 400
           }
 
           ${config.networking.hostName}.infra.noratrieb.dev {
