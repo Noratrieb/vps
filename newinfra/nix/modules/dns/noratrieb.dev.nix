@@ -41,10 +41,11 @@ let
         docker = vps2;
 
         # --- apps
-        uptime = vps1;
+        bisect-rustc = vps1;
         hugo-chat = vps1 // {
           subdomains.api = vps1;
         };
+        uptime = vps1;
 
         # --- fun shit
         localhost.A = [ (a "127.0.0.1") ];

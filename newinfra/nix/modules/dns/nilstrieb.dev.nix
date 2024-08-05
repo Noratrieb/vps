@@ -42,7 +42,6 @@ let
         ns2 = dns2;
 
         # apps
-        bisect-rustc = vps2;
         cors-school = vps2 // {
           subdomains.api = vps2;
         };
@@ -52,6 +51,7 @@ let
         localhost.A = [ (a "127.0.0.1") ];
 
         # --- retired:
+        bisect-rustc = vps1;
         blog = vps1;
         www = vps1;
         uptime = vps1;

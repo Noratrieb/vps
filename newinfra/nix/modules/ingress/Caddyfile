@@ -1,23 +1,23 @@
 # https://gist.github.com/ryanburnette/d13575c9ced201e73f8169d3a793c1a3
 (cors) {
-	@cors_preflight{args.0} method OPTIONS
-	@cors{args.0} header Origin {args.0}
+	@cors_preflight{args[0]} method OPTIONS
+	@cors{args[0]} header Origin {args[0]}
 
-	handle @cors_preflight{args.0} {
+	handle @cors_preflight{args[0]} {
 		header {
-			Access-Control-Allow-Origin "{args.0}"
+			Access-Control-Allow-Origin "{args[0]}"
 			Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE, OPTIONS"
 			Access-Control-Allow-Credentials "false"
-			Access-Control-Allow-Headers "${args.1}"
+			Access-Control-Allow-Headers "${args[1]}"
 			Access-Control-Max-Age "86400"
 			defer
 		}
 		respond "" 204
 	}
 
-	handle @cors{args.0} {
+	handle @cors{args[0]} {
 		header {
-			Access-Control-Allow-Origin "{args.0}"
+			Access-Control-Allow-Origin "{args[0]}"
 			Access-Control-Expose-Headers *
 			defer
 		}
@@ -43,6 +43,10 @@ api.hugo-chat.noratrieb.dev {
 	reverse_proxy * localhost:5001
 }
 
+bisect-rustc.noratrieb.dev {
+	reverse_proxy * localhost:5005
+}
+
 ################################################################
 # deadname redirects
 nilstrieb.dev {
@@ -57,12 +61,15 @@ blog.nilstrieb.dev {
 	redir https://noratrieb.dev/blog{uri} permanent
 }
 
+bisect-rustc.nilstrieb.dev {
+	redir https://bisect-rustc.dev/blog{uri} permanent
+}
+
 hugo-chat.nilstrieb.dev {
 	redir https://hugo-chat.noratrieb.dev{uri} permanent
 }
 
 api.hugo-chat.nilstrieb.dev {
-	import cors https://hugo-chat.nilstrieb.dev "DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type"
 	redir https://api.hugo-chat.noratrieb.dev{uri} permanent
 }
 

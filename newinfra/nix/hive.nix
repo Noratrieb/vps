@@ -141,9 +141,12 @@
       ./modules/wg-mesh
       ./modules/ingress
       ./modules/podman
+
+      # apps
       ./apps/widetom
       ./apps/hugo-chat
       ./apps/uptime
+      ./apps/cargo-bisect-rustc-service
     ];
 
     deployment.tags = [ "ingress" "eu" "apps" "wg" ];

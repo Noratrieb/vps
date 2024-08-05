@@ -28,18 +28,6 @@ services:
     environment:
       BOT_TOKEN: "${KILLUA_BOT_TOKEN}"
       KILLUA_JSON_PATH: /app/config/trivia_questions.json
-  cargo_bisect_rustc_service:
-    container_name: cargo-bisect-rustc-service
-    image: "docker.noratrieb.dev/cargo-bisect-rustc-service:316a4044"
-    restart: always
-    volumes:
-      - "/apps/bisect-rustc-service/db.sqlite:/home/bisector/db.sqlite"
-    environment:
-      SQLITE_DB: /home/bisector/db.sqlite
-    ports:
-      - "5005:4000"
-    networks:
-      - prometheus
   #### Karin
   karin_bot_db:
     container_name: karin-bot-db
