@@ -160,6 +160,7 @@
       ./modules/contabo
       ./modules/wg-mesh
       ./modules/ingress
+      ./modules/garage
     ];
 
     deployment.tags = [ "eu" "apps" "wg" ];
@@ -170,6 +171,7 @@
       (modulesPath + "/profiles/qemu-guest.nix")
       ./modules/ingress
       ./modules/wg-mesh
+      ./modules/garage
     ];
 
     deployment.tags = [ "eu" "apps" "hetzner" ];
@@ -219,6 +221,7 @@
       ./modules/contabo
       ./modules/ingress
       ./modules/wg-mesh
+      ./modules/garage
     ];
 
     deployment.tags = [ "eu" "apps" "wg" ];
