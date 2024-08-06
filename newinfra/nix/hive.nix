@@ -150,6 +150,7 @@
       ./apps/hugo-chat
       ./apps/uptime
       ./apps/cargo-bisect-rustc-service
+      ./apps/registry
     ];
 
     deployment.tags = [ "ingress" "eu" "apps" "wg" ];

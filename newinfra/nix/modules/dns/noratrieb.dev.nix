@@ -43,10 +43,11 @@ let
 
         # --- legacy crap
         vps2 = vps2; # TODO REMOVE
-        docker = vps2;
+        old-docker = vps2;
 
         # --- apps
         bisect-rustc = vps1;
+        docker = vps1;
         hugo-chat = vps1 // {
           subdomains.api = vps1;
         };

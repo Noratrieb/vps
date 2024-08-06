@@ -16,6 +16,8 @@
 ## buckets
 
 - `caddy-store`: Store for Caddy webservers
+    - key `caddy`
+- `docker-registry`
 
 ## keys
 

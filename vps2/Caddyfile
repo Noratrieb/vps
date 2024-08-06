@@ -33,10 +33,7 @@ vps2.nilstrieb.dev {
 	file_server
 }
 
-docker.nilstrieb.dev {
-	reverse_proxy * localhost:5000
-}
-docker.noratrieb.dev {
+old-docker.noratrieb.dev {
 	reverse_proxy * localhost:5000
 }
 

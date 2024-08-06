@@ -14,7 +14,7 @@ storage:
     enabled: true
 http:
   addr: 0.0.0.0:5000
-  host: https://docker.noratrieb.dev
+  host: https://old-docker.noratrieb.dev
   draintimeout: 60s
   headers:
     X-Content-Type-Options: [nosniff]

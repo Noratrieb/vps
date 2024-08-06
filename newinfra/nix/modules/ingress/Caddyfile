@@ -49,6 +49,10 @@ bisect-rustc.noratrieb.dev {
 	reverse_proxy * localhost:5005
 }
 
+docker.noratrieb.dev {
+	reverse_proxy * localhost:5000
+}
+
 ################################################################
 # deadname redirects
 nilstrieb.dev {
@@ -65,6 +69,10 @@ blog.nilstrieb.dev {
 
 bisect-rustc.nilstrieb.dev {
 	redir https://bisect-rustc.dev/blog{uri} permanent
+}
+
+docker.nilstrieb.dev {
+	redir https://docker.noratrieb.dev{uri} permanent
 }
 
 hugo-chat.nilstrieb.dev {
