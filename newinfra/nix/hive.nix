@@ -29,7 +29,7 @@
           wg = {
             privateIP = "10.0.0.1";
             publicKey = "5tg3w/TiCuCeKIBJCd6lHUeNjGEA76abT1OXnhNVyFQ=";
-            peers = [ "vps3" "vps4" ];
+            peers = [ "vps3" "vps4" "vps5" ];
           };
         };
         vps3 = {
@@ -142,6 +142,7 @@
       ./modules/contabo
       ./modules/wg-mesh
       ./modules/ingress
+      ./modules/garage
       ./modules/podman
 
       # apps

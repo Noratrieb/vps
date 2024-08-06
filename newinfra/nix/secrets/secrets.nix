@@ -11,6 +11,7 @@ in
   "hugochat_db_password.age".publicKeys = [ vps1 ];
   "minio_env_file.age".publicKeys = [ vps1 vps3 ];
   "garage_secrets.age".publicKeys = [ vps1 vps3 vps4 vps5 ];
+  "caddy_s3_key_secret.age".publicKeys = [ vps1 vps3 vps4 vps5 ];
   "wg_private_vps1.age".publicKeys = [ vps1 ];
   "wg_private_vps3.age".publicKeys = [ vps3 ];
   "wg_private_vps4.age".publicKeys = [ vps4 ];

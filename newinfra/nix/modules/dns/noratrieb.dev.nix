@@ -12,10 +12,15 @@ let
       vps2 = {
         A = [ "184.174.32.252" ];
       };
+
+      combine = hosts: {
+        A = lib.lists.flatten (map (host: if builtins.hasAttr "A" host then host.A else [ ]) hosts);
+        AAAA = lib.lists.flatten (map (host: if builtins.hasAttr "AAAA" host then host.AAAA else [ ]) hosts);
+      };
     in
     with hostsToDns;
-    # vps1 contains root noratrieb.dev
-    vps1 // {
+    # vps{1,3,4} contains root noratrieb.dev
+    combine [ vps1 vps3 vps4 ] // {
       SOA = {
         nameServer = "ns1.noratrieb.dev.";
         adminEmail = "void@noratrieb.dev";
