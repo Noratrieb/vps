@@ -93,6 +93,7 @@
     };
   };
 
+  networking.firewall.interfaces.wg0.allowedTCPPorts = [ 3100 ]; # loki
   age.secrets.loki_env.file = ../../secrets/loki_env.age;
   systemd.services.loki.serviceConfig.EnvironmentFile = config.age.secrets.loki_env.path;
   services.loki = {
@@ -141,33 +142,4 @@
     mkdir -p /var/lib/loki/{index,cache}
     chown ${config.services.loki.user}:${config.services.loki.group} -R /var/lib/loki
   '';
-
-  services.promtail = {
-    enable = true;
-    configuration = {
-      server = {
-        disable = true;
-      };
-      clients = [
-        {
-          url = "http://localhost:3100/loki/api/v1/push";
-        }
-      ];
-      scrape_configs = [
-        {
-          job_name = "journal";
-          journal = {
-            max_age = "12h";
-            labels = {
-              job = "systemd-journal";
-            };
-          };
-          relabel_configs = [{
-            source_labels = [ "__journal__systemd_unit" ];
-            target_label = "unit";
-          }];
-        }
-      ];
-    };
-  };
 }

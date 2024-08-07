@@ -22,13 +22,6 @@
   boot.tmp.cleanOnBoot = true;
   zramSwap.enable = true;
 
-  networking.firewall.interfaces.wg0.allowedTCPPorts = [ 9100 ];
-  services.prometheus.exporters = {
-    node = {
-      enable = true;
-    };
-  };
-
   services.openssh = {
     enable = true;
     openFirewall = true;
@@ -41,4 +34,42 @@
     enable = true;
   };
   system.nixos.distroName = "NixOS (gay 🏳️‍⚧️)";
+
+  # monitoring
+
+  networking.firewall.interfaces.wg0.allowedTCPPorts = [ 9100 ];
+  services.prometheus.exporters = {
+    node = {
+      enable = true;
+    };
+  };
+  services.promtail = {
+    enable = true;
+    configuration = {
+      server = {
+        disable = true;
+      };
+      clients = [
+        {
+          url = "http://vps3.local:3100/loki/api/v1/push";
+        }
+      ];
+      scrape_configs = [
+        {
+          job_name = "journal";
+          journal = {
+            max_age = "12h";
+            labels = {
+              job = "systemd-journal";
+              node = name;
+            };
+          };
+          relabel_configs = [{
+            source_labels = [ "__journal__systemd_unit" ];
+            target_label = "unit";
+          }];
+        }
+      ];
+    };
+  };
 }
