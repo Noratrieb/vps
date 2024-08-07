@@ -12,23 +12,23 @@
     },
     {
       "name": "docker.nilstrieb.dev",
-      "url": "http://docker.nilstrieb.dev"
+      "url": "https://docker.nilstrieb.dev"
     },
     {
       "name": "vps1.nilstrieb.dev",
-      "url": "http://vps1.nilstrieb.dev"
+      "url": "https://vps1.nilstrieb.dev"
     },
     {
       "name": "vps2.nilstrieb.dev",
-      "url": "http://vps2.nilstrieb.dev"
+      "url": "https://vps2.nilstrieb.dev"
     },
     {
       "name": "bisect-rustc.nilstrieb.dev",
-      "url": "http://bisect-rustc.nilstrieb.dev"
+      "url": "https://bisect-rustc.nilstrieb.dev"
     },
     {
       "name": "hugo-chat.nilstrieb.dev",
-      "url": "http://hugo-chat.nilstrieb.dev"
+      "url": "https://hugo-chat.nilstrieb.dev"
     },
     {
       "name": "api.hugo-chat.nilstrieb.dev",
@@ -36,7 +36,7 @@
     },
     {
       "name": "cors-school.nilstrieb.dev",
-      "url": "http://cors-school.nilstrieb.dev"
+      "url": "https://cors-school.nilstrieb.dev"
     },
     {
       "name": "api.cors-school.nilstrieb.dev",
