@@ -21,7 +21,9 @@
         };
         dns2 = {
           publicIPv4 = "128.140.3.7";
-          publicIPv6 = "2a01:4f8:c2c:d616::";
+          # somehow this doesnt quite work yet, keep it out of DNS records
+          #publicIPv6 = "2a01:4f8:c2c:d616::";
+          publicIPv6 = null;
         };
         vps1 = {
           publicIPv4 = "161.97.165.1";
@@ -43,7 +45,9 @@
         };
         vps4 = {
           publicIPv4 = "195.201.147.17";
-          publicIPv6 = "2a01:4f8:1c1c:cb18::";
+          # somehow this doesnt quite work yet, keep it out of DNS records
+          #publicIPv6 = "2a01:4f8:1c1c:cb18::1";
+          publicIPv6 = null;
           wg = {
             privateIP = "10.0.0.4";
             publicKey = "+n2XKKaSFdCanEGRd41cvnuwJ0URY0HsnpBl6ZrSBRs=";
@@ -163,6 +167,7 @@
       ./modules/wg-mesh
       ./modules/ingress
       ./modules/garage
+      ./modules/prometheus
     ];
 
     deployment.tags = [ "eu" "apps" "wg" ];

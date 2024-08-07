@@ -21,6 +21,13 @@
   boot.tmp.cleanOnBoot = true;
   zramSwap.enable = true;
 
+  networking.firewall.interfaces.wg0.allowedTCPPorts = [ 9100 ];
+  services.prometheus.exporters = {
+    node = {
+      enable = true;
+    };
+  };
+
   services.openssh = {
     enable = true;
     openFirewall = true;

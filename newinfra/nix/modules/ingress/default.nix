@@ -15,6 +15,8 @@ in
 {
   environment.systemPackages = [ caddy ];
 
+  networking.firewall.interfaces.wg0.allowedTCPPorts = [ 9010 ]; # metrics
+
   networking.firewall = {
     allowedTCPPorts = [
       80 # HTTP
@@ -54,7 +56,7 @@ in
             if name == "vps1" || name == "vps3" || name == "vps4" then ''
             noratrieb.dev {
                 encode zstd gzip
-                header -Last-Modified
+                header -Last-Modified2a01:4f8:1c1c:cb18::
                 root * ${import ./caddy-static-prepare {
                   name = "website";
                   src = website { inherit pkgs slides blog; };
