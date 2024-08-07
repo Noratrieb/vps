@@ -1,4 +1,6 @@
 let
+  dns1 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINBKoyDczFntyQyWj47Z8JeewKcCobksd415WM1W56eS";
+  dns2 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINZ1yLdDhI2Vou/9qrPIUP8RU8Sg0WxLI2njtP5hkdL7";
   vps1 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII4Xj3TsDPStoHquTfOlyxShbA/kgMfQskKN8jpfiY4R";
   vps3 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHvupo7d9YMZw56qhjB+tZPijxiG1dKChLpkOWZN0Y7C";
   vps4 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpoLgBTWj1BcNxXVdM26jDBZl+BCtUTj20Wv4sZdCHz";
@@ -15,6 +17,8 @@ in
   "registry_htpasswd.age".publicKeys = [ vps1 ];
   "registry_s3_key_secret.age".publicKeys = [ vps1 ];
   "grafana_admin_password.age".publicKeys = [ vps3 ];
+  "wg_private_dns1.age".publicKeys = [ dns1 ];
+  "wg_private_dns2.age".publicKeys = [ dns2 ];
   "wg_private_vps1.age".publicKeys = [ vps1 ];
   "wg_private_vps3.age".publicKeys = [ vps3 ];
   "wg_private_vps4.age".publicKeys = [ vps4 ];

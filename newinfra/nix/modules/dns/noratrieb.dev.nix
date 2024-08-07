@@ -42,7 +42,6 @@ let
         www = vps1;
 
         # --- legacy crap
-        vps2 = vps2; # TODO REMOVE
         old-docker = vps2;
 
         # --- apps

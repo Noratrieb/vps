@@ -18,12 +18,22 @@
         dns1 = {
           publicIPv4 = "154.38.163.74";
           publicIPv6 = null;
+          wg = {
+            privateIP = "10.0.1.1";
+            publicKey = "7jy2q93xYBHG5yKqLmNuMWSuFMnUGWXVuKQ1yMmxoV4=";
+            peers = [ "vps3" ];
+          };
         };
         dns2 = {
           publicIPv4 = "128.140.3.7";
           # somehow this doesnt quite work yet, keep it out of DNS records
           #publicIPv6 = "2a01:4f8:c2c:d616::";
           publicIPv6 = null;
+          wg = {
+            privateIP = "10.0.1.2";
+            publicKey = "yfOc/q5M+2DWPoZ4ZgwrTYYkviQxGxRWpcBCDcauDnc=";
+            peers = [ "vps3" ];
+          };
         };
         vps1 = {
           publicIPv4 = "161.97.165.1";
@@ -40,7 +50,7 @@
           wg = {
             privateIP = "10.0.0.3";
             publicKey = "pdUxG1vhmYraKzIIEFxTRAMhGwGztBL/Ly5icJUV3g0=";
-            peers = [ "vps1" "vps4" "vps5" ];
+            peers = [ "vps1" "vps4" "vps5" "dns1" "dns2" ];
           };
         };
         vps4 = {
@@ -86,6 +96,7 @@
       (modulesPath + "/profiles/qemu-guest.nix")
       ./modules/contabo
       ./modules/dns
+      ./modules/wg-mesh
     ];
 
     # The name and nodes parameters are supported in Colmena,
@@ -97,6 +108,7 @@
     imports = [
       (modulesPath + "/profiles/qemu-guest.nix")
       ./modules/dns
+      ./modules/wg-mesh
     ];
 
     deployment.tags = [ "dns" "eu" "hetzner" ];

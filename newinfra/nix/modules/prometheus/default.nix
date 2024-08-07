@@ -12,6 +12,8 @@
       {
         job_name = "node";
         static_configs = [
+          { targets = [ "dns1.local:9100" ]; }
+          { targets = [ "dns2.local:9100" ]; }
           { targets = [ "vps1.local:9100" ]; }
           { targets = [ "vps3.local:9100" ]; }
           { targets = [ "vps4.local:9100" ]; }
@@ -31,6 +33,22 @@
         job_name = "docker-registry";
         static_configs = [
           { targets = [ "vps1.local:9011" ]; }
+        ];
+      }
+      {
+        job_name = "garage";
+        static_configs = [
+          { targets = [ "vps1.local:3903" ]; }
+          { targets = [ "vps3.local:3903" ]; }
+          { targets = [ "vps4.local:3903" ]; }
+          { targets = [ "vps5.local:3903" ]; }
+        ];
+      }
+      {
+        job_name = "knot";
+        static_configs = [
+          { targets = [ "dns1.local:9433" ]; }
+          { targets = [ "dns2.local:9433" ]; }
         ];
       }
     ];

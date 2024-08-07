@@ -39,4 +39,10 @@
       '';
     };
   };
+
+  networking.firewall.interfaces.wg0.allowedTCPPorts = [ 9433 ]; # metrics
+  services.prometheus.exporters.knot = {
+    enable = true;
+    port = 9433;
+  };
 }
