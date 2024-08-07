@@ -11,6 +11,7 @@
     curl
     traceroute
     dnsutils
+    nftables
   ];
 
   networking.hostName = name;
