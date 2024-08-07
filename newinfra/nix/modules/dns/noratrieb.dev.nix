@@ -61,6 +61,7 @@ let
         ];
 
         # --- infra
+        grafana = vps3;
         infra.subdomains = hostsToDns;
       };
     };

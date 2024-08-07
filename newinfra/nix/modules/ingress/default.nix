@@ -71,8 +71,8 @@ in
           }
 
           ${
-            if name == "vps1" then
-            builtins.readFile ./Caddyfile else ""
+            if name == "vps1" || name == "vps3" then
+            builtins.readFile ./${name}.Caddyfile else ""
           }
         ''
       );

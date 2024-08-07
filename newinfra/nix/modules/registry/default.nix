@@ -10,6 +10,8 @@
     };
   };
 
+  networking.firewall.interfaces.wg0.allowedTCPPorts = [ 9011 ]; # metrics
+
   systemd.services.docker-registry.serviceConfig.EnvironmentFile = config.age.secrets.registry_s3_key_secret.path;
   services.dockerRegistry = {
     enable = true;
@@ -37,6 +39,13 @@
       http = {
         host = "https://docker.noratrieb.dev";
         draintimeout = "60s";
+        debug = {
+          addr = ":9011";
+          prometheus = {
+            enabled = true;
+            path = "/metrics";
+          };
+        };
       };
       auth.htpasswd = {
         # TODO: ugh :(
