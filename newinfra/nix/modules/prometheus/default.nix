@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ config, lib, ... }: {
   services.prometheus = {
     enable = true;
     globalConfig = { };
@@ -55,7 +55,6 @@
   };
 
   age.secrets.grafana_admin_password.file = ../../secrets/grafana_admin_password.age;
-
   systemd.services.grafana.serviceConfig.EnvironmentFile = config.age.secrets.grafana_admin_password.path;
   services.grafana = {
     enable = true;
@@ -83,8 +82,92 @@
               prometheusType = "Prometheus";
             };
           }
+          {
+            name = "loki";
+            type = "loki";
+            access = "proxy";
+            url = "http://vps3.local:3100";
+          }
         ];
       };
+    };
+  };
+
+  age.secrets.loki_env.file = ../../secrets/loki_env.age;
+  systemd.services.loki.serviceConfig.EnvironmentFile = config.age.secrets.loki_env.path;
+  services.loki = {
+    enable = true;
+    extraFlags = [ "-config.expand-env=true" ];
+    configuration = {
+      auth_enabled = false;
+      server = {
+        http_listen_port = 3100;
+      };
+      common = {
+        ring = {
+          instance_addr = "127.0.0.1";
+          kvstore.store = "inmemory";
+        };
+        replication_factor = 1;
+        path_prefix = "/var/lib/loki";
+      };
+      schema_config = {
+        configs = [
+          {
+            from = "2020-05-15";
+            store = "tsdb";
+            object_store = "s3";
+            schema = "v13";
+            index = {
+              prefix = "index_";
+              period = "24h";
+            };
+          }
+        ];
+      };
+      storage_config = {
+        tsdb_shipper = {
+          active_index_directory = "/var/lib/loki/index";
+          cache_location = "/var/lib/loki/cache";
+        };
+        aws = {
+          s3 = "s3://\${ACCESS_KEY}:\${SECRET_KEY}@http://127.0.0.1:3900/loki";
+          insecure = true;
+        };
+      };
+    };
+  };
+  system.activationScripts.makeLokiDir = lib.stringAfter [ "var" ] ''
+    mkdir -p /var/lib/loki/{index,cache}
+    chown ${config.services.loki.user}:${config.services.loki.group} -R /var/lib/loki
+  '';
+
+  services.promtail = {
+    enable = true;
+    configuration = {
+      server = {
+        disable = true;
+      };
+      clients = [
+        {
+          url = "http://localhost:3100/loki/api/v1/push";
+        }
+      ];
+      scrape_configs = [
+        {
+          job_name = "journal";
+          journal = {
+            max_age = "12h";
+            labels = {
+              job = "systemd-journal";
+            };
+          };
+          relabel_configs = [{
+            source_labels = [ "__journal__systemd_unit" ];
+            target_label = "unit";
+          }];
+        }
+      ];
     };
   };
 }
