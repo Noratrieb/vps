@@ -25,64 +25,78 @@
 }
 
 www.noratrieb.dev {
+	log
 	redir https://noratrieb.dev{uri} permanent
 }
 
 uptime.noratrieb.dev {
+	log
 	encode zstd gzip
 	reverse_proxy * localhost:5010
 }
 
 hugo-chat.noratrieb.dev {
+	log
 	encode zstd gzip
 	reverse_proxy * localhost:5002
 }
 
 api.hugo-chat.noratrieb.dev {
+	log
 	import cors https://hugo-chat.noratrieb.dev "DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type"
 	encode zstd gzip
 	reverse_proxy * localhost:5001
 }
 
 bisect-rustc.noratrieb.dev {
+	log
 	encode zstd gzip
 	reverse_proxy * localhost:5005
 }
 
 docker.noratrieb.dev {
+	log
 	reverse_proxy * localhost:5000
 }
 
 ################################################################
 # deadname redirects
 nilstrieb.dev {
+	log
 	redir https://noratrieb.dev{uri} permanent
 }
 
 www.nilstrieb.dev {
+	log
 	redir https://noratrieb.dev{uri} permanent
 }
 
 blog.nilstrieb.dev {
+	log
 	redir https://noratrieb.dev/blog{uri} permanent
 }
 
 bisect-rustc.nilstrieb.dev {
+	log
 	redir https://bisect-rustc.dev/blog{uri} permanent
 }
 
 docker.nilstrieb.dev {
+	log
 	redir https://docker.noratrieb.dev{uri} permanent
 }
 
 hugo-chat.nilstrieb.dev {
+	log
 	redir https://hugo-chat.noratrieb.dev{uri} permanent
 }
 
 api.hugo-chat.nilstrieb.dev {
+	log
 	redir https://api.hugo-chat.noratrieb.dev{uri} permanent
 }
 
 uptime.nilstrieb.dev {
+	log
 	redir https://uptime.noratrieb.dev{uri} permanent
 }

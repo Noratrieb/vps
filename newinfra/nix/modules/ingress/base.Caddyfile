@@ -14,13 +14,20 @@
 	servers {
 		metrics
 	}
+
+	log default {
+		output stdout
+		format json
+	}
 }
 
 http:// {
+	log
 	respond "This is an HTTPS-only server, silly you. Go to https:// instead." 418
 }
 
 # HTTP
 :9010 {
+	log
 	metrics /metrics
 }

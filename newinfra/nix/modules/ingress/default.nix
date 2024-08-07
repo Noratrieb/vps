@@ -39,6 +39,7 @@ in
         builtins.readFile ./base.Caddyfile +
         ''
           ${config.networking.hostName}.infra.noratrieb.dev {
+              log
               encode zstd gzip
               header -Last-Modified
               root * ${import ./caddy-static-prepare {
@@ -55,6 +56,7 @@ in
           ${
             if name == "vps1" || name == "vps3" || name == "vps4" then ''
             noratrieb.dev {
+                log
                 encode zstd gzip
                 header -Last-Modified2a01:4f8:1c1c:cb18::
                 root * ${import ./caddy-static-prepare {
