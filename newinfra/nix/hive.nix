@@ -242,15 +242,6 @@
       ./modules/ingress
       ./modules/wg-mesh
       ./modules/garage
-      ./modules/backup
-    ];
-
-    services.custom-backup.jobs = [
-      {
-        app = "testapp";
-        file = "/etc/hosts";
-        environmentFile = pkgs.writeText "env" "MyEnv=true\n";
-      }
     ];
 
     deployment.tags = [ "eu" "apps" "wg" ];

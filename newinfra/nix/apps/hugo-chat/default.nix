@@ -40,6 +40,17 @@ in
     };
   };
 
+  services.custom-backup.jobs = [
+    {
+      app = "hugo-chat";
+      pgDump = {
+        containerName = "hugo-chat-db";
+        dbName = "postgres";
+        userName = "postgres";
+      };
+    }
+  ];
+
   # https://www.reddit.com/r/NixOS/comments/13e5w6b/does_anyone_have_a_working_nixos_ocicontainers/
   systemd.services.init-hugo-chat-podman-network = {
     description = "Create the network bridge for hugo-chat.";

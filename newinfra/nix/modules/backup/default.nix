@@ -11,9 +11,25 @@ let
         default = null;
       };
       file = mkOption {
-        type = types.string;
+        type = types.nullOr types.string;
+        default = null;
       };
-      #pg_dump = { };
+      pgDump = mkOption {
+        type = types.nullOr (types.submodule ({ ... }: {
+          options = {
+            containerName = mkOption {
+              type = types.string;
+            };
+            dbName = mkOption {
+              type = types.string;
+            };
+            userName = mkOption {
+              type = types.string;
+            };
+          };
+        }));
+        default = null;
+      };
       #mongo_dump = { };
     };
   };
@@ -33,10 +49,12 @@ in
       backupConfig = {
         files = builtins.map (job: { app = job.app; file = job.file; })
           (builtins.filter (job: job.file != null) cfg.jobs);
+        pg_dumps = builtins.map (job: { app = job.app; } // job.pgDump)
+          (builtins.filter (job: job.pgDump != null) cfg.jobs);
       };
       backupScript = pkgs.writeShellApplication {
         name = "backup";
-        runtimeInputs = with pkgs; [ jq minio-client getent xz ];
+        runtimeInputs = with pkgs; [ podman jq minio-client getent xz ];
         text = builtins.readFile ./backup.sh;
       };
     in
@@ -46,7 +64,8 @@ in
       systemd.services.custom-backup = {
         startAt = "daily";
         serviceConfig = {
-          DynamicUser = true;
+          # TODO: can we use a dynamic user?
+          #DynamicUser = true;
           ExecStart = "${backupScript}/bin/backup";
           Environment = [
             "CONFIG_FILE=${pkgs.writeText "backup-config.json" (builtins.toJSON backupConfig)}"
