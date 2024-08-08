@@ -152,6 +152,7 @@
     '';
   };
 
+  # VPS1 is the primary app server.
   vps1 = { name, nodes, modulesPath, config, lib, ... }: {
     imports = [
       (modulesPath + "/profiles/qemu-guest.nix")
@@ -171,9 +172,10 @@
       ./apps/killua
     ];
 
-    deployment.tags = [ "ingress" "eu" "apps" "wg" ];
+    deployment.tags = [ "ingress" "eu" "apps" ];
     system.stateVersion = "23.11";
   };
+  # VPS3 is the primary monitoring/metrics server.
   vps3 = { name, nodes, modulesPath, config, ... }: {
     imports = [
       (modulesPath + "/profiles/qemu-guest.nix")
@@ -184,9 +186,10 @@
       ./modules/prometheus
     ];
 
-    deployment.tags = [ "eu" "apps" "wg" ];
+    deployment.tags = [ "eu" "apps" ];
     system.stateVersion = "23.11";
   };
+  # VPS4 exists. It's useful for garage replication but not much more.
   vps4 = { lib, modulesPath, ... }: {
     imports = [
       (modulesPath + "/profiles/qemu-guest.nix")
@@ -236,6 +239,7 @@
     
     '';
   };
+  # VPS5 is the primary test server, where new things are being deployed that could break stuff maybe.
   vps5 = { name, nodes, modulesPath, config, pkgs, ... }: {
     imports = [
       (modulesPath + "/profiles/qemu-guest.nix")
@@ -245,7 +249,7 @@
       ./modules/garage
     ];
 
-    deployment.tags = [ "eu" "apps" "wg" ];
+    deployment.tags = [ "eu" "apps" ];
     system.stateVersion = "23.11";
   };
 }

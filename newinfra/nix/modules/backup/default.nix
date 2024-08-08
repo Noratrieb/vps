@@ -3,7 +3,7 @@ let
   jobOptions = { ... }: {
     options = {
       app = mkOption {
-        type = types.string;
+        type = types.str;
         description = "The app name, used as the directory in the bucket";
       };
       environmentFile = mkOption {
@@ -11,20 +11,20 @@ let
         default = null;
       };
       file = mkOption {
-        type = types.nullOr types.string;
+        type = types.nullOr types.str;
         default = null;
       };
       pgDump = mkOption {
         type = types.nullOr (types.submodule ({ ... }: {
           options = {
             containerName = mkOption {
-              type = types.string;
+              type = types.str;
             };
             dbName = mkOption {
-              type = types.string;
+              type = types.str;
             };
             userName = mkOption {
-              type = types.string;
+              type = types.str;
             };
           };
         }));
