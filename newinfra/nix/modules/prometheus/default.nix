@@ -98,7 +98,7 @@
   systemd.services.loki.serviceConfig.EnvironmentFile = config.age.secrets.loki_env.path;
   services.loki = {
     enable = true;
-    extraFlags = [ "-config.expand-env=true" ];
+    extraFlags = [ "-config.expand-env=true" /*"-print-config-stderr"*/ ];
     configuration = {
       auth_enabled = false;
       server = {
@@ -132,8 +132,13 @@
           cache_location = "/var/lib/loki/cache";
         };
         aws = {
-          s3 = "s3://\${ACCESS_KEY}:\${SECRET_KEY}@http://127.0.0.1:3900/loki";
+          access_key_id = "\${ACCESS_KEY}";
+          secret_access_key = "\${SECRET_KEY}";
+          endpoint = "127.0.0.1:3900";
+          s3forcepathstyle = true;
+          region = "garage";
           insecure = true;
+          s3 = "s3://\${ACCESS_KEY}:\${SECRET_KEY}@127.0.0.1:3900/loki";
         };
       };
     };

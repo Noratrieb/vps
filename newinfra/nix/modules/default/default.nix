@@ -58,16 +58,27 @@
         {
           job_name = "journal";
           journal = {
-            max_age = "12h";
+            max_age = "24h";
             labels = {
               job = "systemd-journal";
               node = name;
             };
           };
-          relabel_configs = [{
-            source_labels = [ "__journal__systemd_unit" ];
-            target_label = "unit";
-          }];
+          relabel_configs = [
+            {
+              source_labels = [ "__journal__systemd_unit" ];
+              target_label = "unit";
+            }
+            {
+              source_labels = [ "__journal__hostname" ];
+              target_label = "host";
+            }
+            {
+              source_labels = [ "__journal_priority_keyword" ];
+              target_label = "severity";
+              regex = "(.+)";
+            }
+          ];
         }
       ];
     };
