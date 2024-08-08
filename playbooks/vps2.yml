@@ -15,14 +15,6 @@
         hour: "7"
         job: "/apps/backup.sh"
     #####
-    # APP: killua bot, /apps/killua
-    #####
-    - name: Create /apps/killua
-      ansible.builtin.file:
-        path: /apps/killua
-        state: directory
-        mode: "u=rwx,g=rx,o=rx"
-    #####
     # APP: karin bot, /apps/karin-bot
     #####
     - name: Create /apps/karin-bot

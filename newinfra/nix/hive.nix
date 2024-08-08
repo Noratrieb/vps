@@ -168,6 +168,7 @@
       ./apps/hugo-chat
       ./apps/uptime
       ./apps/cargo-bisect-rustc-service
+      ./apps/killua
     ];
 
     deployment.tags = [ "ingress" "eu" "apps" "wg" ];

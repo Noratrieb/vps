@@ -65,8 +65,6 @@ function upload_directory {
     rm "$tmppath"
 }
 
-upload_file "killua/trivia_questions.json"
-
 upload_pg_dump "cors-school" "cors-school-db" "davinci" "postgres"
 upload_pg_dump "openolat" "openolat-db" "oodb" "oodbu"
 
