@@ -21,6 +21,13 @@ in
     };
   };
 
+  services.custom-backup.jobs = [
+    {
+      app = "cargo-bisect-rustc-service";
+      file = "/var/lib/cargo-bisect-rustc-service/db.sqlite";
+    }
+  ];
+
   system.activationScripts.makeCargoBisectRustcServiceDir = lib.stringAfter [ "var" ] ''
     mkdir -p /var/lib/cargo-bisect-rustc-service/
     chmod ugo+w /var/lib/cargo-bisect-rustc-service/

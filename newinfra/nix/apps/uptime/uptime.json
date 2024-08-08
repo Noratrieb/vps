@@ -24,15 +24,15 @@
     },
     {
       "name": "bisect-rustc.nilstrieb.dev",
-      "url": "https://bisect-rustc.nilstrieb.dev"
+      "url": "https://bisect-rustc.noratrieb.dev"
     },
     {
       "name": "hugo-chat.nilstrieb.dev",
-      "url": "https://hugo-chat.nilstrieb.dev"
+      "url": "https://hugo-chat.noratrieb.dev"
     },
     {
       "name": "api.hugo-chat.nilstrieb.dev",
-      "url": "https://api.hugo-chat.nilstrieb.dev/api/v2/rooms"
+      "url": "https://api.hugo-chat.noratrieb.dev/api/v2/rooms"
     },
     {
       "name": "cors-school.nilstrieb.dev",

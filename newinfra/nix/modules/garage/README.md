@@ -21,9 +21,15 @@
     - key `docker-registry` RW
 - `loki`
     - key `loki` RW
+- `backups`
+    - key `backups` RW
 
 ## keys
 
 - `caddy`: `GK25e33d4ba20d54231e513b80`
 - `docker-registry`: `GK48011ee5b5ccbaf4233c0e40`
 - `loki`: `GK84ffae2a0728abff0f96667b`
+- `backups`: `GK8cb8454a6f650326562bff2f`
+
+- `admin`: `GKaead6cf5340e54a4a19d9490`
+    - RW permissions on ~every bucket

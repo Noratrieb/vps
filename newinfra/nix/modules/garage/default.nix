@@ -1,6 +1,10 @@
 { config, pkgs, name, ... }: {
   age.secrets.garage_secrets.file = ../../secrets/garage_secrets.age;
 
+  environment.systemPackages = with pkgs; [
+    minio-client
+  ];
+
   networking.firewall.interfaces.wg0.allowedTCPPorts = [
     3901 # RPC
     3903 # admin for metrics

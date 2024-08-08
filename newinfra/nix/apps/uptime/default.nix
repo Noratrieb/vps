@@ -29,6 +29,13 @@
     };
   };
 
+  services.custom-backup.jobs = [
+    {
+      app = "uptime";
+      file = "/var/lib/uptime/uptime.db";
+    }
+  ];
+
   system.activationScripts.makeUptimeDir = lib.stringAfter [ "var" ] ''
     mkdir -p /var/lib/uptime/
   '';
