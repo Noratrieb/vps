@@ -1,4 +1,4 @@
-{ pkgs, config, name, ... }: {
+{ pkgs, lib, config, name, pretense, ... }: {
   deployment.targetHost = "${config.networking.hostName}.infra.noratrieb.dev";
 
   imports = [
@@ -35,9 +35,28 @@
   };
   system.nixos.distroName = "NixOS (gay 🏳️‍⚧️)";
 
+  systemd.services.pretense = {
+    description = "pretense connection logger";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network.target" ];
+    serviceConfig = {
+      DynamicUser = true;
+      ExecStart = "${lib.getExe (pretense {inherit pkgs;})}";
+      AmbientCapabilities = "CAP_NET_BIND_SERVICE";
+      Environment = [
+        "PRETENSE_PORTS=23"
+        "PRETENSE_METRICS_PORT=9150"
+      ];
+    };
+  };
+  networking.firewall.allowedTCPPorts = [ 23 ];
+
   # monitoring
 
-  networking.firewall.interfaces.wg0.allowedTCPPorts = [ 9100 ];
+  networking.firewall.interfaces.wg0.allowedTCPPorts = [
+    9100 # node exporter
+    9150 # pretense exporter
+  ];
   services.prometheus.exporters = {
     node = {
       enable = true;

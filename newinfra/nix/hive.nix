@@ -14,6 +14,8 @@
       blog = fetchTarball "https://github.com/Noratrieb/nilstrieb.github.io/archive/8162ce0cff29f940507032be6b0692290d73594c.tar.gz";
       slides = fetchTarball "https://github.com/Noratrieb/slides/archive/0401f35c22b124b69447655f0c537badae9e223c.tar.gz";
 
+      pretense = import (fetchTarball "https://github.com/Noratrieb/pretense/archive/270b01fc1118dfd713c1c41530d1a7d98f04527d.tar.gz");
+
       networkingConfig = {
         dns1 = {
           publicIPv4 = "154.38.163.74";

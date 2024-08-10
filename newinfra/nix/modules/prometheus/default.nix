@@ -51,6 +51,17 @@
           { targets = [ "dns2.local:9433" ]; }
         ];
       }
+      {
+        job_name = "pretense";
+        static_configs = [
+          { targets = [ "dns1.local:9150" ]; }
+          { targets = [ "dns2.local:9150" ]; }
+          { targets = [ "vps1.local:9150" ]; }
+          { targets = [ "vps3.local:9150" ]; }
+          { targets = [ "vps4.local:9150" ]; }
+          { targets = [ "vps5.local:9150" ]; }
+        ];
+      }
     ];
   };
 
