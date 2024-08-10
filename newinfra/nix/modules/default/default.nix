@@ -44,12 +44,12 @@
       ExecStart = "${lib.getExe (pretense {inherit pkgs;})}";
       AmbientCapabilities = "CAP_NET_BIND_SERVICE";
       Environment = [
-        "PRETENSE_PORTS=23"
+        "PRETENSE_PORTS=23,3306,5432,1521" # telnet,mysql,postgres,oracle
         "PRETENSE_METRICS_PORT=9150"
       ];
     };
   };
-  networking.firewall.allowedTCPPorts = [ 23 ];
+  networking.firewall.allowedTCPPorts = [ 2 3306 5432 1521 ];
 
   # monitoring
 
