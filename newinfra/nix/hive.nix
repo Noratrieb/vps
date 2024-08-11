@@ -15,6 +15,7 @@
       slides = fetchTarball "https://github.com/Noratrieb/slides/archive/0401f35c22b124b69447655f0c537badae9e223c.tar.gz";
 
       pretense = import (fetchTarball "https://github.com/Noratrieb/pretense/archive/270b01fc1118dfd713c1c41530d1a7d98f04527d.tar.gz");
+      fakessh = import (fetchTarball "https://github.com/Noratrieb/fakessh/archive/7a129eba2e0bd15d46efce2f2e0daebeb6888bec.tar.gz");
 
       networkingConfig = {
         dns1 = {
@@ -242,7 +243,7 @@
     '';
   };
   # VPS5 is the primary test server, where new things are being deployed that could break stuff maybe.
-  vps5 = { name, nodes, modulesPath, config, pkgs, ... }: {
+  vps5 = { name, nodes, modulesPath, config, pkgs, lib, fakessh, ... }: {
     imports = [
       (modulesPath + "/profiles/qemu-guest.nix")
       ./modules/contabo
@@ -250,6 +251,27 @@
       ./modules/wg-mesh
       ./modules/garage
     ];
+
+    # services.openssh.ports = [ 2000 ];
+    #systemd.services.fakessh = {
+    #  description = "fakessh ssh honeypot";
+    #  wantedBy = [ "multi-user.target" ];
+    #  after = [ "network.target" ];
+    #  serviceConfig = {
+    #    DynamicUser = true;
+    #    ExecStart = "${lib.getExe (fakessh {inherit pkgs;})}";
+    #    AmbientCapabilities = "CAP_NET_BIND_SERVICE";
+    #    # i really don't trust this.
+    #    MemoryHigh = "100;";
+    #    MemoryMax = "200M";
+    #    Environment = [
+    #      "FAKESSH_LISTEN_ADDR=0.0.0.0:22"
+    #      "RUST_LOG=debug"
+    #    ];
+    #  };
+    #};
+    # networking.firewall.allowedTCPPorts = [ 22 ];
+    #deployment.targetPort = 2000;
 
     deployment.tags = [ "eu" "apps" ];
     system.stateVersion = "23.11";
