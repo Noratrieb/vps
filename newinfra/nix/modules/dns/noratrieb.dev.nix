@@ -58,6 +58,7 @@ let
         pronouns.TXT = [
           "she/her"
         ];
+        sshhoneypot = vps5;
 
         # --- infra
         grafana = vps3;
