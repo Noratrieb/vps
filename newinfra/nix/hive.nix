@@ -244,7 +244,7 @@
   # VPS5 is the primary test server, where new things are being deployed that could break stuff maybe.
   vps5 = { name, nodes, modulesPath, config, pkgs, lib, ... }:
     let
-      commit = "18993f3a00c71af419cb28c01d200bd2efd85603";
+      commit = "c8842ef22a2b7170316e5ee52da127baf58b9971";
       fakessh = import (fetchTarball "https://github.com/Noratrieb/fakessh/archive/${commit}.tar.gz");
     in
     {
@@ -257,27 +257,27 @@
       ];
 
 
-      #services.openssh.ports = [ 2000 ];
-      #systemd.services.fakessh = {
-      #  description = "fakessh ssh honeypot";
-      #  wantedBy = [ "multi-user.target" ];
-      #  after = [ "network.target" ];
-      #  serviceConfig = {
-      #    DynamicUser = true;
-      #    ExecStart = "${lib.getExe (fakessh {inherit pkgs;})}";
-      #    AmbientCapabilities = "CAP_NET_BIND_SERVICE";
-      #    # i really don't trust this.
-      #    MemoryHigh = "100;";
-      #    MemoryMax = "200M";
-      #    Environment = [
-      #      "FAKESSH_LISTEN_ADDR=0.0.0.0:22"
-      #      "RUST_LOG=debug"
-      #      #"FAKESSH_JSON_LOGS=1"
-      #    ];
-      #  };
-      #};
-      #networking.firewall.allowedTCPPorts = [ 22 ];
-      #deployment.targetPort = 2000;
+      services.openssh.ports = [ 2000 ];
+      systemd.services.fakessh = {
+        description = "fakessh ssh honeypot";
+        wantedBy = [ "multi-user.target" ];
+        after = [ "network.target" ];
+        serviceConfig = {
+          DynamicUser = true;
+          ExecStart = "${lib.getExe (fakessh {inherit pkgs;})}";
+          AmbientCapabilities = "CAP_NET_BIND_SERVICE";
+          # i really don't trust this.
+          MemoryHigh = "100;";
+          MemoryMax = "200M";
+          Environment = [
+            "FAKESSH_LISTEN_ADDR=0.0.0.0:22"
+            "RUST_LOG=debug"
+            #"FAKESSH_JSON_LOGS=1"
+          ];
+        };
+      };
+      networking.firewall.allowedTCPPorts = [ 22 ];
+      deployment.targetPort = 2000;
 
       deployment.tags = [ "eu" "apps" ];
       system.stateVersion = "23.11";
