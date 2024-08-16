@@ -27,6 +27,11 @@ let
         "v=spf1 include:_spf.protonmail.ch ~all"
       ];
 
+      CAA = [
+        { issuerCritical = false; tag = "issue"; value = "letsencrypt.org"; }
+        { issuerCritical = false; tag = "issue"; value = "sectigo.com"; }
+      ];
+
       NS = [
         "ns1.nilstrieb.dev."
         "ns2.nilstrieb.dev."
@@ -45,7 +50,6 @@ let
         cors-school = vps2 // {
           subdomains.api = vps2;
         };
-        docker = vps2;
         olat = vps2;
 
         localhost.A = [ (a "127.0.0.1") ];
@@ -53,6 +57,7 @@ let
         # --- retired:
         bisect-rustc = vps1;
         blog = vps1;
+        docker = vps1;
         www = vps1;
         uptime = vps1;
         hugo-chat = vps1 // {

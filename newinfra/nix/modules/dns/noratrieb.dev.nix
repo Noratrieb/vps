@@ -32,6 +32,11 @@ let
         "ns2.noratrieb.dev."
       ];
 
+      CAA = [
+        { issuerCritical = false; tag = "issue"; value = "letsencrypt.org"; }
+        { issuerCritical = false; tag = "issue"; value = "sectigo.com"; }
+      ];
+
       subdomains = {
         # --- NS records
         ns1 = dns1;
