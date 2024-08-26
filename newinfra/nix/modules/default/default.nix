@@ -1,4 +1,4 @@
-{ pkgs, lib, config, name, pretense, ... }: {
+{ pkgs, lib, config, name, pretense, quotdd, ... }: {
   deployment.targetHost = "${config.networking.hostName}.infra.noratrieb.dev";
 
   imports = [
@@ -49,7 +49,24 @@
       ];
     };
   };
-  networking.firewall.allowedTCPPorts = [ 23 3306 5432 1521 ];
+  systemd.services.quotdd = {
+    description = "quotdd Quote of The Day Daemon";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network.target" ];
+    serviceConfig = {
+      DynamicUser = true;
+      ExecStart = "${lib.getExe (quotdd {inherit pkgs;})}";
+      AmbientCapabilities = "CAP_NET_BIND_SERVICE";
+      Environment = [ ];
+    };
+  };
+  networking.firewall.allowedTCPPorts = [
+    23 # telnet, pretense
+    3306 # mysql, pretense
+    5432 # postgres, pretense
+    1521 # oracle, pretense
+    17 # quote of the day, quotdd
+  ];
 
   # monitoring
 
