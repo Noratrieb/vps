@@ -17,6 +17,8 @@
       pretense = import (fetchTarball "https://github.com/Noratrieb/pretense/archive/270b01fc1118dfd713c1c41530d1a7d98f04527d.tar.gz");
       quotdd = import (fetchTarball "https://github.com/Noratrieb/quotdd/archive/9c37b3e2093020771ee7c9da6200f95d4269b4e4.tar.gz");
 
+      does-it-build = import (fetchTarball "https://github.com/Noratrieb/does-it-build/archive/d5167446f2fbeedb4c92964fc477d5bf1b8a0dbb.tar.gz");
+
       networkingConfig = {
         dns1 = {
           publicIPv4 = "154.38.163.74";
@@ -192,13 +194,17 @@
     deployment.tags = [ "eu" "apps" "website" ];
     system.stateVersion = "23.11";
   };
-  # VPS4 exists. It's useful for garage replication but not much more.
+  # VPS4 exists. It's useful for garage replication and runs does-it-build which uses some CPU.
   vps4 = { lib, modulesPath, ... }: {
     imports = [
       (modulesPath + "/profiles/qemu-guest.nix")
       ./modules/ingress
       ./modules/wg-mesh
       ./modules/garage
+      ./modules/backup
+
+      # apps
+      ./apps/does-it-build
     ];
 
     deployment.tags = [ "eu" "apps" "hetzner" "website" ];

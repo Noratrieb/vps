@@ -56,6 +56,7 @@ let
           subdomains.api = vps1;
         };
         uptime = vps1;
+        does-it-build = vps4;
 
         # --- fun shit
         localhost.A = [ (a "127.0.0.1") ];
