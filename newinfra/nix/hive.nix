@@ -11,7 +11,7 @@
       nixpkgs-unstable = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/d04953086551086b44b6f3c6b7eeb26294f207da.tar.gz") { }; # nixos-unstable 2024-08-05
 
       website = import (fetchTarball "https://github.com/Noratrieb/website/archive/ab44e5ef7586a220fc1d251bda333a8752bb7783.tar.gz");
-      blog = fetchTarball "https://github.com/Noratrieb/blog/archive/3d4c1e10d9d555c5358dd432e50cb6fd741dee2a.tar.gz";
+      blog = fetchTarball "https://github.com/Noratrieb/blog/archive/cc87a143c6f37b117f47907487c41240715e0166.tar.gz";
       slides = fetchTarball "https://github.com/Noratrieb/slides/archive/0401f35c22b124b69447655f0c537badae9e223c.tar.gz";
 
       pretense = import (fetchTarball "https://github.com/Noratrieb/pretense/archive/270b01fc1118dfd713c1c41530d1a7d98f04527d.tar.gz");
