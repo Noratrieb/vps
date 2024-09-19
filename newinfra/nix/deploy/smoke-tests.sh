@@ -12,8 +12,8 @@ dig @dns1.infra.noratrieb.dev nilstrieb.dev +noall +answer | grep 161.97.165.1
 dig @dns2.infra.noratrieb.dev nilstrieb.dev +noall +answer | grep 161.97.165.1
 
 # Check the NS records. The trailing dot matters!
-dig @dns1.infra.noratrieb.dev NS noratrieb.dev | grep "noratrieb.dev..*86400.*IN.*NS.*ns1.noratrieb.dev."
-dig @dns2.infra.noratrieb.dev NS noratrieb.dev | grep "noratrieb.dev..*86400.*IN.*NS.*ns1.noratrieb.dev."
+dig @dns1.infra.noratrieb.dev NS noratrieb.dev | grep "noratrieb.dev..*3600.*IN.*NS.*ns1.noratrieb.dev."
+dig @dns2.infra.noratrieb.dev NS noratrieb.dev | grep "noratrieb.dev..*3600.*IN.*NS.*ns1.noratrieb.dev."
 
 # Check HTTP responses
 curl --fail -s https://vps1.infra.noratrieb.dev -o /dev/null

@@ -6,8 +6,8 @@ let
       hour1 = 3600;
       hostsToDns = builtins.mapAttrs
         (name: { publicIPv4, publicIPv6, ... }:
-          lib.optionalAttrs (publicIPv4 != null) { A = [ (ttl hour1 (a publicIPv4)) ]; } //
-          lib.optionalAttrs (publicIPv6 != null) { AAAA = [ (ttl hour1 (aaaa publicIPv6)) ]; })
+          lib.optionalAttrs (publicIPv4 != null) { A = [ (a publicIPv4) ]; } //
+          lib.optionalAttrs (publicIPv6 != null) { AAAA = [ (aaaa publicIPv6) ]; })
         networkingConfig;
       vps2 = {
         A = [ "184.174.32.252" ];
@@ -21,6 +21,7 @@ let
     with hostsToDns;
     # vps{1,3,4} contains root noratrieb.dev
     combine [ vps1 vps3 vps4 ] // {
+      TTL = hour1;
       SOA = {
         nameServer = "ns1.noratrieb.dev.";
         adminEmail = "void@noratrieb.dev";
@@ -37,13 +38,24 @@ let
         { issuerCritical = false; tag = "issue"; value = "sectigo.com"; }
       ];
 
+      TXT = [
+        "protonmail-verification=09106d260e40df267109be219d9c7b2759e808b5"
+        "v=spf1 include:_spf.protonmail.ch ~all"
+      ];
+
+
+      MX = [
+        (mx.mx 10 "mail.protonmail.ch.")
+        (mx.mx 20 "mailsec.protonmail.ch.")
+      ];
+
       subdomains = {
         # --- NS records
         ns1 = dns1;
         ns2 = dns2;
 
         # --- website stuff
-        blog.CNAME = map (ttl hour1) [ (cname "noratrieb.github.io") ];
+        blog.CNAME = [ (cname "noratrieb.github.io") ];
         www = vps1;
 
         # --- legacy crap
@@ -69,6 +81,16 @@ let
         # --- infra
         grafana = vps3;
         infra.subdomains = hostsToDns;
+
+        # --- email
+        _domainkey.subdomains = {
+          protonmail.CNAME = [ (cname "protonmail.domainkey.deenxxi4ieo32na6brazky2h7bt5ezko6vexdbvbzzbtj6oj43kca.domains.proton.ch.") ];
+          protonmail2.CNAME = [ (cname "protonmail2.domainkey.deenxxi4ieo32na6brazky2h7bt5ezko6vexdbvbzzbtj6oj43kca.domains.proton.ch.") ];
+          protonmail3.CNAME = [ (cname "protonmail3.domainkey.deenxxi4ieo32na6brazky2h7bt5ezko6vexdbvbzzbtj6oj43kca.domains.proton.ch.") ];
+        };
+        _dmarc.TXT = [
+          { data = "v=DMARC1; p=quarantine"; }
+        ];
       };
     };
 in

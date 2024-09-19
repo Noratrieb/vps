@@ -6,8 +6,8 @@ let
       hour1 = 3600;
       hostsToDns = builtins.mapAttrs
         (name: { publicIPv4, publicIPv6, ... }:
-          lib.optionalAttrs (publicIPv4 != null) { A = [ (ttl hour1 (a publicIPv4)) ]; } //
-          lib.optionalAttrs (publicIPv6 != null) { AAAA = [ (ttl hour1 (aaaa publicIPv6)) ]; })
+          lib.optionalAttrs (publicIPv4 != null) { A = [ (a publicIPv4) ]; } //
+          lib.optionalAttrs (publicIPv6 != null) { AAAA = [ (aaaa publicIPv6) ]; })
         networkingConfig;
       vps2 = {
         A = [ "184.174.32.252" ];
@@ -16,16 +16,12 @@ let
     with hostsToDns;
     # point nilstrieb.dev to vps1 (retired)
     vps1 // {
+      TTL = hour1;
       SOA = {
         nameServer = "ns1.nilstrieb.dev.";
         adminEmail = "void@nilstrieb.dev";
         serial = 2024072601;
       };
-
-      TXT = [
-        "protonmail-verification=86964dcc4994261eab23dbc53dad613b10bab6de"
-        "v=spf1 include:_spf.protonmail.ch ~all"
-      ];
 
       CAA = [
         { issuerCritical = false; tag = "issue"; value = "letsencrypt.org"; }
@@ -35,11 +31,6 @@ let
       NS = [
         "ns1.nilstrieb.dev."
         "ns2.nilstrieb.dev."
-      ];
-
-      MX = with mx; [
-        (mx 10 "mail.protonmail.ch.")
-        (mx 20 "mailsec.protonmail.ch.")
       ];
 
       subdomains = {
