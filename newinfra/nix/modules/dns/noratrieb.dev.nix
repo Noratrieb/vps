@@ -82,6 +82,9 @@ let
         grafana = vps3;
         infra.subdomains = hostsToDns;
 
+        # --- other verification
+        _discord.TXT = [ "dh=e0f7e99c70c4ce17f7afcce3be8bfda9cd363843" ];
+
         # --- email
         _domainkey.subdomains = {
           protonmail.CNAME = [ (cname "protonmail.domainkey.deenxxi4ieo32na6brazky2h7bt5ezko6vexdbvbzzbtj6oj43kca.domains.proton.ch.") ];
@@ -89,7 +92,7 @@ let
           protonmail3.CNAME = [ (cname "protonmail3.domainkey.deenxxi4ieo32na6brazky2h7bt5ezko6vexdbvbzzbtj6oj43kca.domains.proton.ch.") ];
         };
         _dmarc.TXT = [
-          { data = "v=DMARC1; p=quarantine"; }
+          "v=DMARC1; p=quarantine"
         ];
       };
     };
