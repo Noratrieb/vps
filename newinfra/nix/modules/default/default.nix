@@ -26,6 +26,23 @@
     enable = true;
     openFirewall = true;
     banner = "meoooooow!! 😼 :3\n";
+    hostKeys = [
+      {
+        path = "/etc/ssh/ssh_host_ed25519_key";
+        type = "ed25519";
+      }
+      {
+        # P256
+        path = "/etc/ssh/ssh_host_ecdsa_key";
+        type = "ecdsa";
+      }
+      {
+        bits = 4096;
+        path = "/etc/ssh/ssh_host_rsa_key";
+        type = "rsa";
+      }
+    ];
+
     settings = {
       PasswordAuthentication = false;
     };
@@ -100,6 +117,26 @@
               node = name;
             };
           };
+          pipeline_stages = [{
+            match = {
+              selector = "{unit = \"sshd.service\"} |= \"Invalid user\"";
+              stages = [
+                { regex = { expression = "Invalid user.*from (?P<ip>.*) port.*"; }; }
+                {
+                  geoip = {
+                    db = pkgs.fetchurl
+                      {
+                        # Note: You cannot use this for your own usage, this is only for me.
+                        url = "https://github.com/noratrieb-mirrors/maxmind-geoip/releases/download/20240922/GeoLite2-City.mmdb";
+                        sha256 = "sha256-xRGf2JEaEHpxEkIq3jJnZv49lTisFbygbjxiIZHIThg=";
+                      };
+                    source = "ip";
+                    db_type = "city";
+                  };
+                }
+              ];
+            };
+          }];
           relabel_configs = [
             {
               source_labels = [ "__journal__systemd_unit" ];
