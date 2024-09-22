@@ -5,11 +5,9 @@
     # - A path to a Nixpkgs checkout
     # - The Nixpkgs lambda (e.g., import <nixpkgs>)
     # - An initialized Nixpkgs attribute set
-    nixpkgs = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/a1cc729dcbc31d9b0d11d86dc7436163548a9665.tar.gz"); # nixos-24.05 2024-07-26
+    nixpkgs = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/944b2aea7f0a2d7c79f72468106bc5510cbf5101.tar.gz"); # nixos-24.05 2024-09-22
 
     specialArgs = {
-      nixpkgs-unstable = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/d04953086551086b44b6f3c6b7eeb26294f207da.tar.gz") { }; # nixos-unstable 2024-08-05
-
       website = import (fetchTarball "https://github.com/Noratrieb/website/archive/ab44e5ef7586a220fc1d251bda333a8752bb7783.tar.gz");
       blog = fetchTarball "https://github.com/Noratrieb/blog/archive/ab95691e6faebdbd7a6d37150a79b2b813ea181f.tar.gz";
       slides = fetchTarball "https://github.com/Noratrieb/slides/archive/0401f35c22b124b69447655f0c537badae9e223c.tar.gz";
