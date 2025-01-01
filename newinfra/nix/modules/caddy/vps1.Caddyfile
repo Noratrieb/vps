@@ -60,7 +60,13 @@ docker.noratrieb.dev {
 }
 
 ################################################################
-# deadname redirects
+# redirects
+
+blog.noratrieb.dev {
+	log
+	redir https://noratrieb.dev/blog{uri} permanent
+}
+
 nilstrieb.dev {
 	log
 	redir https://noratrieb.dev{uri} permanent

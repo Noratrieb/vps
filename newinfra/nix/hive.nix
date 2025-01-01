@@ -5,11 +5,11 @@
     # - A path to a Nixpkgs checkout
     # - The Nixpkgs lambda (e.g., import <nixpkgs>)
     # - An initialized Nixpkgs attribute set
-    nixpkgs = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/b134951a4c9f3c995fd7be05f3243f8ecd65d798.tar.gz"); # nixos-24.05 2025-01-01
+    nixpkgs = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/3ffbbdbac0566a0977da3d2657b89cbcfe9a173b.tar.gz"); # nixos-24.11 2025-01-01
 
     specialArgs = {
-      website = import (fetchTarball "https://github.com/Noratrieb/website/archive/ab44e5ef7586a220fc1d251bda333a8752bb7783.tar.gz");
-      blog = fetchTarball "https://github.com/Noratrieb/blog/archive/ab95691e6faebdbd7a6d37150a79b2b813ea181f.tar.gz";
+      website = import (fetchTarball "https://github.com/Noratrieb/website/archive/5637e3cb59b00c80feca6a293c158046a4e1efe4.tar.gz");
+      blog = fetchTarball "https://github.com/Noratrieb/blog/archive/3f1978cc85668495bc5a9ac43d5c44fa844c97d6.tar.gz";
       slides = fetchTarball "https://github.com/Noratrieb/slides/archive/0401f35c22b124b69447655f0c537badae9e223c.tar.gz";
 
       pretense = import (fetchTarball "https://github.com/Noratrieb/pretense/archive/270b01fc1118dfd713c1c41530d1a7d98f04527d.tar.gz");
@@ -161,7 +161,7 @@
       (modulesPath + "/profiles/qemu-guest.nix")
       ./modules/contabo
       ./modules/wg-mesh
-      ./modules/ingress
+      ./modules/caddy
       ./modules/garage
       ./modules/podman
       ./modules/registry
@@ -175,7 +175,7 @@
       ./apps/killua
     ];
 
-    deployment.tags = [ "ingress" "eu" "apps" "website" ];
+    deployment.tags = [ "caddy" "eu" "apps" "website" ];
     system.stateVersion = "23.11";
   };
   # VPS3 is the primary monitoring/metrics server.
@@ -184,7 +184,7 @@
       (modulesPath + "/profiles/qemu-guest.nix")
       ./modules/contabo
       ./modules/wg-mesh
-      ./modules/ingress
+      ./modules/caddy
       ./modules/garage
       ./modules/prometheus
     ];
@@ -196,7 +196,7 @@
   vps4 = { lib, modulesPath, ... }: {
     imports = [
       (modulesPath + "/profiles/qemu-guest.nix")
-      ./modules/ingress
+      ./modules/caddy
       ./modules/wg-mesh
       ./modules/garage
       ./modules/backup
@@ -256,7 +256,7 @@
       imports = [
         (modulesPath + "/profiles/qemu-guest.nix")
         ./modules/contabo
-        ./modules/ingress
+        ./modules/caddy
         ./modules/wg-mesh
         ./modules/garage
       ];

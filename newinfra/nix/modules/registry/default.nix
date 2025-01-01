@@ -28,6 +28,7 @@
       storage = {
         s3 = {
           regionendpoint = "http://127.0.0.1:3900";
+          forcepathstyle = true; # ensure it doesn't try docker-registry.127.0.0.1 as the host
           region = "garage";
           bucket = "docker-registry";
           # accesskey = ""; ENV REGISTRY_STORAGE_S3_ACCESSKEY

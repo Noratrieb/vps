@@ -55,7 +55,7 @@ let
         ns2 = dns2;
 
         # --- website stuff
-        blog.CNAME = [ (cname "noratrieb.github.io") ];
+        blog = vps1;
         www = vps1;
 
         # --- legacy crap
