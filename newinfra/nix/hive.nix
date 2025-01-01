@@ -5,7 +5,7 @@
     # - A path to a Nixpkgs checkout
     # - The Nixpkgs lambda (e.g., import <nixpkgs>)
     # - An initialized Nixpkgs attribute set
-    nixpkgs = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/e8c38b73aeb218e27163376a2d617e61a2ad9b59.tar.gz"); # nixos-24.05 2024-11-23
+    nixpkgs = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/b134951a4c9f3c995fd7be05f3243f8ecd65d798.tar.gz"); # nixos-24.05 2025-01-01
 
     specialArgs = {
       website = import (fetchTarball "https://github.com/Noratrieb/website/archive/ab44e5ef7586a220fc1d251bda333a8752bb7783.tar.gz");
@@ -268,12 +268,17 @@
         wantedBy = [ "multi-user.target" ];
         after = [ "network.target" ];
         serviceConfig = {
-          DynamicUser = true;
+          Restart = "on-failure";
+          RestartSec = "5s";
           ExecStart = "${lib.getExe' (cluelessh {inherit pkgs;}) "cluelessh-faked" }";
-          AmbientCapabilities = "CAP_NET_BIND_SERVICE";
+
           # i really don't trust this.
-          MemoryHigh = "100;";
+          DynamicUser = true;
+          AmbientCapabilities = "CAP_NET_BIND_SERVICE";
+          MemoryHigh = "100M";
           MemoryMax = "200M";
+
+          # config
           Environment = [
             "FAKESSH_LISTEN_ADDR=0.0.0.0:22"
             "RUST_LOG=debug"
@@ -282,8 +287,8 @@
         };
       };
       networking.firewall.allowedTCPPorts = [ 22 ];
-      deployment.targetPort = 2000;
 
+      deployment.targetPort = 2000;
       deployment.tags = [ "eu" "apps" ];
       system.stateVersion = "23.11";
     };
