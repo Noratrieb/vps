@@ -57,14 +57,11 @@ let
         # ---
 
         # infra (legacy)
-        inherit vps1;
         inherit vps2;
 
         pronouns.TXT = [
-          "TODO"
+          "she/her"
         ];
-
-        bsky.subdomains.atproto.TXT = [ "did=did:plc:pqyzoyxk7gfcbxk65mjyncyl" ];
       };
     };
 in

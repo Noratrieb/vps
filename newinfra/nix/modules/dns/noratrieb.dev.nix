@@ -84,6 +84,7 @@ let
 
         # --- other verification
         _discord.TXT = [ "dh=e0f7e99c70c4ce17f7afcce3be8bfda9cd363843" ];
+        _atproto.TXT = [ "did=did:plc:pqyzoyxk7gfcbxk65mjyncyl" ];
 
         # --- email
         _domainkey.subdomains = {
