@@ -8,7 +8,7 @@
     nixpkgs = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/3ffbbdbac0566a0977da3d2657b89cbcfe9a173b.tar.gz"); # nixos-24.11 2025-01-01
 
     specialArgs = {
-      website = import (fetchTarball "https://github.com/Noratrieb/website/archive/5637e3cb59b00c80feca6a293c158046a4e1efe4.tar.gz");
+      website = import (fetchTarball "https://github.com/Noratrieb/website/archive/1e1f0be7acf6931832a53447771ed2224b1ae43d.tar.gz");
       blog = fetchTarball "https://github.com/Noratrieb/blog/archive/3f1978cc85668495bc5a9ac43d5c44fa844c97d6.tar.gz";
       slides = fetchTarball "https://github.com/Noratrieb/slides/archive/0401f35c22b124b69447655f0c537badae9e223c.tar.gz";
 
