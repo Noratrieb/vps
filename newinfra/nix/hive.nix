@@ -15,7 +15,7 @@
       pretense = import (fetchTarball "https://github.com/Noratrieb/pretense/archive/270b01fc1118dfd713c1c41530d1a7d98f04527d.tar.gz");
       quotdd = import (fetchTarball "https://github.com/Noratrieb/quotdd/archive/9c37b3e2093020771ee7c9da6200f95d4269b4e4.tar.gz");
 
-      does-it-build = import (fetchTarball "https://github.com/Noratrieb/does-it-build/archive/e639507a42ef4c71bdc11a0b43d2eb49b8ecf4e4.tar.gz");
+      does-it-build = import (fetchTarball "https://github.com/Noratrieb/does-it-build/archive/cc4d90e7481d25c31362072484fb23f6a9473ef3.tar.gz");
 
       networkingConfig = {
         dns1 = {
