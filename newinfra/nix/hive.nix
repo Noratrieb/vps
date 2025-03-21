@@ -5,7 +5,7 @@
     # - A path to a Nixpkgs checkout
     # - The Nixpkgs lambda (e.g., import <nixpkgs>)
     # - An initialized Nixpkgs attribute set
-    nixpkgs = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/3ffbbdbac0566a0977da3d2657b89cbcfe9a173b.tar.gz"); # nixos-24.11 2025-01-01
+    nixpkgs = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/7105ae3957700a9646cc4b766f5815b23ed0c682.tar.gz"); # nixos-24.11 2025-03-21
 
     specialArgs = {
       website = import (fetchTarball "https://github.com/Noratrieb/website/archive/1e1f0be7acf6931832a53447771ed2224b1ae43d.tar.gz");
