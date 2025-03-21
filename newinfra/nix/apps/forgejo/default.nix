@@ -1,4 +1,4 @@
-{ config, pkgs, name, ... }: {
+{ config, ... }: {
   age.secrets.forgejo_s3_key_secret.file = ../../secrets/forgejo_s3_key_secret.age;
 
 
@@ -42,4 +42,9 @@
       };
     };
   };
+
+  services.custom-backup.jobs = [{
+    app = "forgejo";
+    file = "/var/lib/forgejo/data/forgejo.db";
+  }];
 }

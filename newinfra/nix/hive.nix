@@ -1,93 +1,97 @@
 {
-  meta = {
-    # Override to pin the Nixpkgs version (recommended). This option
-    # accepts one of the following:
-    # - A path to a Nixpkgs checkout
-    # - The Nixpkgs lambda (e.g., import <nixpkgs>)
-    # - An initialized Nixpkgs attribute set
-    nixpkgs = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/7105ae3957700a9646cc4b766f5815b23ed0c682.tar.gz"); # nixos-24.11 2025-03-21
+  meta =
+    let nixpkgs-path = (fetchTarball "https://github.com/NixOS/nixpkgs/archive/7105ae3957700a9646cc4b766f5815b23ed0c682.tar.gz"); in
+    {
+      # Override to pin the Nixpkgs version (recommended). This option
+      # accepts one of the following:
+      # - A path to a Nixpkgs checkout
+      # - The Nixpkgs lambda (e.g., import <nixpkgs>)
+      # - An initialized Nixpkgs attribute set
+      nixpkgs = import nixpkgs-path; # nixos-24.11 2025-03-21
 
-    specialArgs = {
-      website = import (fetchTarball "https://github.com/Noratrieb/website/archive/1e1f0be7acf6931832a53447771ed2224b1ae43d.tar.gz");
-      blog = fetchTarball "https://github.com/Noratrieb/blog/archive/d370bf2b2e1dbec871dc1c82db8db9328976e0df.tar.gz";
-      slides = fetchTarball "https://github.com/Noratrieb/slides/archive/0401f35c22b124b69447655f0c537badae9e223c.tar.gz";
+      specialArgs = {
+        website = import (fetchTarball "https://github.com/Noratrieb/website/archive/1e1f0be7acf6931832a53447771ed2224b1ae43d.tar.gz");
+        blog = fetchTarball "https://github.com/Noratrieb/blog/archive/d370bf2b2e1dbec871dc1c82db8db9328976e0df.tar.gz";
+        slides = fetchTarball "https://github.com/Noratrieb/slides/archive/0401f35c22b124b69447655f0c537badae9e223c.tar.gz";
 
-      pretense = import (fetchTarball "https://github.com/Noratrieb/pretense/archive/270b01fc1118dfd713c1c41530d1a7d98f04527d.tar.gz");
-      quotdd = import (fetchTarball "https://github.com/Noratrieb/quotdd/archive/9c37b3e2093020771ee7c9da6200f95d4269b4e4.tar.gz");
+        pretense = import (fetchTarball "https://github.com/Noratrieb/pretense/archive/270b01fc1118dfd713c1c41530d1a7d98f04527d.tar.gz");
+        quotdd = import (fetchTarball "https://github.com/Noratrieb/quotdd/archive/9c37b3e2093020771ee7c9da6200f95d4269b4e4.tar.gz");
 
-      does-it-build = import (fetchTarball "https://github.com/Noratrieb/does-it-build/archive/cc4d90e7481d25c31362072484fb23f6a9473ef3.tar.gz");
+        does-it-build = import (fetchTarball "https://github.com/Noratrieb/does-it-build/archive/cc4d90e7481d25c31362072484fb23f6a9473ef3.tar.gz");
 
-      networkingConfig = {
-        dns1 = {
-          publicIPv4 = "154.38.163.74";
-          publicIPv6 = null;
-          wg = {
-            privateIP = "10.0.1.1";
-            publicKey = "7jy2q93xYBHG5yKqLmNuMWSuFMnUGWXVuKQ1yMmxoV4=";
-            peers = [ "vps3" ];
+        inherit nixpkgs-path;
+
+        networkingConfig = {
+          dns1 = {
+            publicIPv4 = "154.38.163.74";
+            publicIPv6 = null;
+            wg = {
+              privateIP = "10.0.1.1";
+              publicKey = "7jy2q93xYBHG5yKqLmNuMWSuFMnUGWXVuKQ1yMmxoV4=";
+              peers = [ "vps3" ];
+            };
           };
-        };
-        dns2 = {
-          publicIPv4 = "128.140.3.7";
-          # somehow this doesnt quite work yet, keep it out of DNS records
-          #publicIPv6 = "2a01:4f8:c2c:d616::";
-          publicIPv6 = null;
-          wg = {
-            privateIP = "10.0.1.2";
-            publicKey = "yfOc/q5M+2DWPoZ4ZgwrTYYkviQxGxRWpcBCDcauDnc=";
-            peers = [ "vps3" ];
+          dns2 = {
+            publicIPv4 = "128.140.3.7";
+            # somehow this doesnt quite work yet, keep it out of DNS records
+            #publicIPv6 = "2a01:4f8:c2c:d616::";
+            publicIPv6 = null;
+            wg = {
+              privateIP = "10.0.1.2";
+              publicKey = "yfOc/q5M+2DWPoZ4ZgwrTYYkviQxGxRWpcBCDcauDnc=";
+              peers = [ "vps3" ];
+            };
           };
-        };
-        vps1 = {
-          publicIPv4 = "161.97.165.1";
-          publicIPv6 = null;
-          wg = {
-            privateIP = "10.0.0.1";
-            publicKey = "5tg3w/TiCuCeKIBJCd6lHUeNjGEA76abT1OXnhNVyFQ=";
-            peers = [ "vps3" "vps4" "vps5" ];
+          vps1 = {
+            publicIPv4 = "161.97.165.1";
+            publicIPv6 = null;
+            wg = {
+              privateIP = "10.0.0.1";
+              publicKey = "5tg3w/TiCuCeKIBJCd6lHUeNjGEA76abT1OXnhNVyFQ=";
+              peers = [ "vps3" "vps4" "vps5" ];
+            };
           };
-        };
-        vps3 = {
-          publicIPv4 = "134.255.181.139";
-          publicIPv6 = null;
-          wg = {
-            privateIP = "10.0.0.3";
-            publicKey = "pdUxG1vhmYraKzIIEFxTRAMhGwGztBL/Ly5icJUV3g0=";
-            peers = [ "vps1" "vps4" "vps5" "dns1" "dns2" ];
+          vps3 = {
+            publicIPv4 = "134.255.181.139";
+            publicIPv6 = null;
+            wg = {
+              privateIP = "10.0.0.3";
+              publicKey = "pdUxG1vhmYraKzIIEFxTRAMhGwGztBL/Ly5icJUV3g0=";
+              peers = [ "vps1" "vps4" "vps5" "dns1" "dns2" ];
+            };
           };
-        };
-        vps4 = {
-          publicIPv4 = "195.201.147.17";
-          # somehow this doesnt quite work yet, keep it out of DNS records
-          #publicIPv6 = "2a01:4f8:1c1c:cb18::1";
-          publicIPv6 = null;
-          wg = {
-            privateIP = "10.0.0.4";
-            publicKey = "+n2XKKaSFdCanEGRd41cvnuwJ0URY0HsnpBl6ZrSBRs=";
-            peers = [ "vps1" "vps3" "vps5" ];
+          vps4 = {
+            publicIPv4 = "195.201.147.17";
+            # somehow this doesnt quite work yet, keep it out of DNS records
+            #publicIPv6 = "2a01:4f8:1c1c:cb18::1";
+            publicIPv6 = null;
+            wg = {
+              privateIP = "10.0.0.4";
+              publicKey = "+n2XKKaSFdCanEGRd41cvnuwJ0URY0HsnpBl6ZrSBRs=";
+              peers = [ "vps1" "vps3" "vps5" ];
+            };
           };
-        };
-        vps5 = {
-          publicIPv4 = "45.94.209.30";
-          publicIPv6 = null;
-          wg = {
-            privateIP = "10.0.0.5";
-            publicKey = "r1cwt63fcOR+FTqMTUpZdK4/MxpalkDYRHXyy7osWUk=";
-            peers = [ "vps1" "vps3" "vps4" ];
+          vps5 = {
+            publicIPv4 = "45.94.209.30";
+            publicIPv6 = null;
+            wg = {
+              privateIP = "10.0.0.5";
+              publicKey = "r1cwt63fcOR+FTqMTUpZdK4/MxpalkDYRHXyy7osWUk=";
+              peers = [ "vps1" "vps3" "vps4" ];
+            };
           };
         };
       };
-    };
 
-    # If your Colmena host has nix configured to allow for remote builds
-    # (for nix-daemon, your user being included in trusted-users)
-    # you can set a machines file that will be passed to the underlying
-    # nix-store command during derivation realization as a builders option.
-    # For example, if you support multiple orginizations each with their own
-    # build machine(s) you can ensure that builds only take place on your
-    # local machine and/or the machines specified in this file.
-    # machinesFile = ./machines.client-a;
-  };
+      # If your Colmena host has nix configured to allow for remote builds
+      # (for nix-daemon, your user being included in trusted-users)
+      # you can set a machines file that will be passed to the underlying
+      # nix-store command during derivation realization as a builders option.
+      # For example, if you support multiple orginizations each with their own
+      # build machine(s) you can ensure that builds only take place on your
+      # local machine and/or the machines specified in this file.
+      # machinesFile = ./machines.client-a;
+    };
 
   defaults = { pkgs, config, lib, ... }: {
     # This module will be imported by all hosts

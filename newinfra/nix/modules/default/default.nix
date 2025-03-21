@@ -1,9 +1,13 @@
-{ pkgs, lib, config, name, pretense, quotdd, ... }: {
+{ pkgs, lib, config, name, pretense, quotdd, nixpkgs-path, ... }: {
   deployment.targetHost = "${config.networking.hostName}.infra.noratrieb.dev";
 
   imports = [
     "${builtins.fetchTarball "https://github.com/ryantm/agenix/archive/de96bd907d5fbc3b14fc33ad37d1b9a3cb15edc6.tar.gz"}/modules/age.nix" # main 2024-07-26
   ];
+
+  nix = {
+    nixPath = [ "nixpkgs=${nixpkgs-path}" ];
+  };
 
   environment.systemPackages = with pkgs; [
     vim
