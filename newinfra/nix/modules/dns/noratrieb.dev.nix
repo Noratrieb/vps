@@ -69,7 +69,23 @@ let
         };
         uptime = vps1;
         does-it-build = vps4;
-        git = vps1;
+        git = vps1 // {
+          MX = [ (mx.mx 10 "mail.noratrieb.dev") ];
+          TXT = [
+            "v=spf1 a:mail.noratrieb.dev -all"
+          ];
+          subdomains = {
+            _dmarc.TXT = [
+              "v=DMARC1; p=quarantine"
+            ];
+            _domainkey.subdomains = {
+              mail.TXT = [
+                "v=DKIM1; k=rsa; s=email; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCjY7PTXNR6CcLiBrv7oiJtXmtRwJC+aQQL4mLMGLCEqtBXA74NiXvW0AP0/BKtVnoWlDJRXWfnB70T9SQerF/BWq8kjlyMmkxex/QuiSDZWLLRpmL4AZ3y7CQY0r++zROwIrNTX95mWAeAlFd8Ug3gXD9lCml5jwM7C3YyATkKMQIDAQAB;"
+              ];
+            };
+          };
+        };
+        mail = vps1; # this needs reverse DNS as well
 
         # --- fun shit
         localhost.A = [ (a "127.0.0.1") ];

@@ -65,6 +65,11 @@ git.noratrieb.dev {
 	reverse_proxy * localhost:5015
 }
 
+# hmm. maybe for getting a cert? idk.
+# mail.noratrieb.dev {
+# 	abort
+# }
+
 ################################################################
 # redirects
 

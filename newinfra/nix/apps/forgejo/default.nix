@@ -1,6 +1,6 @@
 { config, ... }: {
   age.secrets.forgejo_s3_key_secret.file = ../../secrets/forgejo_s3_key_secret.age;
-
+  age.secrets.mail_git_password.file = ../../secrets/mail_git_password.age;
 
   services.forgejo = {
     enable = true;
@@ -34,11 +34,32 @@
         MINIO_LOCATION = "garage";
         MINIO_USE_SSL = false;
       };
+
+      mailer = {
+        ENABLED = true;
+        FROM = "\"Nora's Git Server\" <git@git.noratrieb.dev>";
+        PROTOCOL = "smtp+starttls";
+        SMTP_ADDR = "localhost";
+        SMTP_PORT = 587;
+        USER = "git@git.noratrieb.dev";
+        PASSWD = "Meowmeow";
+        FORCE_TRUST_SERVER_CERT = true; # lol. it's localhost.
+
+        /*ENABLED = true;
+        PROTOCOL = "sendmail";
+        FROM = "git@git.noratrieb.dev";
+        SENDMAIL_PATH = lib.getExe pkgs.system-sendmail;
+        SENDMAIL_ARGS = "--"; # most "sendmail" programs take options, "--" will prevent an email address being interpreted as an option.
+        */
+      };
     };
 
     secrets = {
       storage = {
         MINIO_SECRET_ACCESS_KEY = config.age.secrets.forgejo_s3_key_secret.path;
+      };
+      mailer = {
+        # PASSWD = config.age.secrets.mail_git_password.path;
       };
     };
   };
