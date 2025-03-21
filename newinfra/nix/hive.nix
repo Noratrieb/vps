@@ -173,6 +173,7 @@
       ./apps/uptime
       ./apps/cargo-bisect-rustc-service
       ./apps/killua
+      ./apps/forgejo
     ];
 
     deployment.tags = [ "caddy" "eu" "apps" "website" ];

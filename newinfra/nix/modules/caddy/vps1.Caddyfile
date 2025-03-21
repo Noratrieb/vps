@@ -59,6 +59,12 @@ docker.noratrieb.dev {
 	reverse_proxy * localhost:5000
 }
 
+git.noratrieb.dev {
+	log
+	encode zstd gzip
+	reverse_proxy * localhost:5015
+}
+
 ################################################################
 # redirects
 

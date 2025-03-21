@@ -69,6 +69,7 @@ let
         };
         uptime = vps1;
         does-it-build = vps4;
+        git = vps1;
 
         # --- fun shit
         localhost.A = [ (a "127.0.0.1") ];
