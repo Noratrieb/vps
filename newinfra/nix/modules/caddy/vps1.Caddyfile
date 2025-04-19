@@ -65,6 +65,19 @@ git.noratrieb.dev {
 	reverse_proxy * localhost:5015
 }
 
+olat.noratrieb.dev {
+	log
+	encode zstd gzip
+	reverse_proxy * localhost:5011
+}
+
+# unsure if necessary... something was misconfigured in the past here...
+olat.noratrieb.dev:8088 {
+	log
+	encode zstd gzip
+	reverse_proxy * localhost:5011
+}
+
 ################################################################
 # redirects
 

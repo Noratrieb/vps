@@ -11,6 +11,7 @@ in
   "widetom_config_toml.age".publicKeys = [ vps1 ];
   "docker_registry_password.age".publicKeys = [ vps1 ];
   "hugochat_db_password.age".publicKeys = [ vps1 ];
+  "openolat_db_password.age".publicKeys = [ vps1 ];
   "minio_env_file.age".publicKeys = [ vps1 vps3 ];
   "garage_secrets.age".publicKeys = [ vps1 vps3 vps4 vps5 ];
   "caddy_s3_key_secret.age".publicKeys = [ vps1 vps3 vps4 vps5 ];

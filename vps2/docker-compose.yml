@@ -103,39 +103,7 @@ services:
   #     - "25565:25565"
   #   volumes:
   #     - /apps/minecraft/server:/data
-  ##### openolat
-  openolat_db:
-    container_name: openolat-db
-    image: "postgres:latest"
-    restart: always
-    volumes:
-      - "/apps/openolat/data:/var/lib/postgresql/data"
-    environment:
-      POSTGRES_DB: oodb
-      POSTGRES_USER: oodbu
-      POSTGRES_PASSWORD: "${OPENOLAT_DB_PASSWORD}"
-      PGDATA: "/var/lib/postgresql/data/pgdata"
-    networks:
-      - openolat-network
-  openolat:
-    container_name: openolat
-    image: "docker.noratrieb.dev/openolat:69b3c8b6"
-    restart: always
-    volumes:
-      - "/apps/openolat/olatdata:/home/openolat/olatdata"
-      - "/apps/openolat/extra-properties.properties:/home/openolat/extra-properties.properties"
-    ports:
-      - "5011:8088"
-    environment:
-      DB_PASSWORD: "${OPENOLAT_DB_PASSWORD}"
-      DB_URL: "jdbc:postgresql://openolat-db:5432/oodb"
-      EXTRA_PROPERTIES: "/home/openolat/extra-properties.properties"
-      OLAT_HOST: olat.nilstrieb.dev
-    networks:
-      - openolat-network
 
 networks:
   cors-school:
   karin-bot:
-  openolat-network:
-  prometheus:

@@ -45,11 +45,3 @@ api.cors-school.nilstrieb.dev {
 cors-school.nilstrieb.dev {
 	reverse_proxy * localhost:5004
 }
-
-olat.nilstrieb.dev {
-	reverse_proxy * localhost:5011
-}
-
-olat.nilstrieb.dev:8088 {
-	reverse_proxy * localhost:5011
-}

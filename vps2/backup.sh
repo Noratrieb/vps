@@ -66,7 +66,6 @@ function upload_directory {
 }
 
 upload_pg_dump "cors-school" "cors-school-db" "davinci" "postgres"
-upload_pg_dump "openolat" "openolat-db" "oodb" "oodbu"
 
 # shellcheck disable=SC1091
 source "karin-bot/.env"
