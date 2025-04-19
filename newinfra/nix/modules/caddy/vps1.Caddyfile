@@ -125,3 +125,13 @@ uptime.nilstrieb.dev {
 	log
 	redir https://uptime.noratrieb.dev{uri} permanent
 }
+
+olat.nilstrieb.dev {
+	log
+	redir https://olat.noratrieb.dev{uri} permanent
+}
+
+olat.nilstrieb.dev:8088 {
+	log
+	redir https://olat.noratrieb.dev{uri} permanent
+}

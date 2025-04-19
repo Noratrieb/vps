@@ -41,7 +41,6 @@ let
         cors-school = vps2 // {
           subdomains.api = vps2;
         };
-        olat = vps2;
 
         localhost.A = [ (a "127.0.0.1") ];
 
@@ -54,6 +53,7 @@ let
         hugo-chat = vps1 // {
           subdomains.api = vps1;
         };
+        olat = vps1;
         # ---
 
         # infra (legacy)
