@@ -58,7 +58,7 @@ in
             noratrieb.dev {
                 log
                 encode zstd gzip
-                header -Last-Modified2a01:4f8:1c1c:cb18::
+                header -Last-Modified
                 root * ${import ./caddy-static-prepare {
                   name = "website";
                   src = website { inherit pkgs slides blog; };
