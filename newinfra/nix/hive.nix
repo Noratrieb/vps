@@ -10,7 +10,7 @@
       nixpkgs = import nixpkgs-path; # nixos-24.11 2025-03-21
 
       specialArgs = {
-        website = import (fetchTarball "https://github.com/Noratrieb/website/archive/c7ed1f687ee02a9f3cb942ea3c18302ca64c1ab7.tar.gz");
+        website = import (fetchTarball "https://github.com/Noratrieb/website/archive/57c4a239da5d17eafde4ade165f3c6706639a9b4.tar.gz");
         blog = fetchTarball "https://github.com/Noratrieb/blog/archive/d370bf2b2e1dbec871dc1c82db8db9328976e0df.tar.gz";
         slides = fetchTarball "https://github.com/Noratrieb/slides/archive/0401f35c22b124b69447655f0c537badae9e223c.tar.gz";
 
