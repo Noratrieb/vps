@@ -11,7 +11,7 @@
 
       specialArgs = {
         website = import (fetchTarball "https://github.com/Noratrieb/website/archive/57c4a239da5d17eafde4ade165f3c6706639a9b4.tar.gz");
-        blog = fetchTarball "https://github.com/Noratrieb/blog/archive/d370bf2b2e1dbec871dc1c82db8db9328976e0df.tar.gz";
+        blog = fetchTarball "https://github.com/Noratrieb/blog/archive/a3db9d1b07a4e17577e28657e55019fc861be28b.tar.gz";
         slides = fetchTarball "https://github.com/Noratrieb/slides/archive/0401f35c22b124b69447655f0c537badae9e223c.tar.gz";
 
         pretense = import (fetchTarball "https://github.com/Noratrieb/pretense/archive/270b01fc1118dfd713c1c41530d1a7d98f04527d.tar.gz");
