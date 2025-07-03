@@ -14,6 +14,7 @@
     wireguard-tools
     python311Packages.zstandard
     python311Packages.brotli
+    nodejs
     (import (builtins.fetchTarball "https://github.com/ryantm/agenix/archive/531beac616433bac6f9e2a19feb8e99a22a66baf.tar.gz") { }).agenix
   ];
 }

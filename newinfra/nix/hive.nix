@@ -1,6 +1,9 @@
 {
   meta =
-    let nixpkgs-path = (fetchTarball "https://github.com/NixOS/nixpkgs/archive/7105ae3957700a9646cc4b766f5815b23ed0c682.tar.gz"); in
+    let
+      my-projects-versions = builtins.fromJSON (builtins.readFile ./my-projects.json);
+      nixpkgs-path = (fetchTarball "https://github.com/NixOS/nixpkgs/archive/7105ae3957700a9646cc4b766f5815b23ed0c682.tar.gz");
+    in
     {
       # Override to pin the Nixpkgs version (recommended). This option
       # accepts one of the following:
@@ -10,14 +13,12 @@
       nixpkgs = import nixpkgs-path; # nixos-24.11 2025-03-21
 
       specialArgs = {
-        website = import (fetchTarball "https://github.com/Noratrieb/website/archive/57c4a239da5d17eafde4ade165f3c6706639a9b4.tar.gz");
-        blog = fetchTarball "https://github.com/Noratrieb/blog/archive/04f7cf7d27db359cbf9fac2e9e3e677a7e76abd9.tar.gz";
-        slides = fetchTarball "https://github.com/Noratrieb/slides/archive/0401f35c22b124b69447655f0c537badae9e223c.tar.gz";
-
-        pretense = import (fetchTarball "https://github.com/Noratrieb/pretense/archive/270b01fc1118dfd713c1c41530d1a7d98f04527d.tar.gz");
-        quotdd = import (fetchTarball "https://github.com/Noratrieb/quotdd/archive/9c37b3e2093020771ee7c9da6200f95d4269b4e4.tar.gz");
-
-        does-it-build = import (fetchTarball "https://github.com/Noratrieb/does-it-build/archive/79bb6d1eb06d47db7d59829cd6cce247d223a960.tar.gz");
+        website = import (fetchTarball "https://github.com/Noratrieb/website/archive/${my-projects-versions.website}.tar.gz");
+        blog = fetchTarball "https://github.com/Noratrieb/blog/archive/${my-projects-versions.blog}.tar.gz";
+        slides = fetchTarball "https://github.com/Noratrieb/slides/archive/${my-projects-versions.slides}.tar.gz";
+        pretense = import (fetchTarball "https://github.com/Noratrieb/pretense/archive/${my-projects-versions.pretense}.tar.gz");
+        quotdd = import (fetchTarball "https://github.com/Noratrieb/quotdd/archive/${my-projects-versions.quotdd}.tar.gz");
+        does-it-build = import (fetchTarball "https://github.com/Noratrieb/does-it-build/archive/${my-projects-versions.does-it-build}.tar.gz");
 
         inherit nixpkgs-path;
 
