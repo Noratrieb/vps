@@ -20,6 +20,8 @@
         quotdd = import (fetchTarball "https://github.com/Noratrieb/quotdd/archive/${my-projects-versions.quotdd}.tar.gz");
         does-it-build = import (fetchTarball "https://github.com/Noratrieb/does-it-build/archive/${my-projects-versions.does-it-build}.tar.gz");
 
+        inherit my-projects-versions;
+
         inherit nixpkgs-path;
 
         networkingConfig = {

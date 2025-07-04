@@ -1,4 +1,11 @@
-{ pkgs, lib, does-it-build, ... }: {
+{ pkgs, lib, does-it-build, my-projects-versions, ... }:
+let
+  does-it-build-base = does-it-build { inherit pkgs; };
+  does-it-build-with-commit = does-it-build-base.overrideAttrs (finalAttrs: previousAttrs: {
+    DOES_IT_BUILD_OVERRIDE_VERSION = my-projects-versions.does-it-build;
+  });
+in
+{
   systemd.services.does-it-build = {
     description = "https://github.com/Noratrieb/does-it-build";
     wantedBy = [ "multi-user.target" ];
@@ -8,7 +15,7 @@
     serviceConfig = {
       User = "does-it-build";
       Group = "does-it-build";
-      ExecStart = "${lib.getExe' (does-it-build {inherit pkgs;}) "does-it-build" }";
+      ExecStart = "${lib.getExe' (does-it-build-with-commit) "does-it-build" }";
       Environment = "DB_PATH=/var/lib/does-it-build/db.sqlite";
     };
   };
