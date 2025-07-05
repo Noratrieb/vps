@@ -72,6 +72,10 @@ let
         git = vps1;
         olat = vps1;
 
+        yeet = {
+          A = [ (a "5.75.137.171") ];
+        };
+
         # --- fun shit
         localhost.A = [ (a "127.0.0.1") ];
         newtest.TXT = [ "uwu it works" ];
