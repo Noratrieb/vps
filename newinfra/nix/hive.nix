@@ -2,7 +2,8 @@
   meta =
     let
       my-projects-versions = builtins.fromJSON (builtins.readFile ./my-projects.json);
-      nixpkgs-path = (fetchTarball "https://github.com/NixOS/nixpkgs/archive/50ab793786d9de88ee30ec4e4c24fb4236fc2674.tar.gz"); # nixos-24.11 2025-07-27
+      nixpkgs-hash = "50ab793786d9de88ee30ec4e4c24fb4236fc2674"; # nixos-24.11 2025-07-27
+      nixpkgs-path = (fetchTarball "https://github.com/NixOS/nixpkgs/archive/${nixpkgs-hash}.tar.gz");
     in
     {
       # Override to pin the Nixpkgs version (recommended). This option

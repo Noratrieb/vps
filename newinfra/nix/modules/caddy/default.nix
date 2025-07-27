@@ -30,6 +30,7 @@ in
   age.secrets.caddy_s3_key_secret.file = ../../secrets/caddy_s3_key_secret.age;
 
   systemd.services.caddy.serviceConfig.EnvironmentFile = config.age.secrets.caddy_s3_key_secret.path;
+  systemd.services.caddy.after = [ "garage.service" ]; # the cert store depends on garage
   services.caddy = {
     enable = true;
     package = caddy;
