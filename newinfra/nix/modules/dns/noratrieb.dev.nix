@@ -72,9 +72,7 @@ let
         git = vps1;
         olat = vps1;
 
-        yeet = {
-          A = [ (a "5.75.137.171") ];
-        };
+        std.CNAME = [ (cname "noratrieb.github.io.") ];
 
         # --- fun shit
         localhost.A = [ (a "127.0.0.1") ];
