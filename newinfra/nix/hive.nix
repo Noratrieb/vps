@@ -2,7 +2,7 @@
   meta =
     let
       my-projects-versions = builtins.fromJSON (builtins.readFile ./my-projects.json);
-      nixpkgs-path = (fetchTarball "https://github.com/NixOS/nixpkgs/archive/7105ae3957700a9646cc4b766f5815b23ed0c682.tar.gz");
+      nixpkgs-path = (fetchTarball "https://github.com/NixOS/nixpkgs/archive/50ab793786d9de88ee30ec4e4c24fb4236fc2674.tar.gz"); # nixos-24.11 2025-07-27
     in
     {
       # Override to pin the Nixpkgs version (recommended). This option
@@ -10,7 +10,7 @@
       # - A path to a Nixpkgs checkout
       # - The Nixpkgs lambda (e.g., import <nixpkgs>)
       # - An initialized Nixpkgs attribute set
-      nixpkgs = import nixpkgs-path; # nixos-24.11 2025-03-21
+      nixpkgs = import nixpkgs-path;
 
       specialArgs = {
         website = import (fetchTarball "https://github.com/Noratrieb/website/archive/${my-projects-versions.website}.tar.gz");
