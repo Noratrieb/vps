@@ -57,6 +57,7 @@ let
         # --- website stuff
         blog = vps1;
         www = vps1;
+        files = combine [ vps1 vps3 vps4 ];
 
         # --- legacy crap
         old-docker = vps2;

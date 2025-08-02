@@ -70,6 +70,13 @@ in
                     precompressed zstd gzip br
                 }
             }
+
+            files.noratrieb.dev {
+              log
+              encode zstd gzip
+
+              reverse_proxy * localhost:3902
+            }
             '' else ""
           }
 
