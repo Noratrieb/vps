@@ -55,7 +55,9 @@ olat.noratrieb.dev:8088 {
 upload.files.noratrieb.dev {
 	log
 	encode zstd gzip
-	reverse_proxy * localhost:3050
+	# we need HTTP/2 here because the server doesn't work with HTTP/1.1
+	# because it will send early 401 responses during the upload without consuming the body
+	reverse_proxy * h2c://localhost:3050
 }
 
 ################################################################
