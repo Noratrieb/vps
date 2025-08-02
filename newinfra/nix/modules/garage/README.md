@@ -25,6 +25,8 @@
     - key `backups` RW
 - `forgejo`
     - key `forgejo` RW
+- `files.noratrieb.dev`
+    - key `upload-files` RW
 
 ## keys
 

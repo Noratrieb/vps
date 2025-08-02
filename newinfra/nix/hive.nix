@@ -20,6 +20,7 @@
         pretense = import (fetchTarball "https://github.com/Noratrieb/pretense/archive/${my-projects-versions.pretense}.tar.gz");
         quotdd = import (fetchTarball "https://github.com/Noratrieb/quotdd/archive/${my-projects-versions.quotdd}.tar.gz");
         does-it-build = import (fetchTarball "https://github.com/Noratrieb/does-it-build/archive/${my-projects-versions.does-it-build}.tar.gz");
+        upload-files = import (fetchTarball "https://github.com/Noratrieb/upload.files.noratrieb.dev/archive/${my-projects-versions."upload.files.noratrieb.dev"}.tar.gz");
 
         inherit my-projects-versions;
 
@@ -183,6 +184,7 @@
       ./apps/killua
       ./apps/forgejo
       ./apps/openolat
+      ./apps/upload-files
     ];
 
     deployment.tags = [ "caddy" "eu" "apps" "website" ];

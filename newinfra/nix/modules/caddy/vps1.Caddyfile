@@ -52,6 +52,12 @@ olat.noratrieb.dev:8088 {
 	reverse_proxy * localhost:5011
 }
 
+upload.files.noratrieb.dev {
+	log
+	encode zstd gzip
+	reverse_proxy * localhost:3050
+}
+
 ################################################################
 # redirects
 

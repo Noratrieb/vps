@@ -23,6 +23,7 @@ in
   "s3_mc_admin_client.age".publicKeys = [ vps1 vps3 vps4 vps5 ];
   "killua_env.age".publicKeys = [ vps1 ];
   "forgejo_s3_key_secret.age".publicKeys = [ vps1 ];
+  "upload_files_s3_secret.age".publicKeys = [ vps1 ];
   "wg_private_dns1.age".publicKeys = [ dns1 ];
   "wg_private_dns2.age".publicKeys = [ dns2 ];
   "wg_private_vps1.age".publicKeys = [ vps1 ];
