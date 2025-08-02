@@ -1,39 +1,30 @@
-# Infra setup
+# new infra
 
-## TODOS
+New infra based on more servers and more shit.
 
-There are many todos here. First, grep this codebase for `todo`. In addition to that:
+All servers have their hostname as their name here and are reachable via `$hostname.infra.noratrieb.dev`.
+They will have different firewall configurations depending on their roles.
 
-- backups
-- data replication across the two servers. i have two servers, let's use that power. maybe rsync or something like that?
 
-## server??
+## DNS
 
-Each VPS has a caddy running _on the host_, not inside docker. It's the entrypoint to the stuff.
-Everything else runs in a docker container via docker compose.
+Two [knot-dns](https://www.knot-dns.cz/) nameservers (`dns1`, `dns2`).
+All records are fully static, generated in the NixOS config.
 
-## extra setup
+## HTTP(S)
 
-every app needs some secrets in places.
+stuff.
 
-there are also "global secrets" used for the docker-compose, for example
-for env vars. those should be placed in `/apps/.env`.
+## provisioning
 
-Right now the global secrets are
+NixOS is provisioned by running [nixos-infect](https://github.com/elitak/nixos-infect) over a default image.
+
+> Contabo sets the hostname to something like vmi######.contaboserver.net, Nixos only allows RFC 1035 compliant hostnames (see here).
+> Run `hostname something_without_dots` before running the script.
+> If you run the script before changing the hostname - remove the /etc/nixos/configuration.nix so it's regenerated with the new hostname.
 
 ```
-KILLUA_BOT_TOKEN=
-HUGO_CHAT_DB_PASSWORD=
+hostname tmp
+curl -LO https://raw.githubusercontent.com/elitak/nixos-infect/master/nixos-infect
+bash nixos-infect
 ```
-
-## things that shall not be forgotten
-
-there once was some custom k8s cluster setup in `./k8s-cluster`. it was incomplete and pretty cursed.
-
-also some kubernetes config in `./kube`. why.
-
-gloriously not great docker configs in `./docker`.
-
-`nginx`, `registry` with config for the two.
-
-`run_scripts` with not good scripts for starting containers.

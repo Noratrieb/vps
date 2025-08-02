@@ -3,3 +3,4 @@
 
 /secrets/** filter=git-crypt diff=git-crypt
 /newinfra/secrets-git-crypt/** filter=git-crypt diff=git-crypt
+/secrets-git-crypt/** filter=git-crypt diff=git-crypt
