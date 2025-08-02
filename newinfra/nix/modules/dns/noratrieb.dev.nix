@@ -9,9 +9,6 @@ let
           lib.optionalAttrs (publicIPv4 != null) { A = [ (a publicIPv4) ]; } //
           lib.optionalAttrs (publicIPv6 != null) { AAAA = [ (aaaa publicIPv6) ]; })
         networkingConfig;
-      vps2 = {
-        A = [ "184.174.32.252" ];
-      };
 
       combine = hosts: {
         A = lib.lists.flatten (map (host: if builtins.hasAttr "A" host then host.A else [ ]) hosts);
@@ -62,9 +59,6 @@ let
             upload = vps1;
           };
         };
-
-        # --- legacy crap
-        old-docker = vps2;
 
         # --- apps
         bisect-rustc = vps1;

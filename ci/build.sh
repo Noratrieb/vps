@@ -7,9 +7,9 @@ APP="$1"
 if [ "$APP" = "hugo-chat" ]; then
     REPO="https://github.com/C0RR1T/HugoChat.git"
 elif [ "$APP" = "cors" ]; then
-    REPO="https://github.com/nilstrieb-lehre/davinci-cors.git"
+    REPO="https://github.com/noratrieb-lehre/davinci-cors.git"
 else
-    REPO="https://github.com/Nilstrieb/$APP.git"
+    REPO="https://github.com/Noratrieb/$APP.git"
 fi
 
 echo "Checking out $REPO"

@@ -1,4 +1,0 @@
-vps:
-  hosts:
-    vps2:
-      ansible_host: vps2.noratrieb.dev

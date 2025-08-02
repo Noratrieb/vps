@@ -53,7 +53,16 @@
             wg = {
               privateIP = "10.0.0.1";
               publicKey = "5tg3w/TiCuCeKIBJCd6lHUeNjGEA76abT1OXnhNVyFQ=";
-              peers = [ "vps3" "vps4" "vps5" ];
+              peers = [ "vps2" "vps3" "vps4" "vps5" ];
+            };
+          };
+          vps2 = {
+            publicIPv4 = "184.174.32.252";
+            publicIPv6 = null;
+            wg = {
+              privateIP = "10.0.0.2";
+              publicKey = "SficHHJ0ynpZoGah5heBpNKnEVIVrgs72Z5HEKd3jHA=";
+              peers = [ "vps1" "vps3" "vps4" "vps5" ];
             };
           };
           vps3 = {
@@ -62,7 +71,7 @@
             wg = {
               privateIP = "10.0.0.3";
               publicKey = "pdUxG1vhmYraKzIIEFxTRAMhGwGztBL/Ly5icJUV3g0=";
-              peers = [ "vps1" "vps4" "vps5" "dns1" "dns2" ];
+              peers = [ "vps1" "vps2" "vps4" "vps5" "dns1" "dns2" ];
             };
           };
           vps4 = {
@@ -73,7 +82,7 @@
             wg = {
               privateIP = "10.0.0.4";
               publicKey = "+n2XKKaSFdCanEGRd41cvnuwJ0URY0HsnpBl6ZrSBRs=";
-              peers = [ "vps1" "vps3" "vps5" ];
+              peers = [ "vps1" "vps2" "vps3" "vps5" ];
             };
           };
           vps5 = {
@@ -82,7 +91,7 @@
             wg = {
               privateIP = "10.0.0.5";
               publicKey = "r1cwt63fcOR+FTqMTUpZdK4/MxpalkDYRHXyy7osWUk=";
-              peers = [ "vps1" "vps3" "vps4" ];
+              peers = [ "vps1" "vps2" "vps3" "vps4" ];
             };
           };
         };
@@ -188,6 +197,19 @@
     ];
 
     deployment.tags = [ "caddy" "eu" "apps" "website" ];
+    system.stateVersion = "23.11";
+  };
+  # VPS2 exists
+  vps2 = { name, nodes, modulesPath, config, lib, ... }: {
+    imports = [
+      (modulesPath + "/profiles/qemu-guest.nix")
+      ./modules/contabo
+      ./modules/wg-mesh
+      ./modules/caddy
+      ./modules/garage
+    ];
+
+    deployment.tags = [ "caddy" "eu" "apps" ];
     system.stateVersion = "23.11";
   };
   # VPS3 is the primary monitoring/metrics server.

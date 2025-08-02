@@ -5,17 +5,6 @@ New infra based on more servers and more shit.
 All servers have their hostname as their name here and are reachable via `$hostname.infra.noratrieb.dev`.
 They will have different firewall configurations depending on their roles.
 
-```
-
---------    --------
-| dns1 |    | dns2 |
---------    --------
-
---------
-| vps1 |
---------
-
-```
 
 ## DNS
 

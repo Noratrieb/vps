@@ -37,11 +37,6 @@ let
         ns1 = dns1;
         ns2 = dns2;
 
-        # apps
-        cors-school = vps2 // {
-          subdomains.api = vps2;
-        };
-
         localhost.A = [ (a "127.0.0.1") ];
 
         # --- retired:
