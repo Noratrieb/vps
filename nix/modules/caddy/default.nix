@@ -15,6 +15,11 @@ let
   blog = fetchTarball "https://github.com/Noratrieb/blog/archive/${my-projects-versions.blog}.tar.gz";
   slides = fetchTarball "https://github.com/Noratrieb/slides/archive/${my-projects-versions.slides}.tar.gz";
   website-build = website { inherit pkgs slides blog; };
+  hugo-chat-client = fetchTarball {
+    url =
+      "https://github.com/C0RR1T/HugoChat/releases/download/2024-08-05/hugo-client.tar.xz";
+    sha256 = "sha256:121ai8q6bm7gp0pl1ajfk0k2nrfg05zid61i20z0j5gpb2qyhsib";
+  };
 in
 {
   environment.systemPackages = [ caddy ];
@@ -83,6 +88,23 @@ in
             }
             '' else ""
           }
+
+          ${if name == "vps1" then ''
+            hugo-chat.noratrieb.dev {
+              log
+              encode zstd gzip
+              root * ${import ./caddy-static-prepare {
+                name = "hugo-chat-client";
+                src = hugo-chat-client;
+                inherit pkgs lib;
+              }}
+              try_files {path} /index.html
+              file_server {
+                etag_file_extensions .sha256
+                precompressed zstd gzip br
+              }
+            }
+          '' else ""}
 
           ${
             if name == "vps1" || name == "vps3" || name == "vps4" then

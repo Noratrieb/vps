@@ -3,12 +3,6 @@ www.noratrieb.dev {
 	redir https://noratrieb.dev{uri} permanent
 }
 
-hugo-chat.noratrieb.dev {
-	log
-	encode zstd gzip
-	reverse_proxy * localhost:5002
-}
-
 api.hugo-chat.noratrieb.dev {
 	log
 	import cors https://hugo-chat.noratrieb.dev "DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type"

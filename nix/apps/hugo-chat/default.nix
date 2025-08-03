@@ -1,36 +1,32 @@
 { config, lib, pkgs, ... }:
 let
-  dockerLogin = {
-    registry = "docker.noratrieb.dev";
-    username = "nils";
-    passwordFile = config.age.secrets.docker_registry_password.path;
+  jarfile = pkgs.fetchurl {
+    url =
+      "https://github.com/C0RR1T/HugoChat/releases/download/2024-08-05/HugoServer.jar";
+    hash = "sha256-hCe2UPqrSR6u3/UxsURI2KzRxN5saeTteCRq5Zfay4M=";
   };
 in
 {
   age.secrets.hugochat_db_password.file = ../../secrets/hugochat_db_password.age;
 
+  systemd.services.hugo-chat-server = {
+    description = "HugoChat server, a chat platform";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network.target" ];
+    environment = {
+      SPRING_DATASOURCE_URL = "jdbc:postgresql://localhost:5003/postgres";
+    };
+    serviceConfig = {
+      DynamicUser = true;
+      ExecStart = "${lib.getExe' pkgs.jdk21 "java"} -jar ${jarfile} --server.port=5001";
+      EnvironmentFile = [ config.age.secrets.hugochat_db_password.path ];
+    };
+  };
+
   virtualisation.oci-containers.containers = {
-    hugo-chat-client = {
-      image = "docker.noratrieb.dev/hugo-chat-client:89ce0b07";
-      login = dockerLogin;
-      ports = [ "127.0.0.1:5002:80" ];
-    };
-
-    hugo-chat-server = {
-      image = "docker.noratrieb.dev/hugo-chat-server:89ce0b07";
-      ports = [ "127.0.0.1:5001:8080" ];
-      environment = {
-        SPRING_DATASOURCE_URL = "jdbc:postgresql://hugo-chat-db:5432/postgres";
-      };
-      environmentFiles = [ config.age.secrets.hugochat_db_password.path ];
-      extraOptions = [ "--network=hugo-chat" ];
-
-      dependsOn = [ "hugo-chat-db" ];
-      login = dockerLogin;
-    };
-
     hugo-chat-db = {
       image = "postgres:16";
+      ports = [ "127.0.0.1:5003:5432" ];
       volumes = [ "/var/lib/hugo-chat/data:/var/lib/postgresql/data" ];
       environment = {
         PGDATA = "/var/lib/postgresql/data/pgdata";
