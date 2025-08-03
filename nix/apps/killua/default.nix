@@ -1,23 +1,27 @@
-{ config, lib, ... }:
-let dataDir = "/var/lib/killua"; in
+{ config, lib, pkgs, ... }:
+let
+  jarfile = pkgs.fetchurl {
+    url =
+      "https://github.com/Noratrieb/killua-bot/releases/download/2023-08-26/KilluaBot.jar";
+    hash = "sha256-LUABYq6cRhLTLyZVzkIjIFHERcb7YQTzyAGaJB49Mxk=";
+  };
+  dataDir = "/var/lib/killua";
+in
 {
   age.secrets.killua_env.file = ../../secrets/killua_env.age;
 
-  virtualisation.oci-containers.containers = {
-    killua = {
-      image = "docker.noratrieb.dev/killua-bot:ac8203d2";
-      volumes = [
-        "${dataDir}:/data"
-      ];
-      environment = {
-        KILLUA_JSON_PATH = "/data/trivia_questions.json";
-      };
-      environmentFiles = [ config.age.secrets.killua_env.path ];
-      login = {
-        registry = "docker.noratrieb.dev";
-        username = "nils";
-        passwordFile = config.age.secrets.docker_registry_password.path;
-      };
+  systemd.services.killua = {
+    description = "killua, an awesome discord bot";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network.target" ];
+    environment = {
+      BOT_TOKEN_PATH = config.age.secrets.widetom_bot_token.path;
+      CONFIG_PATH = config.age.secrets.widetom_config_toml.path;
+    };
+    serviceConfig = {
+      DynamicUser = true;
+      ExecStart = "${lib.getExe' pkgs.jdk17 "java"} -jar ${jarfile}";
+      EnvironmentFile = [ config.age.secrets.killua_env.path ];
     };
   };
 
