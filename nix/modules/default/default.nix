@@ -179,5 +179,51 @@ in
     };
   };
 
+  services.alloy = {
+    enable = true;
+  };
+  systemd.services.alloy.serviceConfig = {
+    DynamicUser = lib.mkForce false;
+  };
+  environment.etc."alloy/config.alloy".text = ''
+    discovery.process "all" {
+      discover_config {
+        cgroup_path = true
+        container_id = true
+      }
+    }
+
+    discovery.relabel "alloy" {
+      targets = discovery.process.all.targets
+      // Filter needed processes
+      rule {
+          source_labels = ["__meta_process_cgroup_path"]
+          regex = "0::/system.slice/.*.service"
+          action = "keep"
+      }
+
+      rule {
+        source_labels = ["__meta_process_cgroup_path"]
+        regex = "0::/system.slice/(.*.service)"
+        target_label = "service_name"
+        action = "replace"
+      }
+    }
+
+    pyroscope.ebpf "instance" {
+      forward_to     = [pyroscope.write.endpoint.receiver]
+      targets = discovery.relabel.alloy.output
+    }
+
+    pyroscope.write "endpoint" {
+      endpoint {
+        url = "http://vps3.local:4040"
+      }
+      external_labels = {
+        "instance" = env("HOSTNAME"),
+      }
+    }
+  '';
+
   deployment.tags = networkingConfig."${name}".tags;
 }

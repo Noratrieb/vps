@@ -25,6 +25,7 @@ in
   "killua_env.age".publicKeys = [ vps1 ];
   "forgejo_s3_key_secret.age".publicKeys = [ vps1 ];
   "upload_files_s3_secret.age".publicKeys = [ vps1 ];
+  "pyroscope_s3_secret.age".publicKeys = [ vps3 ];
   "wg_private_dns1.age".publicKeys = [ dns1 ];
   "wg_private_dns2.age".publicKeys = [ dns2 ];
   "wg_private_vps1.age".publicKeys = [ vps1 ];

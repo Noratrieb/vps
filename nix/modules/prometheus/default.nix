@@ -1,4 +1,4 @@
-{ config, lib, networkingConfig, ... }: {
+{ config, lib, networkingConfig, pkgs, ... }: {
   services.prometheus = {
     enable = true;
     globalConfig = { };
@@ -83,12 +83,21 @@
             access = "proxy";
             url = "http://vps3.local:3100";
           }
+          {
+            name = "pyroscope";
+            type = "grafana-pyroscope-datasource";
+            access = "proxy";
+            url = "http://vps3.local:4040";
+          }
         ];
       };
     };
   };
 
-  networking.firewall.interfaces.wg0.allowedTCPPorts = [ config.services.loki.configuration.server.http_listen_port ];
+  networking.firewall.interfaces.wg0.allowedTCPPorts = [
+    config.services.loki.configuration.server.http_listen_port
+    4040 # pyroscope
+  ];
   age.secrets.loki_env.file = ../../secrets/loki_env.age;
   systemd.services.loki.serviceConfig.EnvironmentFile = config.age.secrets.loki_env.path;
   services.loki = {
@@ -142,4 +151,56 @@
     mkdir -p /var/lib/loki/{index,cache}
     chown ${config.services.loki.user}:${config.services.loki.group} -R /var/lib/loki
   '';
+
+
+  age.secrets.pyroscope_s3_secret = {
+    file = ../../secrets/pyroscope_s3_secret.age;
+    owner = config.users.users.pyroscope.name;
+  };
+
+  systemd.services.pyroscope =
+    let
+      pyroscope = builtins.fetchTarball {
+        url = "https://github.com/grafana/pyroscope/releases/download/v1.14.0/pyroscope_1.14.0_linux_amd64.tar.gz";
+        sha256 = "sha256:005539bp2a2kac8ff6vz77g0niav81rggha1bsfx454fw4dyli4y";
+      };
+      pyroscopeConfig = {
+        analytics.reporting_enabled = false;
+        server = {
+          grpc_listen_port = 9084; # random port
+        };
+        storage = {
+          backend = "s3";
+          s3 = {
+            bucket_name = "pyroscope";
+            region = "garage";
+            endpoint = "localhost:3900";
+            insecure = true;
+            access_key_id = "\${ACCESS_KEY_ID}";
+            secret_access_key = "\${ACCESS_SECRET_KEY}";
+          };
+        };
+      };
+    in
+    {
+      description = "pyroscope, the continuous profiling database";
+      wantedBy = [ "multi-user.target" ];
+      after = [ "network.target" ];
+      serviceConfig = {
+        Restart = "always";
+        User = config.users.users.pyroscope.name;
+        Group = config.users.users.pyroscope.group;
+        ExecStart = "${pyroscope}/pyroscope -config.expand-env=true -config.file ${pkgs.writeText "config.yml" (builtins.toJSON pyroscopeConfig)}";
+        EnvironmentFile = config.age.secrets.pyroscope_s3_secret.path;
+        WorkingDirectory = "/var/lib/pyroscope";
+      };
+    };
+
+  users.users.pyroscope = {
+    group = "pyroscope";
+    isSystemUser = true;
+    home = "/var/lib/pyroscope";
+    createHome = true;
+  };
+  users.groups.pyroscope = { };
 }
