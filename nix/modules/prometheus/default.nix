@@ -22,6 +22,30 @@
         ];
       }
       {
+        job_name = "cadvisor";
+        static_configs = [
+          { targets = [ "dns1.local:8080" ]; }
+          { targets = [ "dns2.local:8080" ]; }
+          { targets = [ "vps1.local:8080" ]; }
+          { targets = [ "vps2.local:8080" ]; }
+          { targets = [ "vps3.local:8080" ]; }
+          { targets = [ "vps4.local:8080" ]; }
+          { targets = [ "vps5.local:8080" ]; }
+        ];
+      }
+      {
+        job_name = "systemd";
+        static_configs = [
+          { targets = [ "dns1.local:9558" ]; }
+          { targets = [ "dns2.local:9558" ]; }
+          { targets = [ "vps1.local:9558" ]; }
+          { targets = [ "vps2.local:9558" ]; }
+          { targets = [ "vps3.local:9558" ]; }
+          { targets = [ "vps4.local:9558" ]; }
+          { targets = [ "vps5.local:9558" ]; }
+        ];
+      }
+      {
         job_name = "caddy";
         static_configs = [
           { targets = [ "vps1.local:9010" ]; }

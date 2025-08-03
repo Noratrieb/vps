@@ -92,13 +92,22 @@
   # monitoring
 
   networking.firewall.interfaces.wg0.allowedTCPPorts = [
+    8080 # cadvisor exporter
     9100 # node exporter
     9150 # pretense exporter
+    9558 # systemd exporter
   ];
   services.prometheus.exporters = {
     node = {
       enable = true;
     };
+    systemd = {
+      enable = true;
+    };
+  };
+  services.cadvisor = {
+    enable = true;
+    listenAddress = "0.0.0.0"; # todo: $wg-ip
   };
   services.promtail = {
     enable = true;
