@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 
-const path = `${import.meta.dirname}/nix/my-projects.json`;
+const path = `${import.meta.dirname}/my-projects.json`;
 const projects = JSON.parse(await fs.readFile(path));
 
 let hasChanges = false;
