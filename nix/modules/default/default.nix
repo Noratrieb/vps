@@ -113,6 +113,10 @@ in
   services.cadvisor = {
     enable = true;
     listenAddress = "0.0.0.0";
+    extraOptions = [
+      # significantly decreases CPU usage (https://github.com/google/cadvisor/issues/2523)
+      "--housekeeping_interval=30s"
+    ];
   };
   services.promtail = {
     enable = true;
