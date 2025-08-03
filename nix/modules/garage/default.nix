@@ -1,4 +1,9 @@
-{ config, pkgs, name, ... }: {
+{ config, pkgs, name, ... }:
+let
+  rpcPort = 3901;
+  adminPort = 3903;
+in
+{
   age.secrets.garage_secrets.file = ../../secrets/garage_secrets.age;
 
   environment.systemPackages = with pkgs; [
@@ -6,8 +11,8 @@
   ];
 
   networking.firewall.interfaces.wg0.allowedTCPPorts = [
-    3901 # RPC
-    3903 # admin for metrics
+    rpcPort
+    adminPort
   ];
 
   services.garage = {
@@ -24,8 +29,8 @@
       # arbitrary, but a bit higher as disk space matters more than time. she says, cluelessly.
       compression-level = 5;
 
-      rpc_bind_addr = "[::]:3901";
-      rpc_public_addr = "${name}.local:3901";
+      rpc_bind_addr = "[::]:${toString rpcPort}";
+      rpc_public_addr = "${name}.local:${toString rpcPort}";
 
       s3_api = {
         s3_region = "garage";
@@ -40,7 +45,7 @@
       };
 
       admin = {
-        api_bind_addr = "[::]:3903";
+        api_bind_addr = "[::]:${toString adminPort}";
       };
     };
     environmentFile = config.age.secrets.garage_secrets.path;

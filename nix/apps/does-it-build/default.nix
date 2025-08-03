@@ -1,7 +1,7 @@
-{ pkgs, lib, does-it-build, my-projects-versions, ... }:
+{ pkgs, lib, my-projects-versions, ... }:
 let
-  does-it-build-base = does-it-build { inherit pkgs; };
-  does-it-build-with-commit = does-it-build-base.overrideAttrs (finalAttrs: previousAttrs: {
+  does-it-build-base = (import (fetchTarball "https://github.com/Noratrieb/does-it-build/archive/${my-projects-versions.does-it-build}.tar.gz")) { inherit pkgs; };
+  does-it-build = does-it-build-base.overrideAttrs (finalAttrs: previousAttrs: {
     DOES_IT_BUILD_OVERRIDE_VERSION = my-projects-versions.does-it-build;
   });
 in
@@ -15,7 +15,7 @@ in
     serviceConfig = {
       User = "does-it-build";
       Group = "does-it-build";
-      ExecStart = "${lib.getExe' (does-it-build-with-commit) "does-it-build" }";
+      ExecStart = "${lib.getExe' (does-it-build) "does-it-build" }";
       Environment = "DB_PATH=/var/lib/does-it-build/db.sqlite";
     };
   };

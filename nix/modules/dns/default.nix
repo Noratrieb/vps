@@ -1,4 +1,6 @@
-{ pkgs, lib, networkingConfig, ... }: {
+{ pkgs, lib, networkingConfig, ... }:
+let metricsPort = 9433; in
+{
   # get the package for the debugging tools
   environment.systemPackages = with pkgs; [ knot-dns ];
 
@@ -40,9 +42,9 @@
     };
   };
 
-  networking.firewall.interfaces.wg0.allowedTCPPorts = [ 9433 ]; # metrics
+  networking.firewall.interfaces.wg0.allowedTCPPorts = [ metricsPort ];
   services.prometheus.exporters.knot = {
     enable = true;
-    port = 9433;
+    port = metricsPort;
   };
 }

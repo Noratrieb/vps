@@ -1,7 +1,6 @@
 {
   meta =
     let
-      my-projects-versions = builtins.fromJSON (builtins.readFile ./my-projects.json);
       nixpkgs-version = builtins.fromJSON (builtins.readFile ./nixpkgs.json);
       nixpkgs-path = (fetchTarball "https://github.com/NixOS/nixpkgs/archive/${nixpkgs-version.commit}.tar.gz");
     in
@@ -14,15 +13,7 @@
       nixpkgs = import nixpkgs-path;
 
       specialArgs = {
-        website = import (fetchTarball "https://github.com/Noratrieb/website/archive/${my-projects-versions.website}.tar.gz");
-        blog = fetchTarball "https://github.com/Noratrieb/blog/archive/${my-projects-versions.blog}.tar.gz";
-        slides = fetchTarball "https://github.com/Noratrieb/slides/archive/${my-projects-versions.slides}.tar.gz";
-        pretense = import (fetchTarball "https://github.com/Noratrieb/pretense/archive/${my-projects-versions.pretense}.tar.gz");
-        quotdd = import (fetchTarball "https://github.com/Noratrieb/quotdd/archive/${my-projects-versions.quotdd}.tar.gz");
-        does-it-build = import (fetchTarball "https://github.com/Noratrieb/does-it-build/archive/${my-projects-versions.does-it-build}.tar.gz");
-        upload-files = import (fetchTarball "https://github.com/Noratrieb/upload.files.noratrieb.dev/archive/${my-projects-versions."upload.files.noratrieb.dev"}.tar.gz");
-
-        inherit my-projects-versions;
+        my-projects-versions = builtins.fromJSON (builtins.readFile ./my-projects.json);
 
         inherit nixpkgs-path;
 
@@ -35,6 +26,7 @@
               publicKey = "7jy2q93xYBHG5yKqLmNuMWSuFMnUGWXVuKQ1yMmxoV4=";
               peers = [ "vps3" ];
             };
+            tags = [ "dns" ];
           };
           dns2 = {
             publicIPv4 = "128.140.3.7";
@@ -46,6 +38,7 @@
               publicKey = "yfOc/q5M+2DWPoZ4ZgwrTYYkviQxGxRWpcBCDcauDnc=";
               peers = [ "vps3" ];
             };
+            tags = [ "dns" ];
           };
           vps1 = {
             publicIPv4 = "161.97.165.1";
@@ -55,6 +48,7 @@
               publicKey = "5tg3w/TiCuCeKIBJCd6lHUeNjGEA76abT1OXnhNVyFQ=";
               peers = [ "vps2" "vps3" "vps4" "vps5" ];
             };
+            tags = [ "apps" ];
           };
           vps2 = {
             publicIPv4 = "184.174.32.252";
@@ -64,6 +58,7 @@
               publicKey = "SficHHJ0ynpZoGah5heBpNKnEVIVrgs72Z5HEKd3jHA=";
               peers = [ "vps1" "vps3" "vps4" "vps5" ];
             };
+            tags = [ "apps" ];
           };
           vps3 = {
             publicIPv4 = "134.255.181.139";
@@ -73,6 +68,7 @@
               publicKey = "pdUxG1vhmYraKzIIEFxTRAMhGwGztBL/Ly5icJUV3g0=";
               peers = [ "vps1" "vps2" "vps4" "vps5" "dns1" "dns2" ];
             };
+            tags = [ "apps" ];
           };
           vps4 = {
             publicIPv4 = "195.201.147.17";
@@ -84,6 +80,7 @@
               publicKey = "+n2XKKaSFdCanEGRd41cvnuwJ0URY0HsnpBl6ZrSBRs=";
               peers = [ "vps1" "vps2" "vps3" "vps5" ];
             };
+            tags = [ "apps" ];
           };
           vps5 = {
             publicIPv4 = "45.94.209.30";
@@ -93,6 +90,7 @@
               publicKey = "r1cwt63fcOR+FTqMTUpZdK4/MxpalkDYRHXyy7osWUk=";
               peers = [ "vps1" "vps2" "vps3" "vps4" ];
             };
+            tags = [ "apps" ];
           };
         };
       };
@@ -120,9 +118,6 @@
       ./modules/wg-mesh
     ];
 
-    # The name and nodes parameters are supported in Colmena,
-    # allowing you to reference configurations in other nodes.
-    deployment.tags = [ "dns" "us" ];
     system.stateVersion = "23.11";
   };
   dns2 = { name, nodes, modulesPath, lib, ... }: {
@@ -132,7 +127,6 @@
       ./modules/wg-mesh
     ];
 
-    deployment.tags = [ "dns" "eu" "hetzner" ];
     system.stateVersion = "23.11";
 
     boot.loader.grub.device = "/dev/sda";
@@ -196,7 +190,6 @@
       ./apps/upload-files
     ];
 
-    deployment.tags = [ "caddy" "eu" "apps" "website" ];
     system.stateVersion = "23.11";
   };
   # VPS2 exists
@@ -209,7 +202,6 @@
       ./modules/garage
     ];
 
-    deployment.tags = [ "caddy" "eu" "apps" ];
     system.stateVersion = "23.11";
   };
   # VPS3 is the primary monitoring/metrics server.
@@ -223,7 +215,6 @@
       ./modules/prometheus
     ];
 
-    deployment.tags = [ "eu" "apps" "website" ];
     system.stateVersion = "23.11";
   };
   # VPS4 exists. It's useful for garage replication and runs does-it-build which uses some CPU.
@@ -239,7 +230,6 @@
       ./apps/does-it-build
     ];
 
-    deployment.tags = [ "eu" "apps" "hetzner" "website" ];
     system.stateVersion = "23.11";
 
     boot.loader.grub.device = "/dev/sda";
@@ -282,10 +272,6 @@
   };
   # VPS5 is the primary test server, where new things are being deployed that could break stuff maybe.
   vps5 = { name, nodes, modulesPath, config, pkgs, lib, ... }:
-    let
-      commit = "5f203d0f5ba2639043bd5bd1c3687c406d6abac1";
-      cluelessh = import (fetchTarball "https://github.com/Noratrieb/cluelessh/archive/${commit}.tar.gz");
-    in
     {
       imports = [
         (modulesPath + "/profiles/qemu-guest.nix")
@@ -293,37 +279,12 @@
         ./modules/caddy
         ./modules/wg-mesh
         ./modules/garage
+        ./apps/fakessh
       ];
 
-
       services.openssh.ports = [ 2000 ];
-      systemd.services.fakessh = {
-        description = "cluelessh-faked ssh honeypot";
-        wantedBy = [ "multi-user.target" ];
-        after = [ "network.target" ];
-        serviceConfig = {
-          Restart = "on-failure";
-          RestartSec = "5s";
-          ExecStart = "${lib.getExe' (cluelessh {inherit pkgs;}) "cluelessh-faked" }";
-
-          # i really don't trust this.
-          DynamicUser = true;
-          AmbientCapabilities = "CAP_NET_BIND_SERVICE";
-          MemoryHigh = "100M";
-          MemoryMax = "200M";
-
-          # config
-          Environment = [
-            "FAKESSH_LISTEN_ADDR=0.0.0.0:22"
-            "RUST_LOG=debug"
-            #"FAKESSH_JSON_LOGS=1"
-          ];
-        };
-      };
-      networking.firewall.allowedTCPPorts = [ 22 ];
-
       deployment.targetPort = 2000;
-      deployment.tags = [ "eu" "apps" ];
+
       system.stateVersion = "23.11";
     };
 }

@@ -10,9 +10,14 @@
     };
   };
 
-  networking.firewall.interfaces.wg0.allowedTCPPorts = [ 9011 ]; # metrics
+  networking.firewall.interfaces.wg0.allowedTCPPorts = [ 9011 ];
 
-  systemd.services.docker-registry.serviceConfig.EnvironmentFile = config.age.secrets.registry_s3_key_secret.path;
+  systemd.services.docker-registry = {
+    serviceConfig.EnvironmentFile = config.age.secrets.registry_s3_key_secret.path;
+    environment = {
+      OTEL_TRACES_EXPORTER = "none";
+    };
+  };
   services.dockerRegistry = {
     enable = true;
     storagePath = null;

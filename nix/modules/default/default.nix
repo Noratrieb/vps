@@ -1,5 +1,10 @@
-{ pkgs, lib, config, name, pretense, quotdd, nixpkgs-path, ... }: {
-  deployment.targetHost = "${config.networking.hostName}.infra.noratrieb.dev";
+{ pkgs, lib, name, my-projects-versions, networkingConfig, nixpkgs-path, ... }:
+let
+  pretense = import (fetchTarball "https://github.com/Noratrieb/pretense/archive/${my-projects-versions.pretense}.tar.gz");
+  quotdd = import (fetchTarball "https://github.com/Noratrieb/quotdd/archive/${my-projects-versions.quotdd}.tar.gz");
+in
+{
+  deployment.targetHost = "${name}.infra.noratrieb.dev";
 
   imports = [
     "${builtins.fetchTarball "https://github.com/ryantm/agenix/archive/de96bd907d5fbc3b14fc33ad37d1b9a3cb15edc6.tar.gz"}/modules/age.nix" # main 2024-07-26
@@ -107,7 +112,7 @@
   };
   services.cadvisor = {
     enable = true;
-    listenAddress = "0.0.0.0"; # todo: $wg-ip
+    listenAddress = "0.0.0.0";
   };
   services.promtail = {
     enable = true;
@@ -169,4 +174,6 @@
       ];
     };
   };
+
+  deployment.tags = networkingConfig."${name}".tags;
 }

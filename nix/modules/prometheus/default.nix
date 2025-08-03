@@ -1,96 +1,52 @@
-{ config, lib, ... }: {
+{ config, lib, networkingConfig, ... }: {
   services.prometheus = {
     enable = true;
     globalConfig = { };
-    scrapeConfigs = [
-      {
-        job_name = "prometheus";
-        static_configs = [
-          { targets = [ "localhost:9090" ]; }
-        ];
-      }
-      {
-        job_name = "node";
-        static_configs = [
-          { targets = [ "dns1.local:9100" ]; }
-          { targets = [ "dns2.local:9100" ]; }
-          { targets = [ "vps1.local:9100" ]; }
-          { targets = [ "vps2.local:9100" ]; }
-          { targets = [ "vps3.local:9100" ]; }
-          { targets = [ "vps4.local:9100" ]; }
-          { targets = [ "vps5.local:9100" ]; }
-        ];
-      }
-      {
-        job_name = "cadvisor";
-        static_configs = [
-          { targets = [ "dns1.local:8080" ]; }
-          { targets = [ "dns2.local:8080" ]; }
-          { targets = [ "vps1.local:8080" ]; }
-          { targets = [ "vps2.local:8080" ]; }
-          { targets = [ "vps3.local:8080" ]; }
-          { targets = [ "vps4.local:8080" ]; }
-          { targets = [ "vps5.local:8080" ]; }
-        ];
-      }
-      {
-        job_name = "systemd";
-        static_configs = [
-          { targets = [ "dns1.local:9558" ]; }
-          { targets = [ "dns2.local:9558" ]; }
-          { targets = [ "vps1.local:9558" ]; }
-          { targets = [ "vps2.local:9558" ]; }
-          { targets = [ "vps3.local:9558" ]; }
-          { targets = [ "vps4.local:9558" ]; }
-          { targets = [ "vps5.local:9558" ]; }
-        ];
-      }
-      {
-        job_name = "caddy";
-        static_configs = [
-          { targets = [ "vps1.local:9010" ]; }
-          { targets = [ "vps2.local:9010" ]; }
-          { targets = [ "vps3.local:9010" ]; }
-          { targets = [ "vps4.local:9010" ]; }
-          { targets = [ "vps5.local:9010" ]; }
-        ];
-      }
-      {
-        job_name = "docker-registry";
-        static_configs = [
-          { targets = [ "vps1.local:9011" ]; }
-        ];
-      }
-      {
-        job_name = "garage";
-        static_configs = [
-          { targets = [ "vps1.local:3903" ]; }
-          { targets = [ "vps2.local:3903" ]; }
-          { targets = [ "vps3.local:3903" ]; }
-          { targets = [ "vps4.local:3903" ]; }
-          { targets = [ "vps5.local:3903" ]; }
-        ];
-      }
-      {
-        job_name = "knot";
-        static_configs = [
-          { targets = [ "dns1.local:9433" ]; }
-          { targets = [ "dns2.local:9433" ]; }
-        ];
-      }
-      {
-        job_name = "pretense";
-        static_configs = [
-          { targets = [ "dns1.local:9150" ]; }
-          { targets = [ "dns2.local:9150" ]; }
-          { targets = [ "vps1.local:9150" ]; }
-          { targets = [ "vps2.local:9150" ]; }
-          { targets = [ "vps3.local:9150" ]; }
-          { targets = [ "vps4.local:9150" ]; }
-          { targets = [ "vps5.local:9150" ]; }
-        ];
-      }
-    ];
+    scrapeConfigs =
+      let hostsWithTag = tag: map (entry: entry.name) (builtins.filter (entry: builtins.elem tag entry.value.tags) (lib.attrsToList networkingConfig)); in
+      [
+        {
+          job_name = "prometheus";
+          static_configs = [
+            { targets = [ "localhost:9090" ]; }
+          ];
+        }
+        {
+          job_name = "node";
+          static_configs = [{ targets = map (name: "${name}.local:9100") (builtins.attrNames networkingConfig); }];
+        }
+        {
+          job_name = "cadvisor";
+          static_configs = [{ targets = map (name: "${name}.local:8080") (builtins.attrNames networkingConfig); }];
+
+        }
+        {
+          job_name = "systemd";
+          static_configs = [{ targets = map (name: "${name}.local:9558") (builtins.attrNames networkingConfig); }];
+        }
+        {
+          job_name = "caddy";
+          static_configs = [{ targets = map (name: "${name}.local:9010") (hostsWithTag "apps"); }];
+        }
+        {
+          job_name = "docker-registry";
+          static_configs = [
+            { targets = [ "vps1.local:9011" ]; }
+          ];
+        }
+        {
+          job_name = "garage";
+          static_configs = [{ targets = map (name: "${name}.local:3903") (hostsWithTag "apps"); }];
+        }
+        {
+          job_name = "knot";
+          static_configs = [{ targets = map (name: "${name}.local:9433") (hostsWithTag "dns"); }];
+        }
+        {
+          job_name = "pretense";
+          static_configs = [{ targets = map (name: "${name}.local:9150") (builtins.attrNames networkingConfig); }];
+        }
+      ];
   };
 
   age.secrets.grafana_admin_password.file = ../../secrets/grafana_admin_password.age;
@@ -132,7 +88,7 @@
     };
   };
 
-  networking.firewall.interfaces.wg0.allowedTCPPorts = [ 3100 ]; # loki
+  networking.firewall.interfaces.wg0.allowedTCPPorts = [ config.services.loki.configuration.server.http_listen_port ];
   age.secrets.loki_env.file = ../../secrets/loki_env.age;
   systemd.services.loki.serviceConfig.EnvironmentFile = config.age.secrets.loki_env.path;
   services.loki = {

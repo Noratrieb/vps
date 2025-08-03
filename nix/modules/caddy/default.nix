@@ -1,4 +1,4 @@
-{ pkgs, config, lib, name, website, slides, blog, ... }:
+{ pkgs, config, lib, name, my-projects-versions, ... }:
 
 let
   caddy = pkgs.callPackage ./caddy-build.nix {
@@ -11,6 +11,10 @@ let
     ];
     vendorHash = "sha256-KP9bYitM/Pocw4DxOXPVBigWh4IykNf8yKJiBlTFZmI=";
   };
+  website = import (fetchTarball "https://github.com/Noratrieb/website/archive/${my-projects-versions.website}.tar.gz");
+  blog = fetchTarball "https://github.com/Noratrieb/blog/archive/${my-projects-versions.blog}.tar.gz";
+  slides = fetchTarball "https://github.com/Noratrieb/slides/archive/${my-projects-versions.slides}.tar.gz";
+  website-build = website { inherit pkgs slides blog; };
 in
 {
   environment.systemPackages = [ caddy ];
@@ -62,7 +66,7 @@ in
                 header -Last-Modified
                 root * ${import ./caddy-static-prepare {
                   name = "website";
-                  src = website { inherit pkgs slides blog; };
+                  src = website-build;
                   inherit pkgs lib;
                 }}
                 file_server {
