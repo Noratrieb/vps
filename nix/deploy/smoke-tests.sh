@@ -41,7 +41,6 @@ http_hosts=(
     grafana.noratrieb.dev
     hugo-chat.noratrieb.dev
     api.hugo-chat.noratrieb.dev/api/v2/rooms
-    uptime.noratrieb.dev
     www.noratrieb.dev
 
     # legacy:

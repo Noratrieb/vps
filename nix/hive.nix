@@ -182,7 +182,6 @@
       # apps
       ./apps/widetom
       ./apps/hugo-chat
-      ./apps/uptime
       ./apps/killua
       ./apps/forgejo
       ./apps/openolat
