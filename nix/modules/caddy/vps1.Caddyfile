@@ -24,8 +24,7 @@ api.hugo-chat.noratrieb.dev {
 
 bisect-rustc.noratrieb.dev {
 	log
-	encode zstd gzip
-	reverse_proxy * localhost:5005
+	redir https://github.com/Noratrieb/cargo-bisect-rustc-service?tab=readme-ov-file#cargo-bisect-rustc-service
 }
 
 docker.noratrieb.dev {
@@ -85,7 +84,7 @@ blog.nilstrieb.dev {
 
 bisect-rustc.nilstrieb.dev {
 	log
-	redir https://bisect-rustc.dev/blog{uri} permanent
+	redir https://bisect-rustc.noratrieb.dev/blog{uri} permanent
 }
 
 docker.nilstrieb.dev {

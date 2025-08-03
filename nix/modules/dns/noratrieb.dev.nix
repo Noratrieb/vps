@@ -61,7 +61,6 @@ let
         };
 
         # --- apps
-        bisect-rustc = vps1;
         docker = vps1;
         hugo-chat = vps1 // {
           subdomains.api = vps1;
@@ -98,6 +97,9 @@ let
         _dmarc.TXT = [
           "v=DMARC1; p=quarantine"
         ];
+
+        # retired
+        bisect-rustc = vps1;
       };
     };
 in

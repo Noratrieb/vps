@@ -183,7 +183,6 @@
       ./apps/widetom
       ./apps/hugo-chat
       ./apps/uptime
-      ./apps/cargo-bisect-rustc-service
       ./apps/killua
       ./apps/forgejo
       ./apps/openolat

@@ -36,7 +36,6 @@ http_hosts=(
     vps3.infra.noratrieb.dev
     vps4.infra.noratrieb.dev
     vps5.infra.noratrieb.dev
-    bisect-rustc.noratrieb.dev
     docker.noratrieb.dev
     does-it-build.noratrieb.dev
     grafana.noratrieb.dev
