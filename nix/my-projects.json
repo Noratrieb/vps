@@ -1,11 +1,83 @@
 {
-  "website": "57c4a239da5d17eafde4ade165f3c6706639a9b4",
-  "blog": "ea2758dd10f29e8d66ca3f54d7303f2ac20005d2",
-  "slides": "0401f35c22b124b69447655f0c537badae9e223c",
-  "pretense": "270b01fc1118dfd713c1c41530d1a7d98f04527d",
-  "quotdd": "e922229e1d9e055be35dabd112bafc87a0686548",
-  "does-it-build": "81790825173d87f89656f66f12a123bc99e2f6f1",
-  "upload.files.noratrieb.dev": "9f31fe53f040f73edbbdc8afcc9bd3cdbc1cd8ab",
-  "cluelessh": "c711cd405da4b7951e554577d09c9576bedf7970",
-  "widetom": "33d1738799618d72fe2b86896f766cbfea58dc76"
+  "website": {
+    "commit": "57c4a239da5d17eafde4ade165f3c6706639a9b4",
+    "fetchFromGitHub": {
+      "owner": "Noratrieb",
+      "repo": "website",
+      "rev": "57c4a239da5d17eafde4ade165f3c6706639a9b4",
+      "hash": "sha256-or6mCQjbc7tWAzzAKQpznZv+2vWJMhyzqxBPwRE2HKw="
+    }
+  },
+  "blog": {
+    "commit": "ea2758dd10f29e8d66ca3f54d7303f2ac20005d2",
+    "fetchFromGitHub": {
+      "owner": "Noratrieb",
+      "repo": "blog",
+      "rev": "ea2758dd10f29e8d66ca3f54d7303f2ac20005d2",
+      "hash": "sha256-LvQ41eJzOvI7mLYDTvlFwGZ2TKrZO26rasydqnEZ/t4="
+    }
+  },
+  "slides": {
+    "commit": "0401f35c22b124b69447655f0c537badae9e223c",
+    "fetchFromGitHub": {
+      "owner": "Noratrieb",
+      "repo": "slides",
+      "rev": "0401f35c22b124b69447655f0c537badae9e223c",
+      "hash": "sha256-K1Me4wf/GSfoc1PGWVJygPyTVV8SXienxUrzXkdCrjQ="
+    }
+  },
+  "pretense": {
+    "commit": "270b01fc1118dfd713c1c41530d1a7d98f04527d",
+    "fetchFromGitHub": {
+      "owner": "Noratrieb",
+      "repo": "pretense",
+      "rev": "270b01fc1118dfd713c1c41530d1a7d98f04527d",
+      "hash": "sha256-76ixjjrZ2xFz3uy92LHT4zbeNvab2f4J9C46MDVr+xQ="
+    }
+  },
+  "quotdd": {
+    "commit": "e922229e1d9e055be35dabd112bafc87a0686548",
+    "fetchFromGitHub": {
+      "owner": "Noratrieb",
+      "repo": "quotdd",
+      "rev": "e922229e1d9e055be35dabd112bafc87a0686548",
+      "hash": "sha256-LhTrUDAZDIVyggaO1deFjoC13M6aktzV3QINY01ThfY="
+    }
+  },
+  "does-it-build": {
+    "commit": "81790825173d87f89656f66f12a123bc99e2f6f1",
+    "fetchFromGitHub": {
+      "owner": "Noratrieb",
+      "repo": "does-it-build",
+      "rev": "81790825173d87f89656f66f12a123bc99e2f6f1",
+      "hash": "sha256-MCgGDd7Sg+BiG8L20Bbz8bHMB/Xuc1ztOVwv/b37BnQ="
+    }
+  },
+  "upload.files.noratrieb.dev": {
+    "commit": "9f31fe53f040f73edbbdc8afcc9bd3cdbc1cd8ab",
+    "fetchFromGitHub": {
+      "owner": "Noratrieb",
+      "repo": "upload.files.noratrieb.dev",
+      "rev": "9f31fe53f040f73edbbdc8afcc9bd3cdbc1cd8ab",
+      "hash": "sha256-IQug0slBlMpHTqrj/SlJKPWCMijSka+s33HDeMf8rd0="
+    }
+  },
+  "cluelessh": {
+    "commit": "c711cd405da4b7951e554577d09c9576bedf7970",
+    "fetchFromGitHub": {
+      "owner": "Noratrieb",
+      "repo": "cluelessh",
+      "rev": "c711cd405da4b7951e554577d09c9576bedf7970",
+      "hash": "sha256-UTo5RUda/AcwGiPEeeliuA78TVMJzvBhhXs4Fr2+BGg="
+    }
+  },
+  "widetom": {
+    "commit": "33d1738799618d72fe2b86896f766cbfea58dc76",
+    "fetchFromGitHub": {
+      "owner": "Noratrieb",
+      "repo": "widetom",
+      "rev": "33d1738799618d72fe2b86896f766cbfea58dc76",
+      "hash": "sha256-lSjlDozwKRLF62jsDaWo+8+rcQdeEgurEnuw00hk3o8="
+    }
+  }
 }

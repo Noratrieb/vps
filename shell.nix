@@ -12,6 +12,13 @@
     python311Packages.zstandard
     python311Packages.brotli
     nodejs
-    (import (builtins.fetchTarball "https://github.com/ryantm/agenix/archive/531beac616433bac6f9e2a19feb8e99a22a66baf.tar.gz") { }).agenix
+    (import
+      (pkgs.fetchFromGitHub {
+        owner = "ryantm";
+        repo = "agenix";
+        rev = "531beac616433bac6f9e2a19feb8e99a22a66baf";
+        hash = "sha256-9P1FziAwl5+3edkfFcr5HeGtQUtrSdk/MksX39GieoA=";
+      })
+      { }).agenix
   ];
 }

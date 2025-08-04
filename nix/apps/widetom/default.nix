@@ -1,12 +1,7 @@
 { config, pkgs, lib, my-projects-versions, ... }:
 let
   widetom = pkgs.rustPlatform.buildRustPackage {
-    src = pkgs.fetchFromGitHub {
-      owner = "Noratrieb";
-      repo = "widetom";
-      rev = my-projects-versions.widetom;
-      hash = "sha256-lSjlDozwKRLF62jsDaWo+8+rcQdeEgurEnuw00hk3o8=";
-    };
+    src = pkgs.fetchFromGitHub my-projects-versions.widetom.fetchFromGitHub;
     pname = "widetom";
     version = "0.1.0";
     cargoHash = "sha256-AWbdPcDc+QOW7U/FYbqlIsg+3MwfggKCTCw1z/ZbSEE=";

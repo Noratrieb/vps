@@ -1,5 +1,6 @@
 { lib, pkgs, my-projects-versions, ... }:
-let cluelessh = import (fetchTarball "https://github.com/Noratrieb/cluelessh/archive/${my-projects-versions.cluelessh}.tar.gz");
+let
+  cluelessh = import (pkgs.fetchFromGitHub my-projects-versions.cluelessh.fetchFromGitHub);
 in
 {
   systemd.services.fakessh = {

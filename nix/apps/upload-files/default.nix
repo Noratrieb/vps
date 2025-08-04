@@ -1,5 +1,7 @@
 { my-projects-versions, pkgs, lib, config, ... }:
-let upload-files = import (fetchTarball "https://github.com/Noratrieb/upload.files.noratrieb.dev/archive/${my-projects-versions."upload.files.noratrieb.dev"}.tar.gz"); in
+let
+  upload-files = import (pkgs.fetchFromGitHub my-projects-versions."upload.files.noratrieb.dev".fetchFromGitHub);
+in
 {
   age.secrets.upload_files_s3_secret.file = ../../secrets/upload_files_s3_secret.age;
 

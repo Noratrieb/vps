@@ -1,7 +1,7 @@
 { pkgs, lib, name, my-projects-versions, networkingConfig, nixpkgs-path, ... }:
 let
-  pretense = import (fetchTarball "https://github.com/Noratrieb/pretense/archive/${my-projects-versions.pretense}.tar.gz");
-  quotdd = import (fetchTarball "https://github.com/Noratrieb/quotdd/archive/${my-projects-versions.quotdd}.tar.gz");
+  pretense = import (pkgs.fetchFromGitHub my-projects-versions.pretense.fetchFromGitHub);
+  quotdd = import (pkgs.fetchFromGitHub my-projects-versions.quotdd.fetchFromGitHub);
 in
 {
   deployment.targetHost = "${name}.infra.noratrieb.dev";

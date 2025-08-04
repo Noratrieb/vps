@@ -1,8 +1,8 @@
 { pkgs, lib, my-projects-versions, ... }:
 let
-  website = import (fetchTarball "https://github.com/Noratrieb/website/archive/${my-projects-versions.website}.tar.gz");
-  blog = fetchTarball "https://github.com/Noratrieb/blog/archive/${my-projects-versions.blog}.tar.gz";
-  slides = fetchTarball "https://github.com/Noratrieb/slides/archive/${my-projects-versions.slides}.tar.gz";
+  website = import (pkgs.fetchFromGitHub my-projects-versions.website.fetchFromGitHub);
+  blog = pkgs.fetchFromGitHub my-projects-versions.blog.fetchFromGitHub;
+  slides = pkgs.fetchFromGitHub my-projects-versions.slides.fetchFromGitHub;
   website-build = website { inherit pkgs slides blog; };
 in
 {
