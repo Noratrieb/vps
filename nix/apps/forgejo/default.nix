@@ -43,6 +43,14 @@
     };
   };
 
+  services.caddy.virtualHosts."git.noratrieb.dev" = {
+    logFormat = "";
+    extraConfig = ''
+      encode zstd gzip
+      reverse_proxy * localhost:5015
+    '';
+  };
+
   services.custom-backup.jobs = [{
     app = "forgejo";
     file = "/var/lib/forgejo/data/forgejo.db";

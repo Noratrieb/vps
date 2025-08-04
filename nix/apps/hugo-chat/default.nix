@@ -5,6 +5,11 @@ let
       "https://github.com/C0RR1T/HugoChat/releases/download/2024-08-05/HugoServer.jar";
     hash = "sha256-hCe2UPqrSR6u3/UxsURI2KzRxN5saeTteCRq5Zfay4M=";
   };
+  hugo-chat-client = fetchTarball {
+    url =
+      "https://github.com/C0RR1T/HugoChat/releases/download/2024-08-05/hugo-client.tar.xz";
+    sha256 = "sha256:121ai8q6bm7gp0pl1ajfk0k2nrfg05zid61i20z0j5gpb2qyhsib";
+  };
 in
 {
   age.secrets.hugochat_db_password.file = ../../secrets/hugochat_db_password.age;
@@ -34,6 +39,61 @@ in
       extraOptions = [ "--network=hugo-chat" ];
       environmentFiles = [ config.age.secrets.hugochat_db_password.path ];
     };
+  };
+
+  services.caddy.virtualHosts = {
+    "hugo-chat.noratrieb.dev" = {
+      logFormat = "";
+      extraConfig = ''
+        encode zstd gzip
+        root * ${import ../../packages/caddy-static-prepare {
+          name = "hugo-chat-client";
+          src = hugo-chat-client;
+          inherit pkgs lib;
+        }}
+        try_files {path} /index.html
+        file_server {
+          etag_file_extensions .sha256
+          precompressed zstd gzip br
+        }
+      '';
+    };
+    "api.hugo-chat.noratrieb.dev" =
+      let
+        cors = pkgs.writeText "cors" ''
+          # https://gist.github.com/ryanburnette/d13575c9ced201e73f8169d3a793c1a3
+          @cors_preflight{args[0]} method OPTIONS
+          @cors{args[0]} header Origin {args[0]}
+
+          handle @cors_preflight{args[0]} {
+            header {
+              Access-Control-Allow-Origin "{args[0]}"
+              Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+              Access-Control-Allow-Credentials "false"
+              Access-Control-Allow-Headers "$${args[1]}"
+              Access-Control-Max-Age "86400"
+              defer
+            }
+            respond "" 204
+          }
+
+          handle @cors{args[0]} {
+            header {
+              Access-Control-Allow-Origin "{args[0]}"
+              Access-Control-Expose-Headers *
+              defer
+            }
+          }
+        '';
+      in
+      {
+        logFormat = "";
+        extraConfig = ''
+          import ${cors} https://hugo-chat.noratrieb.dev "DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type"
+          encode zstd gzip
+          reverse_proxy * localhost:5001
+        '';
+      };
   };
 
   services.custom-backup.jobs = [

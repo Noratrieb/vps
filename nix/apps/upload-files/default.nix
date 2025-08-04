@@ -18,4 +18,15 @@ let upload-files = import (fetchTarball "https://github.com/Noratrieb/upload.fil
       EnvironmentFile = [ config.age.secrets.upload_files_s3_secret.path ];
     };
   };
+
+  services.caddy.virtualHosts."upload.files.noratrieb.dev" = {
+    logFormat = "";
+    extraConfig = ''
+      	encode zstd gzip
+        # we need HTTP/2 here because the server doesn't work with HTTP/1.1
+        # because it will send early 401 responses during the upload without consuming the body
+        # (this has been mostly fixed but still keep it)
+        reverse_proxy * h2c://localhost:3050
+    '';
+  };
 }

@@ -94,6 +94,14 @@
     };
   };
 
+  services.caddy.virtualHosts."grafana.noratrieb.dev" = {
+    logFormat = "";
+    extraConfig = ''
+      encode zstd gzip
+      reverse_proxy * localhost:3000
+    '';
+  };
+
   networking.firewall.interfaces.wg0.allowedTCPPorts = [
     config.services.loki.configuration.server.http_listen_port
     4040 # pyroscope

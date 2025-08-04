@@ -6,6 +6,16 @@ let
   });
 in
 {
+  services.caddy.virtualHosts = {
+    "does-it-build.noratrieb.dev" = {
+      logFormat = "";
+      extraConfig = ''
+        encode zstd gzip
+        reverse_proxy * localhost:3000
+      '';
+    };
+  };
+
   systemd.services.does-it-build = {
     description = "https://github.com/Noratrieb/does-it-build";
     wantedBy = [ "multi-user.target" ];

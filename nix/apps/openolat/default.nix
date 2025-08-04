@@ -44,6 +44,24 @@ in
     };
   };
 
+  services.caddy.virtualHosts = {
+    "olat.noratrieb.dev" = {
+      logFormat = "";
+      extraConfig = ''
+        encode zstd gzip
+        reverse_proxy * localhost:5011
+      '';
+    };
+    # unsure if necessary... something was misconfigured in the past here...
+    "olat.noratrieb.dev:8088" = {
+      logFormat = "";
+      extraConfig = ''
+        encode zstd gzip
+        reverse_proxy * localhost:5011
+      '';
+    };
+  };
+
   services.custom-backup.jobs = [
     {
       app = "openolat-db";

@@ -180,6 +180,8 @@
       ./modules/backup
 
       # apps
+      ./apps/website
+      ./apps/old-redirects
       ./apps/widetom
       ./apps/hugo-chat
       ./apps/killua
@@ -211,6 +213,8 @@
       ./modules/caddy
       ./modules/garage
       ./modules/prometheus
+
+      ./apps/website
     ];
 
     system.stateVersion = "23.11";
@@ -225,6 +229,7 @@
       ./modules/backup
 
       # apps
+      ./apps/website
       ./apps/does-it-build
     ];
 

@@ -60,4 +60,11 @@
       };
     };
   };
+
+  services.caddy.virtualHosts."docker.noratrieb.dev" = {
+    logFormat = "";
+    extraConfig = ''
+      reverse_proxy * localhost:5000
+    '';
+  };
 }

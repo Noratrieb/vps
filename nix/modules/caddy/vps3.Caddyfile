@@ -1,5 +1,0 @@
-grafana.noratrieb.dev {
-	log
-	encode zstd gzip
-	reverse_proxy * localhost:3000
-}
