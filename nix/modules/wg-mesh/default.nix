@@ -9,7 +9,7 @@ in
     let
       hostsEntries = map
         (host:
-          let hostConfig = builtins.getAttr host networkingConfig; in
+          let hostConfig = networkingConfig."${host}"; in
           if builtins.hasAttr "wg" hostConfig then {
             name = hostConfig.wg.privateIP;
             value = [ "${host}.local" ];

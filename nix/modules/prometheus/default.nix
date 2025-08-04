@@ -18,7 +18,6 @@
         {
           job_name = "cadvisor";
           static_configs = [{ targets = map (name: "${name}.local:8080") (builtins.attrNames networkingConfig); }];
-
         }
         {
           job_name = "systemd";
@@ -71,7 +70,7 @@
             name = "Prometheus";
             type = "prometheus";
             access = "proxy";
-            url = "http://vps3.local:9090";
+            url = "http://prometheus.internal:9090";
             jsonData = {
               httpMethod = "POST";
               prometheusType = "Prometheus";
@@ -81,13 +80,13 @@
             name = "loki";
             type = "loki";
             access = "proxy";
-            url = "http://vps3.local:3100";
+            url = "http://loki.internal:3100";
           }
           {
             name = "pyroscope";
             type = "grafana-pyroscope-datasource";
             access = "proxy";
-            url = "http://vps3.local:4040";
+            url = "http://pyroscope.internal:4040";
           }
         ];
       };

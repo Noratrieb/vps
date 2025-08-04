@@ -35,12 +35,12 @@ in
       s3_api = {
         s3_region = "garage";
         api_bind_addr = "[::]:3900";
-        root_domain = ".s3.garage.localhost";
+        root_domain = ".s3.garage.internal";
       };
 
       s3_web = {
         bind_addr = "[::]:3902";
-        root_domain = ".web.garage.localhost";
+        root_domain = ".web.garage.internal";
         index = "index.html";
       };
 

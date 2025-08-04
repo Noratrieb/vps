@@ -6,6 +6,10 @@ in
 {
   deployment.targetHost = "${name}.infra.noratrieb.dev";
 
+  networking.hosts = {
+    "${networkingConfig.vps3.wg.privateIP}" = [ "loki.internal" "pyroscope.internal" "prometheus.internal" ];
+  };
+
   imports = [
     "${builtins.fetchTarball "https://github.com/ryantm/agenix/archive/de96bd907d5fbc3b14fc33ad37d1b9a3cb15edc6.tar.gz"}/modules/age.nix" # main 2024-07-26
   ];
@@ -126,7 +130,7 @@ in
       };
       clients = [
         {
-          url = "http://vps3.local:3100/loki/api/v1/push";
+          url = "http://loki.internal:3100/loki/api/v1/push";
         }
       ];
       scrape_configs = [
@@ -217,7 +221,7 @@ in
 
     pyroscope.write "endpoint" {
       endpoint {
-        url = "http://vps3.local:4040"
+        url = "http://pyroscope.internal:4040"
       }
       external_labels = {
         "instance" = env("HOSTNAME"),
