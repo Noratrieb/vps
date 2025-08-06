@@ -45,7 +45,21 @@
           job_name = "pretense";
           static_configs = [{ targets = map (name: "${name}.local:9150") (builtins.attrNames networkingConfig); }];
         }
+        {
+          job_name = "std-internal-docs-status";
+          scrape_interval = "1h";
+          static_configs = [{ targets = [ "localhost:7846" ]; }];
+        }
       ];
+  };
+
+  systemd.services.prometheus-exporter-std-internal-docs-status = {
+    description = "Cursed hack to get the GitHub deployment status of std.noratrieb.dev";
+    serviceConfig = {
+      DynamicUser = true;
+      ExecStart = "${lib.getExe pkgs.nodejs_24} ${./prometheus-exporter-std-internal-docs.mjs}";
+    };
+    wantedBy = [ "multi-user.target" ];
   };
 
   age.secrets.grafana_admin_password.file = ../../secrets/grafana_admin_password.age;
