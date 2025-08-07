@@ -11,7 +11,7 @@ in
   };
 
   imports = [
-    "${builtins.fetchTarball "https://github.com/ryantm/agenix/archive/de96bd907d5fbc3b14fc33ad37d1b9a3cb15edc6.tar.gz"}/modules/age.nix" # main 2024-07-26
+    "${builtins.fetchTarball "https://github.com/ryantm/agenix/archive/9edb1787864c4f59ae5074ad498b6272b3ec308d.tar.gz"}/modules/age.nix" # main 2025-08-07
   ];
 
   nix = {
@@ -129,9 +129,7 @@ in
         disable = true;
       };
       clients = [
-        {
-          url = "http://loki.internal:3100/loki/api/v1/push";
-        }
+        { url = "http://loki.internal:3100/loki/api/v1/push"; }
       ];
       scrape_configs = [
         {

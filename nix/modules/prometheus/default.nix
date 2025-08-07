@@ -8,42 +8,77 @@
         {
           job_name = "prometheus";
           static_configs = [
-            { targets = [ "localhost:9090" ]; }
+            { targets = [ "localhost:9090" ]; labels = { server = "vps3"; }; }
           ];
         }
         {
           job_name = "node";
-          static_configs = [{ targets = map (name: "${name}.local:9100") (builtins.attrNames networkingConfig); }];
+          static_configs = map
+            (name: {
+              targets = [ "${name}.local:9100" ];
+              labels = { server = name; };
+            })
+            (builtins.attrNames networkingConfig);
         }
         {
           job_name = "cadvisor";
-          static_configs = [{ targets = map (name: "${name}.local:8080") (builtins.attrNames networkingConfig); }];
+          static_configs = map
+            (name: {
+              targets = [ "${name}.local:8080" ];
+              labels = { server = name; };
+            })
+            (builtins.attrNames networkingConfig);
         }
         {
           job_name = "systemd";
-          static_configs = [{ targets = map (name: "${name}.local:9558") (builtins.attrNames networkingConfig); }];
+          static_configs = map
+            (name: {
+              targets = [ "${name}.local:9558" ];
+              labels = { server = name; };
+            })
+            (builtins.attrNames networkingConfig);
         }
         {
           job_name = "caddy";
-          static_configs = [{ targets = map (name: "${name}.local:9010") (hostsWithTag "apps"); }];
+          static_configs = map
+            (name: {
+              targets = [ "${name}.local:9010" ];
+              labels = { server = name; };
+            })
+            (hostsWithTag "apps");
         }
         {
           job_name = "docker-registry";
           static_configs = [
-            { targets = [ "vps1.local:9011" ]; }
+            { targets = [ "vps1.local:9011" ]; labels = { server = "vps1"; }; }
           ];
         }
         {
           job_name = "garage";
-          static_configs = [{ targets = map (name: "${name}.local:3903") (hostsWithTag "apps"); }];
+          static_configs = map
+            (name: {
+              targets = [ "${name}.local:3903" ];
+              labels = { server = name; };
+            })
+            (hostsWithTag "apps");
         }
         {
           job_name = "knot";
-          static_configs = [{ targets = map (name: "${name}.local:9433") (hostsWithTag "dns"); }];
+          static_configs = map
+            (name: {
+              targets = [ "${name}.local:9433" ];
+              labels = { server = name; };
+            })
+            (hostsWithTag "dns");
         }
         {
           job_name = "pretense";
-          static_configs = [{ targets = map (name: "${name}.local:9150") (builtins.attrNames networkingConfig); }];
+          static_configs = map
+            (name: {
+              targets = [ "${name}.local:9150" ];
+              labels = { server = name; };
+            })
+            (builtins.attrNames networkingConfig);
         }
         {
           job_name = "std-internal-docs-status";

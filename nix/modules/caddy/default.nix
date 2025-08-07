@@ -1,15 +1,11 @@
 { pkgs, config, lib, name, ... }:
 
 let
-  caddy = pkgs.callPackage ./caddy-build.nix {
-    externalPlugins = [
-      {
-        name = "certmagic-s3";
-        repo = "github.com/noratrieb-mirrors/certmagic-s3";
-        version = "e48519f95173e982767cbb881d49335b6a00a599";
-      }
+  caddy = pkgs.caddy.withPlugins {
+    plugins = [
+      "github.com/noratrieb-mirrors/certmagic-s3@v1.0.0"
     ];
-    vendorHash = "sha256-KP9bYitM/Pocw4DxOXPVBigWh4IykNf8yKJiBlTFZmI=";
+    hash = "sha256-O1SK13hacEkuSpWLhSdq+hu18Bi6+DqYUPu0lzBpvIE=";
   };
 in
 {
@@ -39,7 +35,7 @@ in
       format json
     '';
     globalConfig = ''
-      email noratrieb@proton.me
+      email tls@noratrieb.dev
       auto_https disable_redirects
 
       storage s3 {
@@ -73,7 +69,7 @@ in
         extraConfig = ''
           encode zstd gzip
           header -Last-Modified
-          root * ${import ./caddy-static-prepare {
+          root * ${import ../../packages/caddy-static-prepare {
             name = "debugging-page";
             src = ./debugging-page;
             inherit pkgs lib;

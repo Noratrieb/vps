@@ -16,8 +16,8 @@
       (pkgs.fetchFromGitHub {
         owner = "ryantm";
         repo = "agenix";
-        rev = "531beac616433bac6f9e2a19feb8e99a22a66baf";
-        hash = "sha256-9P1FziAwl5+3edkfFcr5HeGtQUtrSdk/MksX39GieoA=";
+        rev = "9edb1787864c4f59ae5074ad498b6272b3ec308d";
+        hash = "sha256-NA/FT2hVhKDftbHSwVnoRTFhes62+7dxZbxj5Gxvghs=";
       })
       { }).agenix
   ];

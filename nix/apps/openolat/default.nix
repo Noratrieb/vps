@@ -24,7 +24,7 @@ in
         OLAT_HOST = "olat.noratrieb.dev";
       };
       environmentFiles = [ config.age.secrets.openolat_db_password.path ];
-      extraOptions = [ "--network=openolat" ];
+      extraOptions = [ "--network=openolat" "--cgroup-manager=cgroupfs" "--cgroup-parent=/system.slice/podman-openolat.service" ];
 
       dependsOn = [ "openolat-db" ];
       login = dockerLogin;
@@ -39,7 +39,7 @@ in
         # POSTGRES_PASSWORD = from openolat_db_password
         PGDATA = "/var/lib/postgresql/data/pgdata";
       };
-      extraOptions = [ "--network=openolat" ];
+      extraOptions = [ "--network=openolat" "--cgroup-manager=cgroupfs" "--cgroup-parent=/system.slice/podman-openolat-db.service" ];
       environmentFiles = [ config.age.secrets.openolat_db_password.path ];
     };
   };
