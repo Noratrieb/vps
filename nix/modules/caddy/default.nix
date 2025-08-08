@@ -3,9 +3,9 @@
 let
   caddy = pkgs.caddy.withPlugins {
     plugins = [
-      "github.com/noratrieb-mirrors/certmagic-s3@v1.0.0"
+      "github.com/noratrieb-mirrors/certmagic-s3@v1.1.3"
     ];
-    hash = "sha256-O1SK13hacEkuSpWLhSdq+hu18Bi6+DqYUPu0lzBpvIE=";
+    hash = "sha256-HdCXbqrrGPZSdHv7bZvGz9T6loVbrfKydTbjTyt5Wt0=";
   };
 in
 {
