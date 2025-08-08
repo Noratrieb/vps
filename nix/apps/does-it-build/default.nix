@@ -10,6 +10,15 @@ in
     "does-it-build.noratrieb.dev" = {
       logFormat = "";
       extraConfig = ''
+        @blocked {
+          header User-Agent *SemrushBot*
+          header User-Agent *AhrefsBot*
+          header User-Agent *Amazonbot*
+          header User-Agent *openai.com*
+        }
+
+        respond @blocked "get fucked" 418
+
         encode zstd gzip
         reverse_proxy * localhost:3000
       '';

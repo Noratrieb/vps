@@ -6,6 +6,8 @@ in
 {
   deployment.targetHost = "${name}.infra.noratrieb.dev";
 
+  # TODO: ensure that the rust programs have frame pointers
+
   networking.hosts = {
     "${networkingConfig.vps3.wg.privateIP}" = [ "loki.internal" "pyroscope.internal" "prometheus.internal" ];
   };
