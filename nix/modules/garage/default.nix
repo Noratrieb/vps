@@ -15,6 +15,9 @@ in
     adminPort
   ];
 
+  systemd.services.garage.serviceConfig = {
+    Restart = "on-failure";
+  };
   services.garage = {
     enable = true;
     package = pkgs.garage_2_0_0;
