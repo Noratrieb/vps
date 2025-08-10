@@ -202,6 +202,26 @@
       ./modules/garage
     ];
 
+    networking.useDHCP = false;
+    systemd.network.enable = true;
+    systemd.network.networks."10-ens18" = {
+      matchConfig.MacAddress = "00:50:56:49:f0:60";
+      networkConfig = {
+        LinkLocalAddressing = "ipv6";
+        Address = [ "184.174.32.252/21" "2a02:c206:2119:3519:0000:0000:0000:0001/64" ];
+        Gateway = "fe80::1";
+        DNS = [ "213.136.95.11" "213.136.95.10" "2a02:c207::2:53" "2a02:c207::1:53" "invalid" ];
+        Domains = "invalid";
+      };
+      routes = [
+        {
+          Destination = "0.0.0.0/0";
+          Gateway = "184.174.32.1";
+          GatewayOnLink = true;
+        }
+      ];
+    };
+
     system.stateVersion = "23.11";
   };
   # VPS3 is the primary monitoring/metrics server.
