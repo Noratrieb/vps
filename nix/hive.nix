@@ -178,6 +178,7 @@
       ./modules/podman
       ./modules/registry
       ./modules/backup
+      ./modules/restic
 
       # apps
       ./apps/website
@@ -227,6 +228,7 @@
       ./modules/wg-mesh
       ./modules/garage
       ./modules/backup
+      ./modules/restic
 
       # apps
       ./apps/website

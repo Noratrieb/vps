@@ -25,10 +25,10 @@ in
     };
   };
 
-  services.custom-backup.jobs = [
+  services.custom-backup-restic.jobs = [
     {
       app = "killua";
-      file = "${dataDir}/trivia_questions.json";
+      path = dataDir;
     }
   ];
 

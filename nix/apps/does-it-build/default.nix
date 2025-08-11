@@ -39,12 +39,10 @@ in
     };
   };
 
-  services.custom-backup.jobs = [
-    {
-      app = "does-it-build";
-      file = "/var/lib/does-it-build/db.sqlite";
-    }
-  ];
+  services.custom-backup-restic.jobs = [{
+    app = "does-it-build";
+    path = "/var/lib/does-it-build/db.sqlite";
+  }];
 
   users.users.does-it-build = {
     isSystemUser = true;

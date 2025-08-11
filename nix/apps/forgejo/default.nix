@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ config, lib, pkgs, ... }: {
   age.secrets.forgejo_s3_key_secret.file = ../../secrets/forgejo_s3_key_secret.age;
 
 
@@ -51,8 +51,23 @@
     '';
   };
 
-  services.custom-backup.jobs = [{
+  services.custom-backup-restic.jobs = [{
     app = "forgejo";
-    file = "/var/lib/forgejo/data/forgejo.db";
+    # this is a mess. do not question it. it is a beautiful mess.
+    dynamicFilesFrom = "${lib.getExe pkgs.sudo} --user=forgejo ${lib.getExe (pkgs.writeShellApplication {
+      name = "backup-forgejo.sh";
+      runtimeInputs = [ pkgs.unzip ];
+      text = ''
+        rm -rf /tmp/forgejo-backup
+        mkdir -p /tmp/forgejo-backup
+        {
+          cd /tmp/forgejo-backup
+          ${lib.getExe config.services.forgejo.package} dump -c ${config.services.forgejo.customDir}/conf/app.ini
+          unzip forgejo-dump-* >/dev/null
+          rm forgejo-dump-*
+        } >&2
+        echo /tmp/forgejo-backup
+      '';
+    })}";
   }];
 }
