@@ -51,6 +51,9 @@ let
         ns1 = dns1;
         ns2 = dns2;
 
+        # --- ACME setup for caddy
+        _acme-challenge.CNAME = [ (cname "_acme-challenge.nilstrieb.dev.") ];
+
         # --- website stuff
         blog = vps1;
         www = vps1;

@@ -4,6 +4,7 @@ let
   caddy = pkgs.caddy.withPlugins {
     plugins = [
       "github.com/noratrieb-mirrors/certmagic-s3@v1.1.3"
+      "github.com/caddy-dns/rfc2136@v1.0.0"
     ];
     hash = "sha256-HdCXbqrrGPZSdHv7bZvGz9T6loVbrfKydTbjTyt5Wt0=";
   };
@@ -45,6 +46,17 @@ in
         # secret_key ENV S3_SECRET_KEY
 
         insecure true
+      }
+
+      acme_dns rfc2136 {
+        key_name "test"
+        key_alg "hmac-sha256"
+        key ""
+        server "dns1.local:53"
+      }
+
+      tls {
+        dns_challenge_override_domain "nilstrieb.dev"
       }
 
       servers {

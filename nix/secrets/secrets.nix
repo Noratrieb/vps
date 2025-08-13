@@ -28,6 +28,8 @@ in
   "pyroscope_s3_secret.age".publicKeys = [ vps3 ];
   "restic_backup.age".publicKeys = [ vps1 vps2 vps3 vps4 vps5 ];
   "generic_backup_password.age".publicKeys = [ vps1 vps2 vps3 vps4 vps5 ];
+  "knot_dns_rfc2136_key_config.age".publicKeys = [ dns1 dns2 ];
+  "knot_dns_rfc2136_key_envvar.age".publicKeys = [ vps1 vps2 vps3 vps4 vps5 ];
   "wg_private_dns1.age".publicKeys = [ dns1 ];
   "wg_private_dns2.age".publicKeys = [ dns2 ];
   "wg_private_vps1.age".publicKeys = [ vps1 ];
