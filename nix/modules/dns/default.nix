@@ -1,6 +1,12 @@
-{ pkgs, lib, networkingConfig, ... }:
+{ pkgs, lib, networkingConfig, config, ... }:
 let metricsPort = 9433; in
 {
+  age.secrets.knot_dns_rfc2136_key_config = {
+    file =
+      ../../secrets/knot_dns_rfc2136_key_config.age;
+    owner = "knot";
+  };
+
   # get the package for the debugging tools
   environment.systemPackages = with pkgs; [ knot-dns ];
 
@@ -21,12 +27,25 @@ let metricsPort = 9433; in
 
   services.knot = {
     enable = true;
+    keyFiles = [ config.age.secrets.knot_dns_rfc2136_key_config.path ];
     settingsFile = pkgs.writeTextFile {
       name = "knot.conf";
       text = ''
         server:
             listen: 0.0.0.0@53
             listen: ::@53
+        
+        key:
+          - id: rfc2136-update
+            algorithm: hmac-sha256
+            secret: QRpeYCJLokRWyzT/tWrxaly5Seb5yTkE6/Ub66edWds=
+        
+        acl:
+          - id: update_acl
+            address: 10.0.0.0/24
+            key: rfc2136-update
+            action: update
+            update-type: [TXT]
 
         zone:
           - domain: noratrieb.dev
@@ -35,6 +54,7 @@ let metricsPort = 9433; in
           - domain: nilstrieb.dev
             storage: /var/lib/knot/zones/
             file: ${import ./nilstrieb.dev.nix { inherit pkgs lib networkingConfig; }}
+            acl: update_acl
         log:
           - target: syslog
             any: info
