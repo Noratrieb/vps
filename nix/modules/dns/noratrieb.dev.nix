@@ -60,6 +60,8 @@ let
           };
         };
 
+        garage = combine [ vps1 vps2 vps3 vps4 ];
+
         # --- apps
         docker = vps1;
         hugo-chat = vps1 // {

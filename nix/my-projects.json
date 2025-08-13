@@ -1,29 +1,11 @@
 {
   "website": {
-    "commit": "57c4a239da5d17eafde4ade165f3c6706639a9b4",
+    "commit": "bf24af343128c6ac4e4b7d1034315df28121dab5",
     "fetchFromGitHub": {
       "owner": "Noratrieb",
       "repo": "website",
-      "rev": "57c4a239da5d17eafde4ade165f3c6706639a9b4",
-      "hash": "sha256-or6mCQjbc7tWAzzAKQpznZv+2vWJMhyzqxBPwRE2HKw="
-    }
-  },
-  "blog": {
-    "commit": "ea2758dd10f29e8d66ca3f54d7303f2ac20005d2",
-    "fetchFromGitHub": {
-      "owner": "Noratrieb",
-      "repo": "blog",
-      "rev": "ea2758dd10f29e8d66ca3f54d7303f2ac20005d2",
-      "hash": "sha256-LvQ41eJzOvI7mLYDTvlFwGZ2TKrZO26rasydqnEZ/t4="
-    }
-  },
-  "slides": {
-    "commit": "0401f35c22b124b69447655f0c537badae9e223c",
-    "fetchFromGitHub": {
-      "owner": "Noratrieb",
-      "repo": "slides",
-      "rev": "0401f35c22b124b69447655f0c537badae9e223c",
-      "hash": "sha256-K1Me4wf/GSfoc1PGWVJygPyTVV8SXienxUrzXkdCrjQ="
+      "rev": "bf24af343128c6ac4e4b7d1034315df28121dab5",
+      "hash": "sha256-lmOyHLWBCurLuN8J9sRCO082WRqL8+/OXN6W4Jq8W/8="
     }
   },
   "pretense": {

@@ -4,8 +4,9 @@ let
   caddy = pkgs.caddy.withPlugins {
     plugins = [
       "github.com/noratrieb-mirrors/certmagic-s3@v1.1.3"
+      "github.com/sagikazarmark/caddy-fs-s3@v0.10.0"
     ];
-    hash = "sha256-HdCXbqrrGPZSdHv7bZvGz9T6loVbrfKydTbjTyt5Wt0=";
+    hash = "sha256-wHxwRimtLCd/lhF5IQloAZoCfXgGEnkgeI77ObdG7cA=";
   };
 in
 {
@@ -25,7 +26,7 @@ in
 
   age.secrets.caddy_s3_key_secret.file = ../../secrets/caddy_s3_key_secret.age;
 
-  systemd.services.caddy.serviceConfig.EnvironmentFile = config.age.secrets.caddy_s3_key_secret.path;
+  systemd.services.caddy.serviceConfig.EnvironmentFile = [ config.age.secrets.caddy_s3_key_secret.path ];
   systemd.services.caddy.after = [ "garage.service" ]; # the cert store depends on garage
   services.caddy = {
     enable = true;

@@ -53,5 +53,12 @@ in
     };
     environmentFile = config.age.secrets.garage_secrets.path;
   };
+  services.caddy.virtualHosts."garage.noratrieb.dev" = {
+    logFormat = "";
+    extraConfig = ''
+      encode zstd gzip
+      reverse_proxy * localhost:3900
+    '';
+  };
 }
 
