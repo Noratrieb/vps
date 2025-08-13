@@ -4,6 +4,7 @@ let
     plugins = [
       "github.com/noratrieb-mirrors/certmagic-s3@v1.1.3"
       "github.com/sagikazarmark/caddy-fs-s3@v0.10.0"
+      "github.com/caddy-dns/rfc2136@v1.0.0"
     ];
     hash = "sha256-m5RHlrheqzoGqKQxixq+xTd2hlnCTets9zCT7aFka8g=";
   };

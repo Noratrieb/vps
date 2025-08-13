@@ -19,6 +19,17 @@
         insecure true
       }
 
+      acme_dns rfc2136 {
+        key_name "test"
+        key_alg "hmac-sha256"
+        key ""
+        server "dns1.local:53"
+      }
+
+      tls {
+        dns_challenge_override_domain "nilstrieb.dev"
+      }
+
       servers {
         metrics
       }
