@@ -13,6 +13,10 @@
       extraConfig = ''
         encode zstd gzip
         header -Last-Modified
+
+        header /blog/css/* Cache-Control "max-age=31540000, immutable"
+        header /blog/fonts/* Cache-Control "max-age=31540000, immutable"
+
         file_server {
           fs garage
           # TODO: run precompress script
