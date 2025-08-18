@@ -8,6 +8,7 @@ let
     meta = {
       mainProgram = "widertom";
     };
+    RUSTFLAGS = "-Cforce-frame-pointers=true";
   };
 in
 {
