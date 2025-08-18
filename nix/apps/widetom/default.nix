@@ -32,6 +32,21 @@ in
     serviceConfig = {
       DynamicUser = true;
       ExecStart = lib.getExe widetom;
+      PrivateDevices = true;
+      ProtectHome = true;
+      ProtectClock = true;
+      ProtectKernelLogs = true;
+      ProtectHostname = true;
+      ProtectKernelTunables = true;
+      CapabilityBoundingSet = "";
+      ProtectProc = "noaccess";
+      RestrictNamespaces = true;
+      MemoryDenyWriteExecute = true;
+      ProtectControlGroups = true;
+      ProtectKernelModules = true;
+      SystemCallArchitectures = "";
+      SystemCallFilter = "@system-service";
+      RestrictAddressFamilies = [ "AF_INET" "AF_INET6" ];
     };
   };
 

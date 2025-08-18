@@ -188,6 +188,22 @@ in
   };
   systemd.services.alloy.serviceConfig = {
     DynamicUser = lib.mkForce false;
+    PrivateDevices = true;
+    ProtectClock = true;
+    ProtectKernelLogs = true;
+    PrivateMounts = true;
+    ProtectControlGroups = true;
+    ProtectHostname = true;
+    LockPersonality = true;
+    ProtectKernelTunables = true;
+    ProtectSystem = true;
+    ProtectHome = true;
+    PrivateTmp = true;
+    NoNewPrivileges = true;
+    RestrictNamespaces = "";
+    RestrictAddressFamilies = [ "AF_INET" "AF_INET6" "AF_UNIX" ];
+    # TODO: find what's required for /proc/kallsyms (it should be CAP_SYSLOG!)
+    # CapabilityBoundingSet = "CAP_SYS_PTRACE CAP_BPF CAP_SYSLOG";
   };
   environment.etc."alloy/config.alloy".text = ''
     discovery.process "all" {
