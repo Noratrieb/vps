@@ -17,6 +17,12 @@
         header /blog/css/* Cache-Control "max-age=31540000, immutable"
         header /blog/fonts/* Cache-Control "max-age=31540000, immutable"
 
+        @txt {
+          path /
+          not header Accept *text/html*
+        }
+        rewrite @txt /index.txt 
+
         file_server {
           fs garage
           # TODO: run precompress script
