@@ -1,13 +1,4 @@
 {
-  "website": {
-    "commit": "bf24af343128c6ac4e4b7d1034315df28121dab5",
-    "fetchFromGitHub": {
-      "owner": "Noratrieb",
-      "repo": "website",
-      "rev": "bf24af343128c6ac4e4b7d1034315df28121dab5",
-      "hash": "sha256-lmOyHLWBCurLuN8J9sRCO082WRqL8+/OXN6W4Jq8W/8="
-    }
-  },
   "pretense": {
     "commit": "270b01fc1118dfd713c1c41530d1a7d98f04527d",
     "fetchFromGitHub": {
