@@ -9,6 +9,7 @@ let
     url =
       "https://github.com/C0RR1T/HugoChat/releases/download/2024-08-05/hugo-client.tar.xz";
     sha256 = "sha256:121ai8q6bm7gp0pl1ajfk0k2nrfg05zid61i20z0j5gpb2qyhsib";
+    stripRoot = false;
   };
 in
 {

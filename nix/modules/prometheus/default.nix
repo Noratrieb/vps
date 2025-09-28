@@ -219,6 +219,7 @@
       pyroscope = pkgs.fetchzip {
         url = "https://github.com/grafana/pyroscope/releases/download/v1.14.0/pyroscope_1.14.0_linux_amd64.tar.gz";
         sha256 = "sha256:005539bp2a2kac8ff6vz77g0niav81rggha1bsfx454fw4dyli4y";
+        stripRoot = false;
       };
       pyroscopeConfig = {
         analytics.reporting_enabled = false;
