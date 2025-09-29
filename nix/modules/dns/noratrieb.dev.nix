@@ -37,13 +37,14 @@ let
 
       TXT = [
         "protonmail-verification=09106d260e40df267109be219d9c7b2759e808b5"
-        "v=spf1 include:_spf.protonmail.ch ~all"
+        "t-verify=dae826f2ae9f73a71cc247183616b6c9" # tuta verification
+        (ttl 60 "v=spf1 include:_spf.protonmail.ch ~all")
       ];
 
 
       MX = [
-        (mx.mx 10 "mail.protonmail.ch.")
-        (mx.mx 20 "mailsec.protonmail.ch.")
+        (ttl 60 (mx.mx 10 "mail.protonmail.ch."))
+        (ttl 60 (mx.mx 20 "mailsec.protonmail.ch."))
       ];
 
       subdomains = {
