@@ -38,13 +38,11 @@ let
       TXT = [
         "protonmail-verification=09106d260e40df267109be219d9c7b2759e808b5"
         "t-verify=dae826f2ae9f73a71cc247183616b6c9" # tuta verification
-        (ttl 60 "v=spf1 include:_spf.protonmail.ch ~all")
+        "v=spf1 include:spf.tutanota.de -all"
       ];
 
-
       MX = [
-        (ttl 60 (mx.mx 10 "mail.protonmail.ch."))
-        (ttl 60 (mx.mx 20 "mailsec.protonmail.ch."))
+        (ttl 60 (mx.mx 10 "mail.tutanota.de."))
       ];
 
       subdomains = {
@@ -92,13 +90,15 @@ let
         _atproto.TXT = [ "did=did:plc:pqyzoyxk7gfcbxk65mjyncyl" ];
 
         # --- email
+        _mta-sts.CNAME = [ (cname "mta-sts.tutanota.de.") ];
+        mta-sts.CNAME = [ (cname "mta-sts.tutanota.de.") ];
+
         _domainkey.subdomains = {
-          protonmail.CNAME = [ (cname "protonmail.domainkey.deenxxi4ieo32na6brazky2h7bt5ezko6vexdbvbzzbtj6oj43kca.domains.proton.ch.") ];
-          protonmail2.CNAME = [ (cname "protonmail2.domainkey.deenxxi4ieo32na6brazky2h7bt5ezko6vexdbvbzzbtj6oj43kca.domains.proton.ch.") ];
-          protonmail3.CNAME = [ (cname "protonmail3.domainkey.deenxxi4ieo32na6brazky2h7bt5ezko6vexdbvbzzbtj6oj43kca.domains.proton.ch.") ];
+          s1.CNAME = [ (cname "s1.domainkey.tutanota.de.") ];
+          s2.CNAME = [ (cname "s2.domainkey.tutanota.de.") ];
         };
         _dmarc.TXT = [
-          "v=DMARC1; p=quarantine"
+          "v=DMARC1; p=quarantine; adkim=s"
         ];
 
         # retired

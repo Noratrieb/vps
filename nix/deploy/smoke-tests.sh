@@ -23,10 +23,9 @@ check_dig_answer A "nilstrieb.dev" "161.97.165.1"
 check_dig_answer NS noratrieb.dev "noratrieb.dev..*3600.*IN.*NS.*ns1.noratrieb.dev."
 
 # Mail stuff
-check_dig_answer MX noratrieb.dev "mail.protonmail.ch."
-check_dig_answer MX noratrieb.dev "mailsec.protonmail.ch."
-check_dig_answer TXT noratrieb.dev "protonmail-verification=09106d260e40df267109be219d9c7b2759e808b5"
-check_dig_answer TXT noratrieb.dev "v=spf1 include:_spf.protonmail.ch ~all"
+check_dig_answer MX noratrieb.dev "mail.tutanota.de."
+check_dig_answer TXT noratrieb.dev "t-verify=dae826f2ae9f73a71cc247183616b6c9"
+check_dig_answer TXT noratrieb.dev "v=spf1 include:spf.tutanota.de -all"
 
 # Check HTTP responses
 http_hosts=(
