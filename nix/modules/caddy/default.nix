@@ -6,7 +6,7 @@ let
       "github.com/noratrieb-mirrors/certmagic-s3@v1.1.3"
       "github.com/sagikazarmark/caddy-fs-s3@v0.10.0"
     ];
-    hash = "sha256-mBoHjvx7vcWepF4PdPqmHjoYrnCl487CD02kk9VeJWM=";
+    hash = "sha256-onWUF2Ecd+LFprqY52U1AEvKhBIwKmI6eibeK03LpWM=";
   };
 in
 {

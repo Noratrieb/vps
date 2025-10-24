@@ -179,6 +179,7 @@
       ./modules/registry
       ./modules/backup
       ./modules/restic
+      ./modules/snowflake-proxy
 
       # apps
       ./apps/website
@@ -201,6 +202,7 @@
       ./modules/wg-mesh
       ./modules/caddy
       ./modules/garage
+      ./modules/snowflake-proxy
     ];
 
     system.stateVersion = "23.11";
@@ -214,6 +216,7 @@
       ./modules/caddy
       ./modules/garage
       ./modules/prometheus
+      ./modules/snowflake-proxy
 
       ./apps/website
     ];
@@ -229,6 +232,7 @@
       ./modules/garage
       ./modules/backup
       ./modules/restic
+      ./modules/snowflake-proxy
 
       # apps
       ./apps/website
@@ -284,6 +288,7 @@
         ./modules/caddy
         ./modules/wg-mesh
         ./modules/garage
+        ./modules/snowflake-proxy
         ./apps/fakessh
       ];
 
