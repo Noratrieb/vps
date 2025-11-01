@@ -4,7 +4,7 @@ let
     src = pkgs.fetchFromGitHub my-projects-versions.widetom.fetchFromGitHub;
     pname = "widetom";
     version = "0.1.0";
-    cargoHash = "sha256-AWbdPcDc+QOW7U/FYbqlIsg+3MwfggKCTCw1z/ZbSEE=";
+    cargoHash = "sha256-riQA+GviHMqiSvoRKcJhM3MGVEIv6urgYyvBZZd4fCc=";
     meta = {
       mainProgram = "widertom";
     };
