@@ -1,4 +1,4 @@
-{ pkgs, lib, my-projects-versions, ... }:
+{ pkgs, lib, config, my-projects-versions, ... }:
 let
   does-it-build-base = (import (pkgs.fetchFromGitHub my-projects-versions.does-it-build.fetchFromGitHub)) { inherit pkgs; };
   does-it-build = does-it-build-base.overrideAttrs (finalAttrs: previousAttrs: {
@@ -7,6 +7,8 @@ let
   });
 in
 {
+  age.secrets.does_it_build_private_key.file = ../../secrets/does_it_build_private_key.age;
+
   services.caddy.virtualHosts = {
     "does-it-build.noratrieb.dev" = {
       logFormat = "";
@@ -36,7 +38,15 @@ in
       User = "does-it-build";
       Group = "does-it-build";
       ExecStart = "${lib.getExe' (does-it-build) "does-it-build" }";
-      Environment = "DB_PATH=/var/lib/does-it-build/db.sqlite";
+      Environment = [
+        "DB_PATH=/var/lib/does-it-build/db.sqlite"
+        "GITHUB_SEND_PINGS=1"
+        "GITHUB_OWNER=Noratrieb"
+        "GITHUB_REPO=does-it-build-notifications"
+        "GITHUB_APP_ID=2263995" # https://github.com/settings/apps/does-it-build
+      ];
+      # GITHUB_APP_PRIVATE_KEY=-----BEGIN RSA PRIVATE KEY-----...
+      EnvironmentFile = [ config.age.secrets.does_it_build_private_key.path ];
     };
   };
 
