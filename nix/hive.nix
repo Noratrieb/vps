@@ -2,7 +2,8 @@
   meta =
     let
       nixpkgs-version = builtins.fromJSON (builtins.readFile ./nixpkgs.json);
-      nixpkgs-path = (fetchTarball "https://github.com/NixOS/nixpkgs/archive/${nixpkgs-version.commit}.tar.gz");
+      nixpkgs-path = (fetchTarball "https://github.com/NixOS/nixpkgs/archive/${nixpkgs-version."nixos-25.05".commit}.tar.gz");
+      nixpkgs-next = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/${nixpkgs-version."nixos-25.11".commit}.tar.gz") { };
     in
     {
       # Override to pin the Nixpkgs version (recommended). This option
@@ -15,6 +16,7 @@
       specialArgs = {
         my-projects-versions = builtins.fromJSON (builtins.readFile ./my-projects.json);
 
+        inherit nixpkgs-next;
         inherit nixpkgs-path;
 
         networkingConfig = {

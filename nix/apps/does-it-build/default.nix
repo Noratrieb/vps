@@ -1,9 +1,11 @@
-{ pkgs, lib, config, my-projects-versions, ... }:
+{ pkgs, nixpkgs-next, lib, config, my-projects-versions, ... }:
 let
-  does-it-build-base = (import (pkgs.fetchFromGitHub my-projects-versions.does-it-build.fetchFromGitHub)) { inherit pkgs; };
+  does-it-build-base = (import (pkgs.fetchFromGitHub my-projects-versions.does-it-build.fetchFromGitHub)) {
+    # needs a recent rust version.
+    pkgs = nixpkgs-next;
+  };
   does-it-build = does-it-build-base.overrideAttrs (finalAttrs: previousAttrs: {
     DOES_IT_BUILD_OVERRIDE_VERSION = my-projects-versions.does-it-build.commit;
-    RUSTFLAGS = "-Cforce-frame-pointers=true";
   });
 in
 {

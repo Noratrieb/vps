@@ -1,5 +1,10 @@
 {
-  "channel": "nixos-25.05",
-  "lastUpdated": "2025-11-18T21:17:51.860Z",
-  "commit": "4c8cdd5b1a630e8f72c9dd9bf582b1afb3127d2c"
+  "nixos-25.05": {
+    "lastUpdated": "2025-11-28T23:05:00.984Z",
+    "commit": "9a7b80b6f82a71ea04270d7ba11b48855681c4b0"
+  },
+  "nixos-25.11": {
+    "lastUpdated": "2025-11-28T23:07:32.637Z",
+    "commit": "2fecba9952096ba043c16b9ef40b92851ff3e5d9"
+  }
 }
