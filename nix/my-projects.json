@@ -18,12 +18,12 @@
     }
   },
   "does-it-build": {
-    "commit": "d15a7465584b5e90dc19126cc3d097683d055a63",
+    "commit": "3a1695c554d8f07aac47a11f516ff65db7420ca6",
     "fetchFromGitHub": {
       "owner": "Noratrieb",
       "repo": "does-it-build",
-      "rev": "d15a7465584b5e90dc19126cc3d097683d055a63",
-      "hash": "sha256-UC+uy7Ba+VAXeBplIblrYptoI2ORsnL+U64BNGUR7CY="
+      "rev": "3a1695c554d8f07aac47a11f516ff65db7420ca6",
+      "hash": "sha256-n7rTR3VrPt0x7QfzRnOHSxb4gSfMj4rA9kZD1RTYTWY="
     }
   },
   "upload.files.noratrieb.dev": {

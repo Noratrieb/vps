@@ -60,6 +60,7 @@ in
 
     settings = {
       PasswordAuthentication = false;
+      AllowUsers = [ "root" ];
     };
   };
   services.fail2ban = {
@@ -79,6 +80,22 @@ in
         "PRETENSE_PORTS=23,3306,5432,1521" # telnet,mysql,postgres,oracle
         "PRETENSE_METRICS_PORT=9150"
       ];
+      PrivateDevices = true;
+      ProtectHome = true;
+      ProtectClock = true;
+      ProtectKernelLogs = true;
+      ProtectHostname = true;
+      ProtectKernelTunables = true;
+      CapabilityBoundingSet = "CAP_NET_BIND_SERVICE";
+      ProtectProc = "ptraceable";
+      RestrictNamespaces = true;
+      MemoryDenyWriteExecute = true;
+      ProtectControlGroups = true;
+      ProtectKernelModules = true;
+      SystemCallArchitectures = "";
+      SystemCallFilter = "@system-service";
+      RestrictAddressFamilies = [ "AF_INET" "AF_INET6" ];
+      ProtectSystem = "strict";
     };
   };
   systemd.services.quotdd = {
@@ -90,6 +107,23 @@ in
       ExecStart = "${lib.getExe (quotdd {inherit pkgs;})}";
       AmbientCapabilities = "CAP_NET_BIND_SERVICE";
       Environment = [ ];
+
+      PrivateDevices = true;
+      ProtectHome = true;
+      ProtectClock = true;
+      ProtectKernelLogs = true;
+      ProtectHostname = true;
+      ProtectKernelTunables = true;
+      CapabilityBoundingSet = "CAP_NET_BIND_SERVICE";
+      ProtectProc = "ptraceable";
+      RestrictNamespaces = true;
+      MemoryDenyWriteExecute = true;
+      ProtectControlGroups = true;
+      ProtectKernelModules = true;
+      SystemCallArchitectures = "";
+      SystemCallFilter = "@system-service";
+      RestrictAddressFamilies = [ "AF_INET" "AF_INET6" ];
+      ProtectSystem = "strict";
     };
   };
   networking.firewall.allowedTCPPorts = [

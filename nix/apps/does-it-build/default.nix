@@ -49,6 +49,23 @@ in
       ];
       # GITHUB_APP_PRIVATE_KEY=-----BEGIN RSA PRIVATE KEY-----...
       EnvironmentFile = [ config.age.secrets.does_it_build_private_key.path ];
+
+      ProtectHome = true;
+      StateDirectory = "does-it-build";
+      ProtectSystem = "strict";
+      PrivateTmp = true;
+
+      RemoveIPC = true;
+      NoNewPrivileges = true;
+      PrivateDevices = true;
+      ProtectClock = true;
+      ProtectKernelLogs = true;
+      ProtectControlGroups = true;
+      ProtectKernelModules = true;
+      PrivateMounts = true;
+      RestrictNamespaces = "";
+      RestrictSUIDSGID = true;
+      ProtectHostname = true;
     };
   };
 
