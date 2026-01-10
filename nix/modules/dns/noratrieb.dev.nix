@@ -59,6 +59,8 @@ let
           };
         };
 
+        womangling = combine [ vps1 vps3 vps4 ];
+
         garage = combine [ vps1 vps2 vps3 vps4 ];
 
         # --- apps

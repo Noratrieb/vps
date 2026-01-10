@@ -38,5 +38,12 @@
         reverse_proxy * localhost:3902
       '';
     };
+    "womangling.noratrieb.dev" = {
+      logFormat = "";
+      extraConfig = ''
+        encode zstd gzip
+        reverse_proxy * localhost:3902
+      '';
+    };
   };
 }
