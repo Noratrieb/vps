@@ -62,35 +62,27 @@ in
     "api.hugo-chat.noratrieb.dev" =
       let
         cors = pkgs.writeText "cors" ''
-          # https://gist.github.com/ryanburnette/d13575c9ced201e73f8169d3a793c1a3
-          @cors_preflight{args[0]} method OPTIONS
-          @cors{args[0]} header Origin {args[0]}
-
-          handle @cors_preflight{args[0]} {
-            header {
-              Access-Control-Allow-Origin "{args[0]}"
-              Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE, OPTIONS"
-              Access-Control-Allow-Credentials "false"
-              Access-Control-Allow-Headers "$${args[1]}"
-              Access-Control-Max-Age "86400"
-              defer
-            }
-            respond "" 204
+          @cors_preflight {
+            method OPTIONS
+            header Origin *
           }
 
-          handle @cors{args[0]} {
+          handle @cors_preflight {
             header {
-              Access-Control-Allow-Origin "{args[0]}"
-              Access-Control-Expose-Headers *
-              defer
+              Access-Control-Allow-Origin "*"
+              Access-Control-Allow-Methods "*"
+              Access-Control-Allow-Headers "content-type"
             }
+            respond 204
           }
+
+    
         '';
       in
       {
         logFormat = "";
         extraConfig = ''
-          import ${cors} https://hugo-chat.noratrieb.dev "DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type"
+          import ${cors}
           encode zstd gzip
           reverse_proxy * localhost:5001
         '';
