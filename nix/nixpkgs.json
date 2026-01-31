@@ -1,10 +1,10 @@
 {
   "nixos-25.05": {
-    "lastUpdated": "2025-12-22T11:35:31.967Z",
-    "commit": "2b0d2b456e4e8452cf1c16d00118d145f31160f9"
+    "lastUpdated": "2026-01-31T13:55:04.757Z",
+    "commit": "ac62194c3917d5f474c1a844b6fd6da2db95077d"
   },
   "nixos-25.11": {
-    "lastUpdated": "2025-12-22T11:35:32.154Z",
-    "commit": "b3aad468604d3e488d627c0b43984eb60e75e782"
+    "lastUpdated": "2026-01-31T13:55:04.922Z",
+    "commit": "fa83fd837f3098e3e678e6cf017b2b36102c7211"
   }
 }
