@@ -205,6 +205,9 @@
       ./modules/caddy
       ./modules/garage
       ./modules/snowflake-proxy
+
+      # apps
+      ./apps/matrix
     ];
 
     system.stateVersion = "23.11";

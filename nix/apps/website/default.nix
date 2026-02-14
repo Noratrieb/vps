@@ -12,6 +12,12 @@
       logFormat = "";
       extraConfig = ''
         encode zstd gzip
+
+        reverse_proxy /.well-known/matrix/* https://matrix.noratrieb.dev {
+          header_up Host matrix.noratrieb.dev
+        }
+        
+
         header -Last-Modified
 
         header /blog/css/* Cache-Control "max-age=31540000, immutable"
