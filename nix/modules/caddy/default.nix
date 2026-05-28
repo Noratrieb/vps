@@ -1,40 +1,11 @@
-{ pkgs, config, lib, name, ... }:
-
-let
-  caddy = pkgs.caddy.withPlugins {
-    plugins = [
-      "github.com/noratrieb-mirrors/certmagic-s3@v1.1.3"
-      "github.com/sagikazarmark/caddy-fs-s3@v0.10.0"
-    ];
-    hash = "sha256-m5RHlrheqzoGqKQxixq+xTd2hlnCTets9zCT7aFka8g=";
-  };
-in
-{
-  environment.systemPackages = [ caddy ];
-
-  networking.firewall.interfaces.wg0.allowedTCPPorts = [ 9010 ]; # metrics
-
-  networking.firewall = {
-    allowedTCPPorts = [
-      80 # HTTP
-      443 # HTTPS
-    ];
-    allowedUDPPorts = [
-      443 # HTTP/3 via QUIC
-    ];
-  };
+{ pkgs, config, lib, name, ... }: {
+  imports = [ ../caddy-base ];
 
   age.secrets.caddy_s3_key_secret.file = ../../secrets/caddy_s3_key_secret.age;
 
   systemd.services.caddy.serviceConfig.EnvironmentFile = [ config.age.secrets.caddy_s3_key_secret.path ];
   systemd.services.caddy.after = [ "garage.service" ]; # the cert store depends on garage
   services.caddy = {
-    enable = true;
-    package = caddy;
-    logFormat = ''
-      output stdout
-      format json
-    '';
     globalConfig = ''
       email tls@noratrieb.dev
       auto_https disable_redirects
@@ -57,12 +28,6 @@ in
         logFormat = "";
         extraConfig = ''
           respond "This is an HTTPS-only server, silly you. Go to https:// instead." 418
-        '';
-      };
-      ":9010" = {
-        logFormat = "output discard";
-        extraConfig = ''
-          metrics /metrics
         '';
       };
       "${name}.infra.noratrieb.dev" = {

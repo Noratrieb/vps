@@ -319,6 +319,8 @@
       ./modules/postgres
       ./modules/immich
       ./modules/tailscale
+      ./modules/paperless
+      ./modules/caddy-base
     ];
 
     system.stateVersion = "25.05";

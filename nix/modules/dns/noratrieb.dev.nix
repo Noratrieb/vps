@@ -14,6 +14,10 @@ let
         A = lib.lists.flatten (map (host: if builtins.hasAttr "A" host then host.A else [ ]) hosts);
         AAAA = lib.lists.flatten (map (host: if builtins.hasAttr "AAAA" host then host.AAAA else [ ]) hosts);
       };
+
+      minipc = {
+        A = [ (a "100.100.2.1") ]; # tailscale IP
+      };
     in
     with hostsToDns;
     # vps{1,3,4} contains root noratrieb.dev
@@ -88,6 +92,12 @@ let
         # --- infra
         grafana = vps3;
         infra.subdomains = hostsToDns;
+
+        # --- internal stuff
+        internal.subdomains = {
+          immich = minipc;
+          paperless = minipc;
+        };
 
         # --- other verification
         _discord.TXT = [ "dh=e0f7e99c70c4ce17f7afcce3be8bfda9cd363843" ];
