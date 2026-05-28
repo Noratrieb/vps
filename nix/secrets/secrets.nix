@@ -6,6 +6,7 @@ let
   vps3 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHvupo7d9YMZw56qhjB+tZPijxiG1dKChLpkOWZN0Y7C";
   vps4 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpoLgBTWj1BcNxXVdM26jDBZl+BCtUTj20Wv4sZdCHz";
   vps5 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBWbIznvWQSqRF1E9Gv9y7JXMy3LZxMAWj6K0Nq91kyZ";
+  minipc = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINApZRrvK4RC1SU5m4OLbill7HZYPQtuvh/m/AB4q5dG";
 in
 {
   "widetom_bot_token.age".publicKeys = [ vps1 ];
@@ -30,6 +31,7 @@ in
   "generic_backup_password.age".publicKeys = [ vps1 vps2 vps3 vps4 vps5 ];
   "website_s3_key_write.age".publicKeys = [ vps1 ]; # only used by Noratrieb/website GHA
   "does_it_build_private_key.age".publicKeys = [ vps4 ];
+  "immich_secrets.age".publicKeys = [ minipc ];
   "wg_private_dns1.age".publicKeys = [ dns1 ];
   "wg_private_dns2.age".publicKeys = [ dns2 ];
   "wg_private_vps1.age".publicKeys = [ vps1 ];
@@ -37,4 +39,5 @@ in
   "wg_private_vps3.age".publicKeys = [ vps3 ];
   "wg_private_vps4.age".publicKeys = [ vps4 ];
   "wg_private_vps5.age".publicKeys = [ vps5 ];
+  "wg_private_minipc.age".publicKeys = [ minipc ];
 }

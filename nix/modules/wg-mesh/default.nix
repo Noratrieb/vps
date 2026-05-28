@@ -35,7 +35,9 @@ in
           let peerConfig = (builtins.getAttr peer networkingConfig).wg;
           in {
             inherit (peerConfig) publicKey;
-            endpoint = "${peer}.infra.noratrieb.dev:${toString listenPort}";
+            endpoint =
+              if !(builtins.hasAttr "noEndpoint" peerConfig) || !peerConfig.noEndpoint
+              then "${peer}.infra.noratrieb.dev:${toString listenPort}" else null;
             allowedIPs = [ "${peerConfig.privateIP}/32" ];
             # sometimes there's some weirdness....??
             persistentKeepalive = 25;

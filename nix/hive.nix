@@ -66,7 +66,7 @@
             wg = {
               privateIP = "10.0.0.3";
               publicKey = "pdUxG1vhmYraKzIIEFxTRAMhGwGztBL/Ly5icJUV3g0=";
-              peers = [ "vps1" "vps2" "vps4" "vps5" "dns1" "dns2" ];
+              peers = [ "vps1" "vps2" "vps4" "vps5" "dns1" "dns2" "minipc" ];
             };
             tags = [ "apps" ];
           };
@@ -91,6 +91,17 @@
               peers = [ "vps1" "vps2" "vps3" "vps4" ];
             };
             tags = [ "apps" ];
+          };
+          minipc = {
+            publicIPv4 = null;
+            publicIPv6 = null;
+            wg = {
+              privateIP = "10.0.2.1";
+              publicKey = "ecYfTot7RrJyNebSZTQ1wciOhvrpNSSbkR15twpSSl4=";
+              peers = [ "vps3" ];
+              noEndpoint = true;
+            };
+            tags = [ "home" ];
           };
         };
       };
@@ -300,4 +311,16 @@
 
       system.stateVersion = "23.11";
     };
+  minipc = { name, nodes, modulesPath, config, pkgs, lib, ... }: {
+    imports = [
+      ./modules/minipc
+      ./modules/wg-mesh
+      ./modules/nas-mount
+      ./modules/postgres
+      ./modules/immich
+      ./modules/tailscale
+    ];
+
+    system.stateVersion = "25.05";
+  };
 }

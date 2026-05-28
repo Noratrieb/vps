@@ -2,9 +2,12 @@
 let
   pretense = import (pkgs.fetchFromGitHub my-projects-versions.pretense.fetchFromGitHub);
   quotdd = import (pkgs.fetchFromGitHub my-projects-versions.quotdd.fetchFromGitHub);
+  networkConfig = networkingConfig."${name}";
 in
 {
-  deployment.targetHost = "${name}.infra.noratrieb.dev";
+  deployment.targetHost =
+    if networkConfig.publicIPv4 == null
+    then name else "${name}.infra.noratrieb.dev";
 
   # TODO: ensure that the rust programs have frame pointers
 
@@ -20,6 +23,8 @@ in
     nixPath = [ "nixpkgs=${nixpkgs-path}" ];
   };
 
+  nixpkgs.config.allowUnfree = true;
+
   environment.systemPackages = with pkgs; [
     vim
     wget
@@ -27,9 +32,13 @@ in
     traceroute
     dnsutils
     nftables
+    htop
   ];
 
   networking.hostName = name;
+
+  # Swiss german console tty keyboard layout
+  console.keyMap = "sg";
 
   time.timeZone = "Europe/Zurich";
   users.users.root.openssh.authorizedKeys.keys = [ ''ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG0n1ikUG9rYqobh7WpAyXrqZqxQoQ2zNJrFPj12gTpP nilsh@PC-Nils'' ];
