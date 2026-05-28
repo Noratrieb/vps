@@ -18,7 +18,7 @@ let
     vps1 // {
       TTL = hour1;
       SOA = {
-        nameServer = "ns1.nilstrieb.dev.";
+        nameServer = "ns.nilstrieb.dev.";
         adminEmail = "void@nilstrieb.dev";
         serial = 2024072601;
       };
@@ -34,6 +34,7 @@ let
       ];
 
       subdomains = {
+        ns = dns1;
         ns1 = dns1;
         ns2 = dns2;
 
