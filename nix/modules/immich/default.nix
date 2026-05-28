@@ -10,6 +10,9 @@
       enableVectors = false;
       enableVectorChord = true;
     };
+    environment = {
+      IMMICH_TELEMETRY_INCLUDE = "all";
+    };
     openFirewall = true;
   };
 
@@ -26,4 +29,6 @@
       local all       all     peer
     '';
   };
+
+  networking.firewall.interfaces.wg0.allowedTCPPorts = [ 8081 8082 ];
 }

@@ -85,6 +85,13 @@
           scrape_interval = "1h";
           static_configs = [{ targets = [ "localhost:7846" ]; }];
         }
+        {
+          job_name = "immich";
+          static_configs = [
+            { targets = [ "minipc.local:8081" ]; labels = { server = "minipc"; }; }
+            { targets = [ "minipc.local:8082" ]; labels = { server = "minipc"; }; }
+          ];
+        }
       ];
   };
 
