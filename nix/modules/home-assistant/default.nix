@@ -6,6 +6,7 @@
       # https://www.home-assistant.io/integrations/isal
       "isal"
       "fronius"
+      "integration"
     ];
     config = {
       default_config = { };
