@@ -5,6 +5,7 @@
       # Recommended for fast zlib compression
       # https://www.home-assistant.io/integrations/isal
       "isal"
+      "fronius"
     ];
     config = {
       default_config = { };
