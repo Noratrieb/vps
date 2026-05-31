@@ -6,7 +6,7 @@ let
       "github.com/sagikazarmark/caddy-fs-s3@v0.10.0"
       "github.com/caddy-dns/rfc2136@v1.0.0"
     ];
-    hash = "sha256-m5RHlrheqzoGqKQxixq+xTd2hlnCTets9zCT7aFka8g=";
+    hash = "sha256-EGkboqppRr2xcZ+7ie+WrqdP8sHSoouX4STl4NajMYs=";
   };
 in
 {
@@ -32,6 +32,7 @@ in
       format json
     '';
     globalConfig = ''
+      email tls@noratrieb.dev
       auto_https disable_redirects
 
       servers {

@@ -7,9 +7,6 @@
   systemd.services.caddy.after = [ "garage.service" ]; # the cert store depends on garage
   services.caddy = {
     globalConfig = ''
-      email tls@noratrieb.dev
-      auto_https disable_redirects
-
       storage s3 {
         host "localhost:3900"
         bucket "caddy-store"
@@ -17,21 +14,6 @@
         # secret_key ENV S3_SECRET_KEY
 
         insecure true
-      }
-
-      acme_dns rfc2136 {
-        key_name "test"
-        key_alg "hmac-sha256"
-        key ""
-        server "dns1.local:53"
-      }
-
-      tls {
-        dns_challenge_override_domain "nilstrieb.dev"
-      }
-
-      servers {
-        metrics
       }
     '';
     virtualHosts = {

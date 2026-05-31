@@ -24,7 +24,7 @@
             wg = {
               privateIP = "10.0.1.1";
               publicKey = "7jy2q93xYBHG5yKqLmNuMWSuFMnUGWXVuKQ1yMmxoV4=";
-              peers = [ "vps3" ];
+              peers = [ "minipc" "vps3" "vps5" ];
             };
             tags = [ "dns" ];
           };
@@ -88,7 +88,7 @@
             wg = {
               privateIP = "10.0.0.5";
               publicKey = "r1cwt63fcOR+FTqMTUpZdK4/MxpalkDYRHXyy7osWUk=";
-              peers = [ "vps1" "vps2" "vps3" "vps4" ];
+              peers = [ "dns1" "vps1" "vps2" "vps3" "vps4" ];
             };
             tags = [ "apps" ];
           };
@@ -98,7 +98,7 @@
             wg = {
               privateIP = "10.0.2.1";
               publicKey = "ecYfTot7RrJyNebSZTQ1wciOhvrpNSSbkR15twpSSl4=";
-              peers = [ "vps3" ];
+              peers = [ "dns1" "vps3" ];
               noEndpoint = true;
             };
             tags = [ "home" ];
@@ -320,7 +320,9 @@
       ./modules/immich
       ./modules/tailscale
       ./modules/paperless
+      ./modules/home-assistant
       ./modules/caddy-base
+      ./modules/caddy-acme-dns
     ];
 
     system.stateVersion = "25.05";

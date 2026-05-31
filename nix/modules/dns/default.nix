@@ -1,9 +1,9 @@
-{ pkgs, lib, networkingConfig, config, ... }:
+{ pkgs, lib, networkingConfig, config, name, ... }:
 let metricsPort = 9433; in
 {
-  age.secrets.knot_dns_rfc2136_key_config = {
+  age.secrets.knot_dns_acme_dns_01_key_config = {
     file =
-      ../../secrets/knot_dns_rfc2136_key_config.age;
+      ../../secrets/knot_dns_acme_dns_01_key_config.age;
     owner = "knot";
   };
 
@@ -27,42 +27,57 @@ let metricsPort = 9433; in
 
   services.knot = {
     enable = true;
-    keyFiles = [ config.age.secrets.knot_dns_rfc2136_key_config.path ];
-    settingsFile = pkgs.writeTextFile {
-      name = "knot.conf";
-      text = ''
-        server:
-            listen: 0.0.0.0@53
-            listen: ::@53
-        
-        key:
-          - id: rfc2136-update
-            algorithm: hmac-sha256
-            secret: QRpeYCJLokRWyzT/tWrxaly5Seb5yTkE6/Ub66edWds=
-        
-        acl:
-          - id: update_acl
-            address: 10.0.0.0/24
-            key: rfc2136-update
-            action: update
-            update-type: [TXT]
+    keyFiles = [ config.age.secrets.knot_dns_acme_dns_01_key_config.path ];
+    settings = {
+      server.listen = [ "0.0.0.0@53" "::@53" ];
+      acl = [
+        {
+          id = "update_acl";
+          address = "10.0.0.0/16";
+          key = "acme-dns-01";
+          action = "update";
+          update-type = [ "TXT" ];
+        }
+      ];
+      zone = [
+        {
+          domain = "noratrieb.dev";
+          file = import ./noratrieb.dev.nix { inherit pkgs lib networkingConfig; };
+        }
 
-        zone:
-          - domain: noratrieb.dev
-            storage: /var/lib/knot/zones/
-            file: ${import ./noratrieb.dev.nix { inherit pkgs lib networkingConfig; }}
-          - domain: nilstrieb.dev
-            storage: /var/lib/knot/zones/
-            file: ${import ./nilstrieb.dev.nix { inherit pkgs lib networkingConfig; }}
-            acl: update_acl
-        log:
-          - target: syslog
-            any: info
-      '';
+      ] ++ (if name == "dns1" then [
+        {
+          domain = "nilstrieb.dev";
+          file = import ./nilstrieb.dev.nix { inherit pkgs lib networkingConfig; };
+        }
+        {
+          domain = "noratrieb-acme-delegate.dev";
+          storage = "/var/lib/knot/zones/";
+          file = "noratrieb-acme-delegate.dev.zone";
+          acl = "update_acl";
+        }
+      ] else [ ]);
+      log = [{
+        target = "syslog";
+        any = "info";
+      }];
     };
   };
 
-  networking.firewall.interfaces.wg0.allowedTCPPorts = [ metricsPort ];
+  systemd.services.knot.preStart =
+    lib.mkIf (name == "dns1")
+      (lib.getExe
+        (pkgs.writeShellApplication {
+          name = "knot-prestart.sh";
+          text = ''
+            mkdir -p /var/lib/knot/zones/
+            cp ${
+              import ./noratrieb-acme-delegate.dev.nix { inherit pkgs lib networkingConfig; }
+            } /var/lib/knot/zones/noratrieb-acme-delegate.dev.zone
+          '';
+        }));
+
+  networking.firewall.interfaces.wg0.allowedTCPPorts = [ metricsPort 53 ];
   services.prometheus.exporters.knot = {
     enable = true;
     port = metricsPort;

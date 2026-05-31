@@ -9,17 +9,13 @@ let
           lib.optionalAttrs (publicIPv4 != null) { A = [ (a publicIPv4) ]; } //
           lib.optionalAttrs (publicIPv6 != null) { AAAA = [ (aaaa publicIPv6) ]; })
         networkingConfig;
-      vps2 = {
-        A = [ "184.174.32.252" ];
-      };
     in
     with hostsToDns;
-    # point nilstrieb.dev to vps1 (retired)
-    vps1 // {
+    {
       TTL = hour1;
       SOA = {
-        nameServer = "ns.nilstrieb.dev.";
-        adminEmail = "void@nilstrieb.dev";
+        nameServer = "ns.noratrieb-acme-delegate.dev.";
+        adminEmail = "void@noratrieb.dev";
         serial = 2024072601;
       };
 
@@ -29,36 +25,15 @@ let
       ];
 
       NS = [
-        "ns.nilstrieb.dev."
+        "ns.noratrieb-acme-delegate.dev."
       ];
 
       subdomains = {
         ns = dns1;
-
-        localhost.A = [ (a "127.0.0.1") ];
-
-        # --- retired:
-        bisect-rustc = vps1;
-        blog = vps1;
-        docker = vps1;
-        www = vps1;
-        uptime = vps1;
-        hugo-chat = vps1 // {
-          subdomains.api = vps1;
-        };
-        olat = vps1;
-        # ---
-
-        # infra (legacy)
-        inherit vps2;
-
-        pronouns.TXT = [
-          "she/her"
-        ];
       };
     };
 in
 pkgs.writeTextFile {
-  name = "nilstrieb.dev.zone";
-  text = pkgs.nix-dns.lib.toString "nilstrieb.dev" data;
+  name = "noratrieb-acme-delegate.dev.zone";
+  text = pkgs.nix-dns.lib.toString "noratrieb-acme-delegate.dev" data;
 }

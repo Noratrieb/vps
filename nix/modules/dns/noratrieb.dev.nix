@@ -97,10 +97,15 @@ let
         infra.subdomains = hostsToDns;
 
         # --- internal stuff
-        internal.subdomains = {
-          immich = minipc;
-          paperless = minipc;
-        };
+        internal.subdomains = builtins.listToAttrs (builtins.map
+          (name: {
+            inherit name;
+            value = minipc // {
+              subdomains = {
+                _acme-challenge.CNAME = [ (cname "_acme-challenge.${name}.internal.noratrieb-acme-delegate.dev.") ];
+              };
+            };
+          }) [ "immich" "paperless" "home-assistant" ]);
 
         # --- other verification
         _discord.TXT = [ "dh=e0f7e99c70c4ce17f7afcce3be8bfda9cd363843" ];

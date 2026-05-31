@@ -12,6 +12,7 @@ let nasDir = "/mnt/nas/HEY/_Nora/paperless"; in {
       PAPERLESS_TIME_ZONE = "Europe/Zurich";
       PAPERLESS_ADMIN_USER = "nora";
       PAPERLESS_OCR_LANGUAGE = "deu+eng";
+      PAPERLESS_URL = "https://paperless.internal.noratrieb.dev";
     };
     exporter = {
       enable = true;
@@ -20,5 +21,12 @@ let nasDir = "/mnt/nas/HEY/_Nora/paperless"; in {
     };
   };
 
-  networking.firewall.allowedTCPPorts = [ 8010 ];
+  services.caddy.virtualHosts."paperless.internal.noratrieb.dev" = {
+    extraConfig = ''
+      tls {
+        dns_challenge_override_domain "_acme-challenge.paperless.internal.noratrieb-acme-delegate.dev"
+      }
+      reverse_proxy * localhost:${builtins.toString config.services.paperless.port}
+    '';
+  };
 }

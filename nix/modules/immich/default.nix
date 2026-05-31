@@ -13,7 +13,6 @@
     environment = {
       IMMICH_TELEMETRY_INCLUDE = "all";
     };
-    openFirewall = true;
   };
 
   services.postgresql = {
@@ -27,6 +26,15 @@
     authentication = pkgs.lib.mkForce ''
       #type database  DBuser  auth-method
       local all       all     peer
+    '';
+  };
+
+  services.caddy.virtualHosts."immich.internal.noratrieb.dev" = {
+    extraConfig = ''
+      tls {
+        dns_challenge_override_domain "_acme-challenge.immich.internal.noratrieb-acme-delegate.dev"
+      }
+      reverse_proxy * localhost:${builtins.toString config.services.immich.port}
     '';
   };
 

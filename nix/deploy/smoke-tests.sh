@@ -4,20 +4,28 @@
 
 set -eux
 
+check_single_dig_answer() {
+    dns="$1"
+    type="$2"
+    host="$3"
+    grep="$4"
+
+    dig "@$dns.infra.noratrieb.dev" "$type" "$host" +noall +answer | grep "$grep"
+}
+
 check_dig_answer() {
     type="$1"
     host="$2"
     grep="$3"
 
-    dig @dns1.infra.noratrieb.dev "$type" "$host" +noall +answer | grep "$grep"
-    dig @dns2.infra.noratrieb.dev "$type" "$host" +noall +answer | grep "$grep"
-
+    check_single_dig_answer "dns1" "$type" "$host" "$grep"
+    check_single_dig_answer "dns2" "$type" "$host" "$grep"
 }
 
 # Check DNS name servers
 check_dig_answer A "dns1.infra.noratrieb.dev" "154.38.163.74"
 
-check_dig_answer A "nilstrieb.dev" "161.97.165.1"
+check_single_dig_answer "dns1" A "nilstrieb.dev" "161.97.165.1"
 
 # Check the NS records. The trailing dot matters!
 check_dig_answer NS noratrieb.dev "noratrieb.dev..*3600.*IN.*NS.*ns1.noratrieb.dev."
