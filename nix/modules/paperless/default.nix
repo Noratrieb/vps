@@ -29,4 +29,6 @@ let nasDir = "/mnt/nas/HEY/_Nora/paperless"; in {
       reverse_proxy * localhost:${builtins.toString config.services.paperless.port}
     '';
   };
+
+  networking.firewall.allowedTCPPorts = [ config.services.paperless.port ];
 }
