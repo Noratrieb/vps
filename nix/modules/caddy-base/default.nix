@@ -29,7 +29,9 @@ in
     package = caddy;
     logFormat = ''
       output stdout
-      format json
+      format json {
+        message_key "_msg"
+      }
     '';
     globalConfig = ''
       email tls@noratrieb.dev

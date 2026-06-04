@@ -117,6 +117,10 @@
       };
     };
 
+    declarativePlugins = [
+      pkgs.grafanaPlugins.victoriametrics-logs-datasource
+    ];
+
     provision = {
       enable = true;
       datasources.settings = {
@@ -143,6 +147,12 @@
             type = "grafana-pyroscope-datasource";
             access = "proxy";
             url = "http://pyroscope.internal:4040";
+          }
+          {
+            name = "victorialogs";
+            type = "victoriametrics-logs-datasource";
+            access = "proxy";
+            url = "http://loki.internal:9428";
           }
         ];
       };
@@ -267,4 +277,8 @@
     createHome = true;
   };
   users.groups.pyroscope = { };
+
+  services.victorialogs = {
+    enable = true;
+  };
 }

@@ -175,6 +175,7 @@ in
       };
       clients = [
         { url = "http://loki.internal:3100/loki/api/v1/push"; }
+        { url = "http://loki.internal:9428/insert/loki/api/v1/push"; }
       ];
       scrape_configs = [
         {
@@ -207,6 +208,10 @@ in
             };
           }];
           relabel_configs = [
+            {
+              source_labels = [ "msg" ];
+              target_label = "_msg";
+            }
             {
               source_labels = [ "__journal__systemd_unit" ];
               target_label = "unit";
