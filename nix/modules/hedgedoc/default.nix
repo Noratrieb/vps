@@ -8,8 +8,9 @@
     settings = {
       domain = "hedgedoc.noratrieb.dev";
       allowAnonymous = false;
+      allowAnonymousEdits = false;
       protocolUseSSL = true;
-      enableUploads = "none";
+      enableUploads = "registered";
       #imageuploadtype = "minio";
       # doesn't work yet :(
       minio = {
