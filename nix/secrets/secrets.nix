@@ -33,6 +33,7 @@ in
   "does_it_build_private_key.age".publicKeys = [ vps4 ];
   "immich_secrets.age".publicKeys = [ minipc ];
   "paperless_env.age".publicKeys = [ minipc ];
+  "hedgedoc_env.age".publicKeys = [ vps1 ];
   "knot_dns_acme_dns_01_key_config.age".publicKeys = [ dns1 dns2 ];
   "knot_dns_acme_dns_01_key_envvar.age".publicKeys = [ vps5 minipc ];
   "wg_private_dns1.age".publicKeys = [ dns1 ];

@@ -201,6 +201,7 @@
       ./apps/forgejo
       ./apps/openolat
       ./apps/upload-files
+      ./modules/hedgedoc
     ];
 
     system.stateVersion = "23.11";

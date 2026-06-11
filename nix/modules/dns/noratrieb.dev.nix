@@ -81,6 +81,7 @@ let
         does-it-build = vps4;
         git = vps1;
         olat = vps1;
+        hedgedoc = vps1;
 
         std.CNAME = [ (cname "noratrieb.github.io.") ];
 
