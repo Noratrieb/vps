@@ -7,6 +7,7 @@
       "isal"
       "fronius"
       "integration"
+      "zha"
     ];
     config = {
       default_config = { };
