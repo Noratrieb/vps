@@ -6,7 +6,7 @@ let
       "github.com/sagikazarmark/caddy-fs-s3@v0.10.0"
       "github.com/caddy-dns/rfc2136@v1.0.0"
     ];
-    hash = "sha256-EGkboqppRr2xcZ+7ie+WrqdP8sHSoouX4STl4NajMYs=";
+    hash = "sha256-+tUiGUAUYddjUDUI0a6xqeGi9tI3/hRlbhKkE/w7B7k=";
   };
 in
 {
