@@ -111,6 +111,7 @@
     settings = {
       security = {
         admin_user = "admin";
+        secret_key = "SW2YcwTIb9zpOOhoPsMm";
       };
       server = {
         root_url = "https://grafana.noratrieb.dev";

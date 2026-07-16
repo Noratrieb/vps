@@ -1,6 +1,6 @@
 {
-  "nixos-25.11": {
-    "lastUpdated": "2026-06-26T19:39:04.379Z",
-    "commit": "03c72920da828594fae523aaef96f33dff10b340"
+  "nixos-26.05": {
+    "lastUpdated": "2026-07-15T15:27:20.825Z",
+    "commit": "8eeec934ae0dbeca3d7868c059568a65c08b2fc3"
   }
 }

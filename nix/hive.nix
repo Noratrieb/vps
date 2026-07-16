@@ -2,7 +2,7 @@
   meta =
     let
       nixpkgs-version = builtins.fromJSON (builtins.readFile ./nixpkgs.json);
-      nixpkgs-path = (fetchTarball "https://github.com/NixOS/nixpkgs/archive/${nixpkgs-version."nixos-25.11".commit}.tar.gz");
+      nixpkgs-path = (fetchTarball "https://github.com/NixOS/nixpkgs/archive/${nixpkgs-version."nixos-26.05".commit}.tar.gz");
     in
     {
       # Override to pin the Nixpkgs version (recommended). This option
@@ -124,7 +124,8 @@
   dns1 = { name, nodes, modulesPath, ... }: {
     imports = [
       (modulesPath + "/profiles/qemu-guest.nix")
-      ./modules/contabo
+      ./modules/disko/base
+      ./modules/disko/standard
       ./modules/dns
       ./modules/wg-mesh
     ];
@@ -134,48 +135,20 @@
   dns2 = { name, nodes, modulesPath, lib, ... }: {
     imports = [
       (modulesPath + "/profiles/qemu-guest.nix")
+      ./modules/disko/base
+      ./modules/disko/standard
       ./modules/dns
       ./modules/wg-mesh
     ];
 
     system.stateVersion = "23.11";
 
-    boot.loader.grub.device = "/dev/sda";
-    boot.initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "xen_blkfront" "vmw_pvscsi" ];
-    boot.initrd.kernelModules = [ "nvme" ];
-    fileSystems."/" = { device = "/dev/sda1"; fsType = "ext4"; };
+    boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" ];
+    boot.initrd.kernelModules = [ "dm-snapshot" ];
+    boot.kernelModules = [ ];
+    boot.extraModulePackages = [ ];
 
-    # This file was populated at runtime with the networking
-    # details gathered from the active system.
-    networking = {
-      nameservers = [
-        "8.8.8.8"
-      ];
-      defaultGateway = "172.31.1.1";
-      defaultGateway6 = {
-        address = "fe80::1";
-        interface = "eth0";
-      };
-      dhcpcd.enable = false;
-      usePredictableInterfaceNames = lib.mkForce false;
-      interfaces = {
-        eth0 = {
-          ipv4.addresses = [
-            { address = "128.140.3.7"; prefixLength = 32; }
-          ];
-          ipv6.addresses = [
-            { address = "2a01:4f8:c2c:d616::1"; prefixLength = 64; }
-            { address = "fe80::9400:3ff:fe91:1647"; prefixLength = 64; }
-          ];
-          ipv4.routes = [{ address = "172.31.1.1"; prefixLength = 32; }];
-          ipv6.routes = [{ address = "fe80::1"; prefixLength = 128; }];
-        };
-
-      };
-    };
-    services.udev.extraRules = ''
-      ATTR{address}=="96:00:03:91:16:47", NAME="eth0"
-    '';
+    nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   };
 
   # VPS1 is the primary app server.
@@ -242,6 +215,8 @@
   vps4 = { lib, modulesPath, ... }: {
     imports = [
       (modulesPath + "/profiles/qemu-guest.nix")
+      ./modules/disko/base
+      ./modules/disko/standard
       ./modules/caddy
       ./modules/wg-mesh
       ./modules/garage
@@ -256,43 +231,12 @@
 
     system.stateVersion = "23.11";
 
-    boot.loader.grub.device = "/dev/sda";
-    boot.initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "xen_blkfront" "vmw_pvscsi" ];
-    boot.initrd.kernelModules = [ "nvme" ];
-    fileSystems."/" = { device = "/dev/sda1"; fsType = "ext4"; };
+    boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" ];
+    boot.initrd.kernelModules = [ "dm-snapshot" ];
+    boot.kernelModules = [ ];
+    boot.extraModulePackages = [ ];
 
-    # This file was populated at runtime with the networking
-    # details gathered from the active system.
-    networking = {
-      nameservers = [
-        "8.8.8.8"
-      ];
-      defaultGateway = "172.31.1.1";
-      defaultGateway6 = {
-        address = "fe80::1";
-        interface = "eth0";
-      };
-      dhcpcd.enable = false;
-      usePredictableInterfaceNames = lib.mkForce false;
-      interfaces = {
-        eth0 = {
-          ipv4.addresses = [
-            { address = "195.201.147.17"; prefixLength = 32; }
-          ];
-          ipv6.addresses = [
-            { address = "2a01:4f8:1c1c:cb18::1"; prefixLength = 64; }
-            { address = "fe80::9400:3ff:fe95:a9e4"; prefixLength = 64; }
-          ];
-          ipv4.routes = [{ address = "172.31.1.1"; prefixLength = 32; }];
-          ipv6.routes = [{ address = "fe80::1"; prefixLength = 128; }];
-        };
-
-      };
-    };
-    services.udev.extraRules = ''
-      ATTR{address}=="96:00:03:95:a9:e4", NAME="eth0"
-    
-    '';
+    nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   };
   # VPS5 is the primary test server, where new things are being deployed that could break stuff maybe.
   vps5 = { name, nodes, modulesPath, config, pkgs, lib, ... }:

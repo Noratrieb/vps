@@ -1,11 +1,11 @@
 {
   "pretense": {
-    "commit": "270b01fc1118dfd713c1c41530d1a7d98f04527d",
+    "commit": "7fc04b61bc1dbf864cf2ea5263d48eec6ee7a84f",
     "fetchFromGitHub": {
       "owner": "Noratrieb",
       "repo": "pretense",
-      "rev": "270b01fc1118dfd713c1c41530d1a7d98f04527d",
-      "hash": "sha256-76ixjjrZ2xFz3uy92LHT4zbeNvab2f4J9C46MDVr+xQ="
+      "rev": "7fc04b61bc1dbf864cf2ea5263d48eec6ee7a84f",
+      "hash": "sha256-JALeOyMySdDVcBt1Q3nbOsy09U6Z7yL61k7Pkt0e/+s="
     }
   },
   "quotdd": {

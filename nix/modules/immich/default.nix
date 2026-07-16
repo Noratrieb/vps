@@ -6,10 +6,6 @@
     mediaLocation = "/mnt/nas/HEY/_Nora/immich";
     secretsFile = config.age.secrets.immich_secrets.path;
     host = "0.0.0.0";
-    database = {
-      enableVectors = false;
-      enableVectorChord = true;
-    };
     environment = {
       IMMICH_TELEMETRY_INCLUDE = "all";
     };

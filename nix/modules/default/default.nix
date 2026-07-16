@@ -49,7 +49,6 @@ in
   services.openssh = {
     enable = true;
     openFirewall = true;
-    banner = "meoooooow!! 😼 :3\n";
     hostKeys = [
       {
         path = "/etc/ssh/ssh_host_ed25519_key";
@@ -70,6 +69,7 @@ in
     settings = {
       PasswordAuthentication = false;
       AllowUsers = [ "root" ];
+      Banner = "${pkgs.writeText "banner.txt" "meoooooow!! 😼 :3\n"}";
     };
   };
   services.fail2ban = {
@@ -167,7 +167,8 @@ in
       "--housekeeping_interval=30s"
     ];
   };
-  services.promtail = {
+  /*
+    services.promtail = {
     enable = true;
     configuration = {
       server = {
@@ -229,31 +230,76 @@ in
         }
       ];
     };
-  };
+    };
+  */
 
   services.alloy = {
     enable = true;
   };
   systemd.services.alloy.serviceConfig = {
     DynamicUser = lib.mkForce false;
-    PrivateDevices = true;
     ProtectClock = true;
-    ProtectKernelLogs = true;
     PrivateMounts = true;
     ProtectControlGroups = true;
     ProtectHostname = true;
     LockPersonality = true;
     ProtectKernelTunables = true;
-    ProtectSystem = true;
     ProtectHome = true;
     PrivateTmp = true;
     NoNewPrivileges = true;
-    RestrictNamespaces = "";
     RestrictAddressFamilies = [ "AF_INET" "AF_INET6" "AF_UNIX" ];
     # TODO: find what's required for /proc/kallsyms (it should be CAP_SYSLOG!)
     # CapabilityBoundingSet = "CAP_SYS_PTRACE CAP_BPF CAP_SYSLOG";
   };
   environment.etc."alloy/config.alloy".text = ''
+    // ------------ JOURNAL TO LOGS
+    loki.source.journal "journal" {
+      max_age = "24h"
+
+      labels = {
+        job  = "systemd-journal",
+        node = "${name}",
+      }
+
+      forward_to = [loki.relabel.journal.receiver]
+    }
+
+    loki.relabel "journal" {
+      forward_to = [loki.write.default.receiver]
+
+      rule {
+        source_labels = ["__journal__message"]
+        target_label  = "_msg"
+      }
+
+      rule {
+        source_labels = ["__journal__systemd_unit"]
+        target_label  = "unit"
+      }
+
+      rule {
+        source_labels = ["__journal__hostname"]
+        target_label  = "host"
+      }
+
+      rule {
+        source_labels = ["__journal_priority_keyword"]
+        target_label  = "severity"
+      }
+    }
+
+    loki.write "default" {
+      endpoint {
+        url = "http://loki.internal:3100/loki/api/v1/push"
+      }
+
+      endpoint {
+        url = "http://loki.internal:9428/insert/loki/api/v1/push"
+      }
+    }
+
+    // ------------ PYROSCOPE PARTS
+
     discovery.process "all" {
       discover_config {
         cgroup_path = true

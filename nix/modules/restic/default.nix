@@ -1,4 +1,4 @@
-{ config, lib, ... }: with lib;
+{ config, lib, pkgs, ... }: with lib;
 let
   jobOptions = { ... }: {
     options = {
@@ -50,6 +50,8 @@ in
   config = {
     age.secrets.restic_backup.file = ../../secrets/restic_backup.age;
     age.secrets.generic_backup_password.file = ../../secrets/generic_backup_password.age;
+
+    environment.systemPackages = [ pkgs.restic ];
 
     services.restic.backups =
       builtins.listToAttrs (map
