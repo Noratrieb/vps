@@ -39,10 +39,10 @@ check_dig_answer TXT noratrieb.dev "v=spf1 include:spf.tutanota.de -all"
 http_hosts=(
     noratrieb.dev
     nilstrieb.dev
-    vps1.infra.noratrieb.dev
+    dimetrodon.infra.noratrieb.dev
     vps3.infra.noratrieb.dev
-    vps4.infra.noratrieb.dev
-    vps5.infra.noratrieb.dev
+    triceratops.infra.noratrieb.dev
+    ptilodus.infra.noratrieb.dev
     docker.noratrieb.dev
     does-it-build.noratrieb.dev
     grafana.noratrieb.dev

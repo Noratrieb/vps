@@ -14,8 +14,8 @@ let
       };
     in
     with hostsToDns;
-    # point nilstrieb.dev to vps1 (retired)
-    vps1 // {
+    # point nilstrieb.dev to dimetrodon (retired)
+    dimetrodon // {
       TTL = hour1;
       SOA = {
         nameServer = "ns.nilstrieb.dev.";
@@ -38,15 +38,15 @@ let
         localhost.A = [ (a "127.0.0.1") ];
 
         # --- retired:
-        bisect-rustc = vps1;
-        blog = vps1;
-        docker = vps1;
-        www = vps1;
-        uptime = vps1;
-        hugo-chat = vps1 // {
-          subdomains.api = vps1;
+        bisect-rustc = dimetrodon;
+        blog = dimetrodon;
+        docker = dimetrodon;
+        www = dimetrodon;
+        uptime = dimetrodon;
+        hugo-chat = dimetrodon // {
+          subdomains.api = dimetrodon;
         };
-        olat = vps1;
+        olat = dimetrodon;
         # ---
 
         # infra (legacy)

@@ -21,7 +21,7 @@ let
     in
     with hostsToDns;
     # vps{1,3,4} contains root noratrieb.dev
-    combine [ vps1 vps3 vps4 ] // {
+    combine [ dimetrodon vps3 triceratops ] // {
       TTL = hour1;
       SOA = {
         nameServer = "ns1.noratrieb.dev.";
@@ -58,30 +58,30 @@ let
         _acme-challenge.CNAME = [ (cname "_acme-challenge.nilstrieb.dev.") ];
 
         # --- website stuff
-        blog = vps1;
-        www = vps1;
-        files = combine [ vps1 vps3 vps4 ] // {
+        blog = dimetrodon;
+        www = dimetrodon;
+        files = combine [ dimetrodon vps3 triceratops ] // {
           subdomains = {
-            upload = vps1;
+            upload = dimetrodon;
           };
         };
 
-        womangling = combine [ vps1 vps3 vps4 ];
+        womangling = combine [ dimetrodon vps3 triceratops ];
 
-        garage = combine [ vps1 vps2 vps3 vps4 ];
+        garage = combine [ dimetrodon vps2 vps3 triceratops ];
 
         matrix = vps2;
 
         # --- apps
-        docker = vps1;
-        hugo-chat = vps1 // {
-          subdomains.api = vps1;
+        docker = dimetrodon;
+        hugo-chat = dimetrodon // {
+          subdomains.api = dimetrodon;
         };
-        uptime = vps1;
-        does-it-build = vps4;
-        git = vps1;
-        olat = vps1;
-        hedgedoc = vps1;
+        uptime = dimetrodon;
+        does-it-build = triceratops;
+        git = dimetrodon;
+        olat = dimetrodon;
+        hedgedoc = dimetrodon;
 
         std.CNAME = [ (cname "noratrieb.github.io.") ];
 
@@ -91,7 +91,7 @@ let
         pronouns.TXT = [
           "she/her"
         ];
-        sshhoneypot = vps5;
+        sshhoneypot = ptilodus;
 
         # --- infra
         grafana = vps3;
@@ -125,7 +125,7 @@ let
         ];
 
         # retired
-        bisect-rustc = vps1;
+        bisect-rustc = dimetrodon;
       };
     };
 in

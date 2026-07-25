@@ -24,7 +24,7 @@
             wg = {
               privateIP = "10.0.1.1";
               publicKey = "7jy2q93xYBHG5yKqLmNuMWSuFMnUGWXVuKQ1yMmxoV4=";
-              peers = [ "minipc" "vps3" "vps5" ];
+              peers = [ "minipc" "vps3" "ptilodus" ];
             };
             tags = [ "dns" ];
           };
@@ -40,13 +40,13 @@
             };
             tags = [ "dns" ];
           };
-          vps1 = {
+          dimetrodon = {
             publicIPv4 = "161.97.165.1";
             publicIPv6 = null;
             wg = {
               privateIP = "10.0.0.1";
               publicKey = "5tg3w/TiCuCeKIBJCd6lHUeNjGEA76abT1OXnhNVyFQ=";
-              peers = [ "vps2" "vps3" "vps4" "vps5" ];
+              peers = [ "vps2" "vps3" "triceratops" "ptilodus" ];
             };
             tags = [ "apps" ];
           };
@@ -56,7 +56,7 @@
             wg = {
               privateIP = "10.0.0.2";
               publicKey = "SficHHJ0ynpZoGah5heBpNKnEVIVrgs72Z5HEKd3jHA=";
-              peers = [ "vps1" "vps3" "vps4" "vps5" ];
+              peers = [ "dimetrodon" "vps3" "triceratops" "ptilodus" ];
             };
             tags = [ "apps" ];
           };
@@ -66,11 +66,11 @@
             wg = {
               privateIP = "10.0.0.3";
               publicKey = "pdUxG1vhmYraKzIIEFxTRAMhGwGztBL/Ly5icJUV3g0=";
-              peers = [ "vps1" "vps2" "vps4" "vps5" "dns1" "dns2" "minipc" ];
+              peers = [ "dimetrodon" "vps2" "triceratops" "ptilodus" "dns1" "dns2" "minipc" ];
             };
             tags = [ "apps" ];
           };
-          vps4 = {
+          triceratops = {
             publicIPv4 = "195.201.147.17";
             # somehow this doesnt quite work yet, keep it out of DNS records
             #publicIPv6 = "2a01:4f8:1c1c:cb18::1";
@@ -78,17 +78,17 @@
             wg = {
               privateIP = "10.0.0.4";
               publicKey = "+n2XKKaSFdCanEGRd41cvnuwJ0URY0HsnpBl6ZrSBRs=";
-              peers = [ "vps1" "vps2" "vps3" "vps5" ];
+              peers = [ "dimetrodon" "vps2" "vps3" "ptilodus" ];
             };
             tags = [ "apps" ];
           };
-          vps5 = {
+          ptilodus = {
             publicIPv4 = "45.94.209.30";
             publicIPv6 = null;
             wg = {
               privateIP = "10.0.0.5";
               publicKey = "r1cwt63fcOR+FTqMTUpZdK4/MxpalkDYRHXyy7osWUk=";
-              peers = [ "dns1" "vps1" "vps2" "vps3" "vps4" ];
+              peers = [ "dns1" "dimetrodon" "vps2" "vps3" "triceratops" ];
             };
             tags = [ "apps" ];
           };
@@ -151,8 +151,8 @@
     nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   };
 
-  # VPS1 is the primary app server.
-  vps1 = { name, nodes, modulesPath, config, lib, ... }: {
+  # dimetrodon is the primary app server.
+  dimetrodon = { name, nodes, modulesPath, config, lib, ... }: {
     imports = [
       (modulesPath + "/profiles/qemu-guest.nix")
       ./modules/contabo
@@ -211,8 +211,8 @@
 
     system.stateVersion = "23.11";
   };
-  # VPS4 exists. It's useful for garage replication and runs does-it-build which uses some CPU.
-  vps4 = { lib, modulesPath, ... }: {
+  # triceratops exists. It's useful for garage replication and runs does-it-build which uses some CPU.
+  triceratops = { lib, modulesPath, ... }: {
     imports = [
       (modulesPath + "/profiles/qemu-guest.nix")
       ./modules/disko/base
@@ -238,8 +238,8 @@
 
     nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   };
-  # VPS5 is the primary test server, where new things are being deployed that could break stuff maybe.
-  vps5 = { name, nodes, modulesPath, config, pkgs, lib, ... }:
+  # ptilodus (a genus of extinct multituberculate mammals) is the primary test server, where new things are being deployed that could break stuff maybe.
+  ptilodus = { name, nodes, modulesPath, config, pkgs, lib, ... }:
     {
       imports = [
         (modulesPath + "/profiles/qemu-guest.nix")

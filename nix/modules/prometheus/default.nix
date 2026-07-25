@@ -50,7 +50,7 @@
         {
           job_name = "docker-registry";
           static_configs = [
-            { targets = [ "vps1.local:9011" ]; labels = { server = "vps1"; }; }
+            { targets = [ "dimetrodon.local:9011" ]; labels = { server = "dimetrodon"; }; }
           ];
         }
         {
