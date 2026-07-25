@@ -13,6 +13,7 @@ let nasDir = "/mnt/nas/HEY/_Nora/paperless"; in {
       PAPERLESS_ADMIN_USER = "nora";
       PAPERLESS_OCR_LANGUAGE = "deu+eng";
       PAPERLESS_URL = "https://paperless.internal.noratrieb.dev";
+      PAPERLESS_CONSUMER_POLLING_INTERVAL = 10;
     };
     exporter = {
       enable = true;
