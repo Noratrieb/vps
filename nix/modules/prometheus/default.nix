@@ -8,7 +8,7 @@
         {
           job_name = "prometheus";
           static_configs = [
-            { targets = [ "localhost:9090" ]; labels = { server = "vps3"; }; }
+            { targets = [ "localhost:9090" ]; labels = { server = "trilobite"; }; }
           ];
         }
         {

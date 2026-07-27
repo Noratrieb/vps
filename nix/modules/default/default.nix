@@ -12,7 +12,7 @@ in
   # TODO: ensure that the rust programs have frame pointers
 
   networking.hosts = {
-    "${networkingConfig.vps3.wg.privateIP}" = [ "loki.internal" "pyroscope.internal" "prometheus.internal" ];
+    "${networkingConfig.trilobite.wg.privateIP}" = [ "loki.internal" "pyroscope.internal" "prometheus.internal" ];
   };
 
   imports = [

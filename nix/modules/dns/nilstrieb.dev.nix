@@ -9,7 +9,7 @@ let
           lib.optionalAttrs (publicIPv4 != null) { A = [ (a publicIPv4) ]; } //
           lib.optionalAttrs (publicIPv6 != null) { AAAA = [ (aaaa publicIPv6) ]; })
         networkingConfig;
-      vps2 = {
+      diplodocus = {
         A = [ "184.174.32.252" ];
       };
     in
@@ -50,7 +50,7 @@ let
         # ---
 
         # infra (legacy)
-        inherit vps2;
+        inherit diplodocus;
 
         pronouns.TXT = [
           "she/her"

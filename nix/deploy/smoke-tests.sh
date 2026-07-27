@@ -40,7 +40,7 @@ http_hosts=(
     noratrieb.dev
     nilstrieb.dev
     dimetrodon.infra.noratrieb.dev
-    vps3.infra.noratrieb.dev
+    trilobite.infra.noratrieb.dev
     triceratops.infra.noratrieb.dev
     ptilodus.infra.noratrieb.dev
     docker.noratrieb.dev

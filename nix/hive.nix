@@ -24,7 +24,7 @@
             wg = {
               privateIP = "10.0.1.1";
               publicKey = "7jy2q93xYBHG5yKqLmNuMWSuFMnUGWXVuKQ1yMmxoV4=";
-              peers = [ "minipc" "vps3" "ptilodus" ];
+              peers = [ "minipc" "trilobite" "ptilodus" ];
             };
             tags = [ "dns" ];
           };
@@ -36,7 +36,7 @@
             wg = {
               privateIP = "10.0.1.2";
               publicKey = "yfOc/q5M+2DWPoZ4ZgwrTYYkviQxGxRWpcBCDcauDnc=";
-              peers = [ "vps3" ];
+              peers = [ "trilobite" ];
             };
             tags = [ "dns" ];
           };
@@ -46,27 +46,27 @@
             wg = {
               privateIP = "10.0.0.1";
               publicKey = "5tg3w/TiCuCeKIBJCd6lHUeNjGEA76abT1OXnhNVyFQ=";
-              peers = [ "vps2" "vps3" "triceratops" "ptilodus" ];
+              peers = [ "diplodocus" "trilobite" "triceratops" "ptilodus" ];
             };
             tags = [ "apps" ];
           };
-          vps2 = {
+          diplodocus = {
             publicIPv4 = "184.174.32.252";
             publicIPv6 = null;
             wg = {
               privateIP = "10.0.0.2";
               publicKey = "SficHHJ0ynpZoGah5heBpNKnEVIVrgs72Z5HEKd3jHA=";
-              peers = [ "dimetrodon" "vps3" "triceratops" "ptilodus" ];
+              peers = [ "dimetrodon" "trilobite" "triceratops" "ptilodus" ];
             };
             tags = [ "apps" ];
           };
-          vps3 = {
+          trilobite = {
             publicIPv4 = "134.255.181.139";
             publicIPv6 = null;
             wg = {
               privateIP = "10.0.0.3";
               publicKey = "pdUxG1vhmYraKzIIEFxTRAMhGwGztBL/Ly5icJUV3g0=";
-              peers = [ "dimetrodon" "vps2" "triceratops" "ptilodus" "dns1" "dns2" "minipc" ];
+              peers = [ "dimetrodon" "diplodocus" "triceratops" "ptilodus" "dns1" "dns2" "minipc" ];
             };
             tags = [ "apps" ];
           };
@@ -78,7 +78,7 @@
             wg = {
               privateIP = "10.0.0.4";
               publicKey = "+n2XKKaSFdCanEGRd41cvnuwJ0URY0HsnpBl6ZrSBRs=";
-              peers = [ "dimetrodon" "vps2" "vps3" "ptilodus" ];
+              peers = [ "dimetrodon" "diplodocus" "trilobite" "ptilodus" ];
             };
             tags = [ "apps" ];
           };
@@ -88,7 +88,7 @@
             wg = {
               privateIP = "10.0.0.5";
               publicKey = "r1cwt63fcOR+FTqMTUpZdK4/MxpalkDYRHXyy7osWUk=";
-              peers = [ "dns1" "dimetrodon" "vps2" "vps3" "triceratops" ];
+              peers = [ "dns1" "dimetrodon" "diplodocus" "trilobite" "triceratops" ];
             };
             tags = [ "apps" ];
           };
@@ -98,7 +98,7 @@
             wg = {
               privateIP = "10.0.2.1";
               publicKey = "ecYfTot7RrJyNebSZTQ1wciOhvrpNSSbkR15twpSSl4=";
-              peers = [ "dns1" "vps3" ];
+              peers = [ "dns1" "trilobite" ];
               noEndpoint = true;
             };
             tags = [ "home" ];
@@ -179,8 +179,8 @@
 
     system.stateVersion = "23.11";
   };
-  # VPS2 exists
-  vps2 = { name, nodes, modulesPath, config, lib, ... }: {
+  # diplodocus exists
+  diplodocus = { name, nodes, modulesPath, config, lib, ... }: {
     imports = [
       (modulesPath + "/profiles/qemu-guest.nix")
       ./modules/contabo
@@ -195,8 +195,8 @@
 
     system.stateVersion = "23.11";
   };
-  # VPS3 is the primary monitoring/metrics server.
-  vps3 = { name, nodes, modulesPath, config, ... }: {
+  # trilobite is the primary monitoring/metrics server.
+  trilobite = { name, nodes, modulesPath, config, ... }: {
     imports = [
       (modulesPath + "/profiles/qemu-guest.nix")
       ./modules/contabo

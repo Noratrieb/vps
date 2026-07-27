@@ -21,7 +21,7 @@ let
     in
     with hostsToDns;
     # vps{1,3,4} contains root noratrieb.dev
-    combine [ dimetrodon vps3 triceratops ] // {
+    combine [ dimetrodon trilobite triceratops ] // {
       TTL = hour1;
       SOA = {
         nameServer = "ns1.noratrieb.dev.";
@@ -60,17 +60,17 @@ let
         # --- website stuff
         blog = dimetrodon;
         www = dimetrodon;
-        files = combine [ dimetrodon vps3 triceratops ] // {
+        files = combine [ dimetrodon trilobite triceratops ] // {
           subdomains = {
             upload = dimetrodon;
           };
         };
 
-        womangling = combine [ dimetrodon vps3 triceratops ];
+        womangling = combine [ dimetrodon trilobite triceratops ];
 
-        garage = combine [ dimetrodon vps2 vps3 triceratops ];
+        garage = combine [ dimetrodon diplodocus trilobite triceratops ];
 
-        matrix = vps2;
+        matrix = diplodocus;
 
         # --- apps
         docker = dimetrodon;
@@ -94,7 +94,7 @@ let
         sshhoneypot = ptilodus;
 
         # --- infra
-        grafana = vps3;
+        grafana = trilobite;
         infra.subdomains = hostsToDns;
 
         # --- internal stuff
