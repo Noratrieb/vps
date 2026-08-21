@@ -13,6 +13,7 @@ in
 
   networking.hosts = {
     "${networkingConfig.trilobite.wg.privateIP}" = [ "loki.internal" "pyroscope.internal" "prometheus.internal" ];
+    "${networkingConfig.minipc.wg.privateIP}" = [ "immich.internal.noratrieb.dev" ];
   };
 
   imports = [

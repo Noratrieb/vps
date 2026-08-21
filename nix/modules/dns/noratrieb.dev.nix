@@ -82,6 +82,7 @@ let
         git = dimetrodon;
         olat = dimetrodon;
         hedgedoc = dimetrodon;
+        immich-share = dimetrodon;
 
         std.CNAME = [ (cname "noratrieb.github.io.") ];
 

@@ -46,7 +46,7 @@
             wg = {
               privateIP = "10.0.0.1";
               publicKey = "5tg3w/TiCuCeKIBJCd6lHUeNjGEA76abT1OXnhNVyFQ=";
-              peers = [ "diplodocus" "trilobite" "triceratops" "ptilodus" ];
+              peers = [ "diplodocus" "trilobite" "triceratops" "ptilodus" "minipc" ];
             };
             tags = [ "apps" ];
           };
@@ -98,7 +98,7 @@
             wg = {
               privateIP = "10.0.2.1";
               publicKey = "ecYfTot7RrJyNebSZTQ1wciOhvrpNSSbkR15twpSSl4=";
-              peers = [ "dns1" "trilobite" ];
+              peers = [ "dns1" "trilobite" "dimetrodon" ];
               noEndpoint = true;
             };
             tags = [ "home" ];
@@ -175,6 +175,7 @@
       ./apps/openolat
       ./apps/upload-files
       ./modules/hedgedoc
+      ./modules/immich-public-proxy
     ];
 
     system.stateVersion = "23.11";

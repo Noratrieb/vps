@@ -6,8 +6,14 @@
     mediaLocation = "/mnt/nas/HEY/_Nora/immich";
     secretsFile = config.age.secrets.immich_secrets.path;
     host = "0.0.0.0";
+    port = 2283;
     environment = {
       IMMICH_TELEMETRY_INCLUDE = "all";
+    };
+    settings = {
+      server = {
+        externalDomain = "https://immich-share.noratrieb.dev";
+      };
     };
   };
 
