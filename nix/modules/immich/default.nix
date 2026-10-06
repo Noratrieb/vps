@@ -1,8 +1,9 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, nixpkgs-unstable, ... }: {
   age.secrets.immich_secrets.file = ../../secrets/immich_secrets.age;
 
   services.immich = {
     enable = true;
+    package = nixpkgs-unstable.immich;
     mediaLocation = "/mnt/nas/HEY/_Nora/immich";
     secretsFile = config.age.secrets.immich_secrets.path;
     host = "0.0.0.0";

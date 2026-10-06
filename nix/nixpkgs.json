@@ -1,6 +1,10 @@
 {
   "nixos-26.05": {
-    "lastUpdated": "2026-07-15T15:27:20.825Z",
-    "commit": "8eeec934ae0dbeca3d7868c059568a65c08b2fc3"
+    "lastUpdated": "2026-10-06T19:34:49.843Z",
+    "commit": "b25309931cfda5f0b8805f462a29897eeae50168"
+  },
+  "nixos-unstable": {
+    "lastUpdated": "2026-10-06T20:11:12.863Z",
+    "commit": "151fa4e8ddfdd8dd25d945ad94ed54a13de9f6e4"
   }
 }

@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   services.matrix-continuwuity = {
     enable = true;
+    package = pkgs.matrix-continuwuity_latest;
     settings = {
       global = {
         server_name = "noratrieb.dev";
@@ -16,7 +17,7 @@
       };
     };
   };
-  environment.systemPackages = [ pkgs.matrix-continuwuity ];
+  environment.systemPackages = [ pkgs.matrix-continuwuity_latest ];
   services.caddy.virtualHosts."matrix.noratrieb.dev" = {
     extraConfig = ''
       encode zstd gzip

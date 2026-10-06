@@ -3,6 +3,7 @@
     let
       nixpkgs-version = builtins.fromJSON (builtins.readFile ./nixpkgs.json);
       nixpkgs-path = (fetchTarball "https://github.com/NixOS/nixpkgs/archive/${nixpkgs-version."nixos-26.05".commit}.tar.gz");
+      nixpkgs-unstable-path = (fetchTarball "https://github.com/NixOS/nixpkgs/archive/${nixpkgs-version."nixos-unstable".commit}.tar.gz");
     in
     {
       # Override to pin the Nixpkgs version (recommended). This option
@@ -16,6 +17,8 @@
         my-projects-versions = builtins.fromJSON (builtins.readFile ./my-projects.json);
 
         inherit nixpkgs-path;
+        nixpkgs-unstable = (import nixpkgs-unstable-path) { };
+
 
         networkingConfig = {
           dns1 = {
